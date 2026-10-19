@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lovdare | Thoughtful Wellness Gifting for Women</title>
+  <meta name="description" content="Thoughtfully curated gift boxes focused on menstrual wellness, iron awareness, postpartum recovery, and menopause care. Love darefully. Love louder.">
+  <meta name="keywords" content="Lovdare, wellness gift boxes, period care gift, postpartum care box, menopause gift, iron deficiency awareness, women wellness gifting">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+
+  <!-- Google Fonts: Cormorant Garamond & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <noscript>
+    <style>
+      .fade-up-element {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    </style>
+  </noscript>
+</head>
+<body>
+
+  <!-- =========================================================================
+       1. Navigation Bar (Sticky with Transparent-to-Solid Transition)
+       ========================================================================= -->
+  <nav class="navbar navbar-expand-lg lovdare-navbar" aria-label="Main Navigation">
+    <div class="container">
+      <a class="navbar-brand-wrapper" href="index.html">
+        <div class="brand-logo-mark" aria-hidden="true">
+          <i class="bi bi-flower2"></i>
+        </div>
+        <div class="brand-text-wrapper">
+          <span class="brand-title">Lovdare</span>
+          <span class="brand-tagline">Love Darefully</span>
+        </div>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarLovdareContent" aria-controls="navbarLovdareContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarLovdareContent">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#boxes">Our Boxes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#story">Our Story</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#values">Our Values</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact</a>
+          </li>
+        </ul>
+        <div class="d-flex align-items-center gap-3">
+          <a href="#boxes" class="btn-lovdare btn-lovdare-primary nav-action-btn">
+            <span>Explore the Boxes</span>
+            <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- =========================================================================
+       2. Hero Section (Automatic Background Slider with Crossfade)
+       ========================================================================= -->
+  <header class="hero-section" id="hero">
+    <!-- Background Slider Elements -->
+    <div class="hero-slider" aria-hidden="true">
+      <div class="hero-slide active" style="background-image: url('assets/images/hero-1.jpg');"></div>
+      <div class="hero-slide" style="background-image: url('assets/images/hero-2.jpg');"></div>
+      <div class="hero-slide" style="background-image: url('assets/images/hero-3.jpg');"></div>
+      <div class="hero-slide" style="background-image: url('assets/images/hero-4.jpg');"></div>
+    </div>
+
+    <!-- Dark Contrast Overlay -->
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <!-- Hero Content -->
+    <div class="container position-relative">
+      <div class="hero-content mx-auto">
+        <div class="tag-badge light hero-animate-1">
+          <i class="bi bi-heart-fill text-danger fs-6"></i>
+          <span>LOVE DAREFULLY. LOVE LOUDER.</span>
+        </div>
+        <h1 class="hero-heading hero-animate-2">
+          Care That Goes Beyond a Gift.
+        </h1>
+        <p class="hero-supporting hero-animate-3">
+          Thoughtfully curated gift boxes that open conversations, nurture wellbeing, and remind women they deserve care at every stage of life.
+        </p>
+        <div class="hero-buttons hero-animate-4">
+          <a href="#boxes" class="btn-lovdare btn-lovdare-primary">
+            <span>Explore Our Boxes</span>
+            <i class="bi bi-gift"></i>
+          </a>
+          <a href="#story" class="btn-lovdare btn-lovdare-outline">
+            <span>Our Story</span>
+            <i class="bi bi-arrow-down"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slider Dot Indicators -->
+    <div class="hero-dots" aria-label="Slider Controls"></div>
+  </header>
+
+  <!-- =========================================================================
+       3. Product Collection Section ("Every Stage Deserves Care")
+       ========================================================================= -->
+  <section class="section-padding product-section" id="boxes">
+    <div class="container">
+      <div class="text-center">
+        <span class="tag-badge orange fade-up-element">OUR CURATED COLLECTIONS</span>
+        <h2 class="section-title fade-up-element">Every Stage Deserves Care</h2>
+        <p class="section-subtitle fade-up-element">
+          Thoughtful gifts for the moments that matter, the conversations that count, and the care that should never be overlooked.
+        </p>
+      </div>
+
+      <!-- Responsive Product Carousel -->
+      <div class="carousel-outer position-relative fade-up-element">
+        <!-- Prev & Next Arrows -->
+        <button class="carousel-nav-btn carousel-nav-prev" aria-label="Previous Products">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+        <button class="carousel-nav-btn carousel-nav-next" aria-label="Next Products">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+
+        <!-- Viewport & Track -->
+        <div class="carousel-viewport">
+          <div class="carousel-track">
+
+            <!-- Card 1: Happy Period Box -->
+            <div class="product-card-item">
+              <div class="lovdare-product-card" data-href="happy-period-box.html" role="article" aria-label="Happy Period Box">
+                <div class="card-image-box">
+                  <span class="card-stage-pill">Menstrual Care</span>
+                  <img src="assets/images/box-period.jpg" alt="Happy Period Box curated gift essentials" loading="lazy">
+                </div>
+                <div class="card-content-box">
+                  <h3 class="card-product-title">Happy Period Box</h3>
+                  <p class="card-product-desc">
+                    A thoughtful mix of period-care essentials and comforting treats, created to acknowledge PMS, period pain, and the care every menstruator deserves.
+                  </p>
+                  <div class="card-actions-row">
+                    <a href="happy-period-box.html" class="link-discover">
+                      <span>Discover Box</span>
+                      <i class="bi bi-arrow-right"></i>
+                    </a>
+                    <button type="button" class="btn-card-buy btn-whatsapp" data-whatsapp-product="happy-period" title="Inquire on WhatsApp">
+                      <i class="bi bi-whatsapp"></i>
+                      <span>Buy Now</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2: Gift Iron – Not Gold -->
+            <div class="product-card-item">
+              <div class="lovdare-product-card" data-href="gift-iron-not-gold.html" role="article" aria-label="Gift Iron Not Gold Box">
+                <div class="card-image-box">
+                  <span class="card-stage-pill">Everyday Health</span>
+                  <img src="assets/images/box-iron.jpg" alt="Gift Iron Not Gold awareness and nutrition box" loading="lazy">
+                </div>
+                <div class="card-content-box">
+                  <h3 class="card-product-title">Gift Iron – Not Gold</h3>
+                  <p class="card-product-desc">
+                    A meaningful gift featuring iron-rich foods, snacks, and an educational booklet to encourage awareness of iron deficiency and everyday wellbeing.
+                  </p>
+                  <div class="card-actions-row">
+                    <a href="gift-iron-not-gold.html" class="link-discover">
+                      <span>Discover Box</span>
+                      <i class="bi bi-arrow-right"></i>
+                    </a>
+                    <button type="button" class="btn-card-buy btn-whatsapp" data-whatsapp-product="gift-iron" title="Inquire on WhatsApp">
+                      <i class="bi bi-whatsapp"></i>
+                      <span>Buy Now</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3: Post-Pregnancy Care Box -->
+            <div class="product-card-item">
+              <div class="lovdare-product-card" data-href="post-pregnancy-care-box.html" role="article" aria-label="Post-Pregnancy Care Box">
+                <div class="card-image-box">
+                  <span class="card-stage-pill">Motherhood & Rest</span>
+                  <img src="assets/images/box-postpartum.jpg" alt="Post Pregnancy Care Box for new mothers" loading="lazy">
+                </div>
+                <div class="card-content-box">
+                  <h3 class="card-product-title">Post-Pregnancy Care Box</h3>
+                  <p class="card-product-desc">
+                    A comforting collection of self-care gifts celebrating the woman behind motherhood and supporting moments of rest, care, and emotional wellbeing.
+                  </p>
+                  <div class="card-actions-row">
+                    <a href="post-pregnancy-care-box.html" class="link-discover">
+                      <span>Discover Box</span>
+                      <i class="bi bi-arrow-right"></i>
+                    </a>
+                    <button type="button" class="btn-card-buy btn-whatsapp" data-whatsapp-product="postpartum" title="Inquire on WhatsApp">
+                      <i class="bi bi-whatsapp"></i>
+                      <span>Buy Now</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 4: Pre & Post-Menopausal Gift Box -->
+            <div class="product-card-item">
+              <div class="lovdare-product-card" data-href="menopause-gift-box.html" role="article" aria-label="Pre & Post-Menopausal Gift Box">
+                <div class="card-image-box">
+                  <span class="card-stage-pill">Menopause Journey</span>
+                  <img src="assets/images/box-menopause.jpg" alt="Pre and Post Menopausal wellness and comfort box" loading="lazy">
+                </div>
+                <div class="card-content-box">
+                  <h3 class="card-product-title">Pre &amp; Post-Menopausal Gift Box</h3>
+                  <p class="card-product-desc">
+                    A thoughtful wellness gift that encourages conversations about menopause and offers care, comfort, and support through a new stage of life.
+                  </p>
+                  <div class="card-actions-row">
+                    <a href="menopause-gift-box.html" class="link-discover">
+                      <span>Discover Box</span>
+                      <i class="bi bi-arrow-right"></i>
+                    </a>
+                    <button type="button" class="btn-card-buy btn-whatsapp" data-whatsapp-product="menopause" title="Inquire on WhatsApp">
+                      <i class="bi bi-whatsapp"></i>
+                      <span>Buy Now</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Carousel Pagination Dots -->
+        <div class="carousel-dots-wrapper" aria-label="Product Pagination"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       4. Brand Story / About Section
+       ========================================================================= -->
+  <section class="section-padding about-section" id="story">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <!-- Visual Column -->
+        <div class="col-lg-6 fade-up-element">
+          <div class="about-image-wrapper">
+            <img src="assets/images/about-story.jpg" alt="Women connecting thoughtfully in warm natural lighting" loading="lazy">
+            <div class="about-floating-card">
+              <p>“Care should never be limited to a particular age, stage, or occasion.”</p>
+              <span>— The Lovdare Promise</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Editorial Story Column -->
+        <div class="col-lg-6 fade-up-element">
+          <div class="about-content-wrapper">
+            <span class="tag-badge sage">THE LOVDARE INITIATIVE</span>
+            <h2 class="about-heading">Changing Conversations, One Gift at a Time.</h2>
+            <p class="about-lead">
+              Lovdare is an initiative that encourages us to love darefully and louder by transforming overlooked and often taboo topics into meaningful gifting experiences.
+            </p>
+            <p class="about-text">
+              From menstruation and iron deficiency to postpartum wellbeing and menopause, our thoughtfully curated boxes aim to make conversations easier, encourage awareness, and remind women that their health and happiness matter.
+            </p>
+            <div class="about-quote">
+              Because care should never be limited to a particular age, stage, or occasion.
+            </div>
+            <div>
+              <a href="#values" class="btn-lovdare btn-lovdare-dark">
+                <span>Discover Our Story</span>
+                <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       5. Brand Values Section
+       ========================================================================= -->
+  <section class="section-padding values-section" id="values">
+    <div class="container">
+      <div class="text-center">
+        <span class="tag-badge orange fade-up-element">WHAT WE BELIEVE</span>
+        <h2 class="section-title fade-up-element">Our Guiding Pillars</h2>
+        <p class="section-subtitle fade-up-element">
+          Every box we curate is grounded in empathy, dignity, and the courage to show up for the women in our lives.
+        </p>
+      </div>
+
+      <div class="row g-4 mt-2">
+        <!-- Value 1 -->
+        <div class="col-md-4 fade-up-element">
+          <div class="value-card">
+            <div class="value-icon-box" aria-hidden="true">
+              <i class="bi bi-chat-heart"></i>
+            </div>
+            <h3 class="value-title">Break the Taboo</h3>
+            <p class="value-description">
+              Encourage open conversations about topics that are often overlooked. We believe honesty and warmth replace stigma with genuine connection.
+            </p>
+          </div>
+        </div>
+
+        <!-- Value 2 -->
+        <div class="col-md-4 fade-up-element">
+          <div class="value-card">
+            <div class="value-icon-box" aria-hidden="true">
+              <i class="bi bi-box2-heart"></i>
+            </div>
+            <h3 class="value-title">Carefully Curated</h3>
+            <p class="value-description">
+              Thoughtful gifting that brings together comfort, awareness, and care. Every item is selected with intention to bring relief, warmth, and joy.
+            </p>
+          </div>
+        </div>
+
+        <!-- Value 3 -->
+        <div class="col-md-4 fade-up-element">
+          <div class="value-card">
+            <div class="value-icon-box" aria-hidden="true">
+              <i class="bi bi-flower1"></i>
+            </div>
+            <h3 class="value-title">Care at Every Stage</h3>
+            <p class="value-description">
+              Celebrate women's wellbeing through different phases of life. From early cycles to motherhood and graceful maturity, every milestone matters.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       6. Closing Call-To-Action (Dark Olive Section)
+       ========================================================================= -->
+  <section class="cta-section" id="cta">
+    <img src="assets/images/cta-bg.jpg" alt="Botanical aesthetic background" class="cta-bg-image" loading="lazy" aria-hidden="true">
+    <div class="container">
+      <div class="cta-container fade-up-element">
+        <span class="tag-badge light mb-3">BEGIN THE CONVERSATION</span>
+        <h2 class="cta-heading">Make Care a Gift Worth Giving.</h2>
+        <p class="cta-desc">
+          Celebrate her, support her, and start conversations that matter. Send a meaningful box to a daughter, mother, partner, friend, or yourself.
+        </p>
+        <div>
+          <a href="#boxes" class="btn-lovdare btn-lovdare-primary">
+            <span>Explore Our Boxes</span>
+            <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       7. Footer Section
+       ========================================================================= -->
+  <footer class="lovdare-footer" id="contact">
+    <div class="container">
+      <div class="row g-5">
+        <!-- Brand Info -->
+        <div class="col-lg-4 col-md-6">
+          <div class="footer-brand-title">Lovdare</div>
+          <p class="footer-brand-desc">
+            A wellness gifting initiative dedicated to transforming overlooked health conversations into warm, intentional moments of care for women everywhere.
+          </p>
+          <div class="footer-social-links">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="Follow Lovdare on Instagram">
+              <i class="bi bi-instagram"></i>
+            </a>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="Lovdare Facebook">
+              <i class="bi bi-facebook"></i>
+            </a>
+            <a href="https://wa.me/910000000000" target="_blank" rel="noopener noreferrer" class="footer-social-btn" data-whatsapp-product="general" aria-label="Chat on WhatsApp">
+              <i class="bi bi-whatsapp"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="col-lg-2 col-md-6 col-6">
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#boxes">Our Boxes</a></li>
+            <li><a href="#story">Our Story</a></li>
+            <li><a href="#values">Our Values</a></li>
+            <li><a href="#contact">Contact Support</a></li>
+          </ul>
+        </div>
+
+        <!-- Products -->
+        <div class="col-lg-3 col-md-6 col-6">
+          <h4 class="footer-heading">The Gift Boxes</h4>
+          <ul class="footer-links">
+            <li><a href="happy-period-box.html">Happy Period Box</a></li>
+            <li><a href="gift-iron-not-gold.html">Gift Iron – Not Gold</a></li>
+            <li><a href="post-pregnancy-care-box.html">Post-Pregnancy Care</a></li>
+            <li><a href="menopause-gift-box.html">Pre &amp; Post-Menopause</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact & Ordering Note -->
+        <div class="col-lg-3 col-md-6">
+          <h4 class="footer-heading">WhatsApp Gifting</h4>
+          <div class="footer-contact-item">
+            <i class="bi bi-whatsapp"></i>
+            <div>
+              <strong>Direct WhatsApp Orders</strong>
+              <div class="small text-secondary">Every box can be ordered directly via WhatsApp with personal notes.</div>
+            </div>
+          </div>
+          <div class="footer-contact-item">
+            <i class="bi bi-envelope"></i>
+            <div>
+              <strong>hello@lovdare.com</strong>
+              <div class="small text-secondary">Inquiries &amp; Collaborations</div>
+            </div>
+          </div>
+          <div class="footer-contact-item">
+            <i class="bi bi-shield-check"></i>
+            <div>
+              <strong>Thoughtfully Packaged</strong>
+              <div class="small text-secondary">Eco-conscious, plastic-free materials</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom text-center">
+        <p class="mb-1">&copy; 2026 Lovdare. All rights reserved. Love darefully. Love louder.</p>
+        <p class="footer-disclaimer">
+          Lovdare wellness gifts are thoughtfully curated for comfort, awareness, and emotional support. They do not constitute medical advice or clinical diagnosis.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5 Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom Application Script -->
+  <script src="js/script.js"></script>
+</body>
+</html>
