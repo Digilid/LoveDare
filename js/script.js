@@ -223,9 +223,12 @@
 
     function getItemsPerView() {
       const width = window.innerWidth;
-      if (width >= 992) return 3; // Desktop
-      if (width >= 640) return 2; // Tablet
-      return 1; // Mobile
+      if (width >= 992) return 4; // Desktop: show 4 cards in the row
+      return 2; // Mobile / Tablet: show 2 cards in the view
+    }
+
+    function getGap() {
+      return window.innerWidth < 768 ? 12 : 20;
     }
 
     function getMaxIndex() {
@@ -235,7 +238,9 @@
 
     function updateCardWidths() {
       const itemsPerView = getItemsPerView();
-      const gap = 24; // 1.5rem = 24px
+      const gap = getGap();
+      track.style.gap = `${gap}px`;
+
       const computedStyle = window.getComputedStyle(viewport);
       const paddingLeft = parseFloat(computedStyle.paddingLeft) || 0;
       const paddingRight = parseFloat(computedStyle.paddingRight) || 0;
@@ -261,15 +266,24 @@
       // Calculate translation based on single item width + gap
       const firstCard = cards[0];
       const cardWidth = firstCard.offsetWidth || firstCard.getBoundingClientRect().width;
-      const gap = 24; // 1.5rem = 24px
+      const gap = getGap();
       const step = cardWidth + gap;
 
       const translateX = -(currentIndex * step);
       track.style.transform = `translateX(${translateX}px)`;
 
-      // Update button disabled states
-      if (prevBtn) prevBtn.disabled = (currentIndex === 0);
-      if (nextBtn) nextBtn.disabled = (currentIndex >= maxIndex);
+      // When all 4 cards fit on desktop (maxIndex === 0), hide navigation buttons & dots
+      if (prevBtn) {
+        prevBtn.style.display = (maxIndex === 0) ? 'none' : 'flex';
+        prevBtn.disabled = (currentIndex === 0);
+      }
+      if (nextBtn) {
+        nextBtn.style.display = (maxIndex === 0) ? 'none' : 'flex';
+        nextBtn.disabled = (currentIndex >= maxIndex);
+      }
+      if (dotsContainer) {
+        dotsContainer.style.display = (maxIndex === 0) ? 'none' : 'flex';
+      }
 
       // Update pagination dots
       updateDots();
@@ -279,6 +293,11 @@
       if (!dotsContainer) return;
       dotsContainer.innerHTML = '';
       const maxIndex = getMaxIndex();
+      if (maxIndex === 0) {
+        dotsContainer.style.display = 'none';
+        return;
+      }
+      dotsContainer.style.display = 'flex';
       const totalSteps = maxIndex + 1;
 
       for (let i = 0; i < totalSteps; i++) {
