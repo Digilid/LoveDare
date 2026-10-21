@@ -224,16 +224,18 @@
     function getItemsPerView() {
       const width = window.innerWidth;
       if (width >= 992) return 4; // Desktop: show 4 cards in the row
-      return 2; // Mobile / Tablet: show 2 cards in the view
+      if (width >= 768) return 2; // Tablet: show 2 cards in the view
+      return 1.5; // Mobile: show 1.5 cards in one row
     }
 
     function getGap() {
-      return window.innerWidth < 768 ? 12 : 20;
+      return window.innerWidth < 768 ? 14 : 20;
     }
 
     function getMaxIndex() {
       const itemsPerView = getItemsPerView();
-      return Math.max(0, cards.length - itemsPerView);
+      if (itemsPerView >= cards.length) return 0;
+      return cards.length - 1;
     }
 
     function updateCardWidths() {
@@ -248,8 +250,14 @@
 
       if (availableWidth <= 0) return;
 
-      const totalGaps = (itemsPerView - 1) * gap;
-      const cardWidth = Math.floor((availableWidth - totalGaps) / itemsPerView);
+      let cardWidth;
+      if (itemsPerView === 1.5) {
+        // Exactly 1 full card + 1 gap + 0.5 card = availableWidth
+        cardWidth = Math.floor((availableWidth - gap) / 1.5);
+      } else {
+        const totalGaps = (itemsPerView - 1) * gap;
+        cardWidth = Math.floor((availableWidth - totalGaps) / itemsPerView);
+      }
 
       cards.forEach(card => {
         card.style.width = `${cardWidth}px`;
@@ -263,13 +271,24 @@
       if (currentIndex > maxIndex) currentIndex = maxIndex;
       if (currentIndex < 0) currentIndex = 0;
 
+      const computedStyle = window.getComputedStyle(viewport);
+      const paddingLeft = parseFloat(computedStyle.paddingLeft) || 0;
+      const paddingRight = parseFloat(computedStyle.paddingRight) || 0;
+      const availableWidth = viewport.clientWidth - paddingLeft - paddingRight;
+
       // Calculate translation based on single item width + gap
       const firstCard = cards[0];
       const cardWidth = firstCard.offsetWidth || firstCard.getBoundingClientRect().width;
       const gap = getGap();
       const step = cardWidth + gap;
 
-      const translateX = -(currentIndex * step);
+      const totalContentWidth = cards.length * cardWidth + (cards.length - 1) * gap;
+      const maxTranslate = Math.max(0, totalContentWidth - availableWidth);
+
+      let translateX = -(currentIndex * step);
+      if (-translateX > maxTranslate) {
+        translateX = -maxTranslate;
+      }
       track.style.transform = `translateX(${translateX}px)`;
 
       // When all 4 cards fit on desktop (maxIndex === 0), hide navigation buttons & dots
