@@ -630,10 +630,8 @@
     }
 
     function selectCollection(index, smooth = true) {
-      if (index < 0) index = 0;
-      if (index >= cards.length) index = cards.length - 1;
-
-      selectedIndex = index;
+      // Infinite wrap-around: modulo operation supporting negative and overflow indices
+      selectedIndex = (index % cards.length + cards.length) % cards.length;
 
       // Update card active classes
       cards.forEach((card, idx) => {
@@ -642,12 +640,12 @@
         card.setAttribute('aria-selected', isActive ? 'true' : 'false');
       });
 
-      // Update navigation buttons
+      // Navigation buttons remain enabled for infinite manual sliding
       if (prevBtn) {
-        prevBtn.disabled = (selectedIndex === 0);
+        prevBtn.disabled = false;
       }
       if (nextBtn) {
-        nextBtn.disabled = (selectedIndex === cards.length - 1);
+        nextBtn.disabled = false;
       }
 
       // Update dots
@@ -706,20 +704,16 @@
       });
     });
 
-    // Nav button event listeners
+    // Nav button event listeners (Infinity wrap-around)
     if (prevBtn) {
       prevBtn.addEventListener('click', () => {
-        if (selectedIndex > 0) {
-          selectCollection(selectedIndex - 1);
-        }
+        selectCollection(selectedIndex - 1);
       });
     }
 
     if (nextBtn) {
       nextBtn.addEventListener('click', () => {
-        if (selectedIndex < cards.length - 1) {
-          selectCollection(selectedIndex + 1);
-        }
+        selectCollection(selectedIndex + 1);
       });
     }
 
@@ -743,9 +737,9 @@
       viewport.classList.remove('is-dragging');
 
       const swipeThreshold = 40;
-      if (dragDistance < -swipeThreshold && selectedIndex < cards.length - 1) {
+      if (dragDistance < -swipeThreshold) {
         selectCollection(selectedIndex + 1);
-      } else if (dragDistance > swipeThreshold && selectedIndex > 0) {
+      } else if (dragDistance > swipeThreshold) {
         selectCollection(selectedIndex - 1);
       } else {
         updateCarouselPosition(true);
@@ -761,12 +755,12 @@
     viewport.addEventListener('touchmove', handleTouchMove, { passive: true });
     viewport.addEventListener('touchend', handleTouchEnd);
 
-    // Keyboard navigation when viewport has focus
+    // Keyboard navigation when viewport has focus (Infinity wrap-around)
     viewport.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight' && selectedIndex < cards.length - 1) {
+      if (e.key === 'ArrowRight') {
         e.preventDefault();
         selectCollection(selectedIndex + 1);
-      } else if (e.key === 'ArrowLeft' && selectedIndex > 0) {
+      } else if (e.key === 'ArrowLeft') {
         e.preventDefault();
         selectCollection(selectedIndex - 1);
       }
