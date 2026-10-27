@@ -221,8 +221,6 @@
   function initProductCarousel() {
     const viewport = document.querySelector('.carousel-viewport');
     const track = document.querySelector('.carousel-track');
-    const prevBtn = document.querySelector('.carousel-nav-prev');
-    const nextBtn = document.querySelector('.carousel-nav-next');
     const dotsContainer = document.querySelector('.carousel-dots-wrapper');
     const cards = document.querySelectorAll('.product-card-item');
 
@@ -331,14 +329,6 @@
       // Infinite wrap-around: modulo operation supporting negative and overflow indices
       selectedIndex = (index % cards.length + cards.length) % cards.length;
 
-      // Navigation buttons remain enabled for infinite manual sliding
-      if (prevBtn) {
-        prevBtn.disabled = false;
-      }
-      if (nextBtn) {
-        nextBtn.disabled = false;
-      }
-
       // Update dots
       updateDots();
 
@@ -394,19 +384,6 @@
         }
       });
     });
-
-    // Nav button event listeners (Infinity wrap-around)
-    if (prevBtn) {
-      prevBtn.addEventListener('click', () => {
-        selectCollection(selectedIndex - 1, true, false);
-      });
-    }
-
-    if (nextBtn) {
-      nextBtn.addEventListener('click', () => {
-        selectCollection(selectedIndex + 1, true, false);
-      });
-    }
 
     // Touch & pointer gestures
     function handleTouchStart(e) {
