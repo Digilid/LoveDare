@@ -551,6 +551,87 @@
 
   /**
    * --------------------------------------------------------------------------
+   * 6b. Customer Reviews Auto-Sliding Carousel
+   * --------------------------------------------------------------------------
+   */
+  function initReviewsCarousel() {
+    const carousel = document.getElementById('reviewsCarousel');
+    const track = document.getElementById('reviewsTrack');
+    const dotsContainer = document.getElementById('reviewsDots');
+    if (!carousel || !track) return;
+
+    const slides = track.querySelectorAll('.review-slide');
+    if (slides.length <= 1) return;
+
+    let currentIndex = 0;
+    let autoSlideTimer = null;
+    const intervalMs = 4200;
+
+    function goToReview(index) {
+      currentIndex = (index % slides.length + slides.length) % slides.length;
+      track.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+      if (dotsContainer) {
+        const dots = dotsContainer.querySelectorAll('.review-dot');
+        dots.forEach((dot, idx) => {
+          dot.classList.toggle('active', idx === currentIndex);
+        });
+      }
+    }
+
+    function startAutoSlide() {
+      stopAutoSlide();
+      autoSlideTimer = setInterval(() => {
+        goToReview(currentIndex + 1);
+      }, intervalMs);
+    }
+
+    function stopAutoSlide() {
+      if (autoSlideTimer) {
+        clearInterval(autoSlideTimer);
+        autoSlideTimer = null;
+      }
+    }
+
+    if (dotsContainer) {
+      dotsContainer.innerHTML = '';
+      slides.forEach((_, idx) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = `review-dot ${idx === 0 ? 'active' : ''}`;
+        dot.setAttribute('aria-label', `Show review ${idx + 1}`);
+        dot.addEventListener('click', () => {
+          goToReview(idx);
+          startAutoSlide();
+        });
+        dotsContainer.appendChild(dot);
+      });
+    }
+
+    carousel.addEventListener('mouseenter', stopAutoSlide);
+    carousel.addEventListener('mouseleave', startAutoSlide);
+
+    let touchStartX = 0;
+    carousel.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      stopAutoSlide();
+    }, { passive: true });
+
+    carousel.addEventListener('touchend', (e) => {
+      const diff = e.changedTouches[0].clientX - touchStartX;
+      if (diff < -40) {
+        goToReview(currentIndex + 1);
+      } else if (diff > 40) {
+        goToReview(currentIndex - 1);
+      }
+      startAutoSlide();
+    }, { passive: true });
+
+    startAutoSlide();
+  }
+
+  /**
+   * --------------------------------------------------------------------------
    * 7. Initialize Everything Safely on DOM Ready
    * --------------------------------------------------------------------------
    */
@@ -560,6 +641,7 @@
       ['HeroSlider', initHeroSlider],
       ['ProductCarousel', initProductCarousel],
       ['ProductCardClicks', initProductCardClicks],
+      ['ReviewsCarousel', initReviewsCarousel],
       ['WhatsAppButtons', initWhatsAppButtons],
       ['ScrollAnimations', initScrollAnimations],
       ['SmoothScroll', initSmoothScroll]
