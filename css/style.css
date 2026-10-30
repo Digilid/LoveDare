@@ -1068,7 +1068,7 @@ img {
   opacity: 0.7;
 }
 
-/* Three Alternating Rows */
+/* Four Product Rows - Side-by-Side (Image Left, Text Right) on Desktop & Mobile */
 .expanded-rows-wrapper {
   display: flex;
   flex-direction: column;
@@ -1084,13 +1084,14 @@ img {
 .expanded-row {
   margin: 0;
   scroll-margin-top: 5.5rem;
+  flex-wrap: nowrap;
 }
 
-/* Image Cards in Details Rows - EXACT same width, height & aspect-ratio across ALL 4 rows */
+/* Image Cards in Details Rows - Uniform across ALL 4 rows */
 .expanded-img-card {
   position: relative;
   width: 100%;
-  aspect-ratio: 3 / 2; /* Uniform 3:2 landscape aspect ratio across rows 1, 2, 3, and 4 */
+  aspect-ratio: 3 / 2; /* Uniform 3:2 landscape aspect ratio on desktop */
   max-height: 380px;
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -1118,10 +1119,10 @@ img {
 }
 
 @media (min-width: 992px) {
-  .expanded-col-text.order-2 {
+  .expanded-col-text:last-child {
     padding-left: 1.5rem;
   }
-  .expanded-col-text.order-lg-1 {
+  .expanded-col-text:first-child {
     padding-right: 1.5rem;
   }
 }
@@ -1141,6 +1142,127 @@ img {
   color: var(--color-charcoal);
   line-height: 1.75;
   margin-bottom: 1.25rem;
+}
+
+.expanded-row-desc .desc-desktop {
+  display: inline;
+}
+
+.expanded-row-desc .desc-mobile {
+  display: none;
+}
+
+/* Mobile View: Side-by-Side Compact Layout (Image Left, Text Right) */
+@media (max-width: 767.98px) {
+  .collection-expanded-section {
+    margin-top: 1.75rem;
+    padding-top: 1.5rem;
+  }
+
+  .expanded-rows-wrapper {
+    gap: 1.5rem;
+  }
+
+  .expanded-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .expanded-row > .expanded-col-img {
+    flex: 0 0 38%;
+    width: 38%;
+    max-width: 38%;
+    padding: 0;
+    margin-top: 0;
+  }
+
+  .expanded-row > .expanded-col-text {
+    flex: 1 1 62%;
+    width: 62%;
+    max-width: 62%;
+    min-width: 0;
+    padding: 0;
+    margin-top: 0;
+  }
+
+  .expanded-img-card {
+    aspect-ratio: 1 / 1;
+    max-height: 165px;
+    border-radius: var(--radius-md);
+  }
+
+  .expanded-text-card {
+    padding: 0;
+  }
+
+  .expanded-text-card .tag-badge {
+    font-size: 0.52rem;
+    padding: 0.15rem 0.45rem;
+    letter-spacing: 0.04em;
+  }
+
+  .expanded-row-heading {
+    font-size: 0.98rem;
+    margin-top: 0.2rem;
+    margin-bottom: 0.25rem;
+    line-height: 1.2;
+  }
+
+  .expanded-row-desc {
+    font-size: 0.73rem;
+    line-height: 1.38;
+    margin-bottom: 0.45rem;
+  }
+
+  .expanded-row-desc .desc-desktop {
+    display: none;
+  }
+
+  .expanded-row-desc .desc-mobile {
+    display: inline;
+  }
+
+  .expanded-actions {
+    margin-top: 0.35rem !important;
+    gap: 0.4rem !important;
+  }
+
+  .expanded-actions .btn-lovdare {
+    font-size: 0.7rem;
+    padding: 0.36rem 0.75rem;
+    gap: 0.3rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .expanded-row {
+    gap: 0.6rem;
+  }
+
+  .expanded-img-card {
+    max-height: 140px;
+  }
+
+  .expanded-row-heading {
+    font-size: 0.88rem;
+  }
+
+  .expanded-row-desc {
+    font-size: 0.68rem;
+    line-height: 1.32;
+  }
+
+  .expanded-actions .btn-lovdare {
+    font-size: 0.65rem;
+    padding: 0.3rem 0.65rem;
+  }
 }
 
 .expanded-feature-list {
