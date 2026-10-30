@@ -1627,11 +1627,19 @@ img {
 }
 
 .cta-desc {
-  font-size: clamp(1.05rem, 1.3vw, 1.25rem);
+  font-size: clamp(1.05rem, 1.3vw, 1.2rem);
   color: var(--color-beige);
   font-weight: 300;
-  margin-bottom: 2.5rem;
-  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  line-height: 1.75;
+}
+
+.cta-quote {
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 1.8vw, 1.55rem);
+  font-style: italic;
+  color: var(--color-ivory);
+  line-height: 1.5;
 }
 
 /* --------------------------------------------------------------------------
