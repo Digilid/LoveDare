@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import CollectionImageDescriptions from '../components/CollectionImageDescriptions';
 import { LOVDARE_CONFIG } from '../config/lovdareConfig';
 
 /* ============================================================================
@@ -263,29 +264,39 @@ const FAQ_ITEMS = [
    MAIN PAGE COMPONENT
    ============================================================================ */
 
+const BOX_COUNT = SUB_CATEGORY_BOXES.length;
+const INFINITE_SUB_BOXES = [
+  ...SUB_CATEGORY_BOXES,
+  ...SUB_CATEGORY_BOXES,
+  ...SUB_CATEGORY_BOXES
+];
+
 export default function HappyPeriodBoxPage() {
   // 1. Top Hero Carousel State
   const [heroSlide, setHeroSlide] = useState(0);
   const [heroPaused, setHeroPaused] = useState(false);
 
-  // 2. Sub-Category Horizontal Carousel State
-  const subCarouselRef = useRef(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [activeSubBox, setActiveSubBox] = useState(null);
+  // 2. Sub-Category Infinite Slider State
+  const subTrackRef = useRef(null);
+  const [subSlideIndex, setSubSlideIndex] = useState(BOX_COUNT);
+  const [subTransition, setSubTransition] = useState(true);
+  const [subPaused, setSubPaused] = useState(false);
+  const [subStepPx, setSubStepPx] = useState(290);
+  const [subDragOffset, setSubDragOffset] = useState(0);
+  const subDraggingRef = useRef(false);
+  const subDragStartXRef = useRef(0);
 
-  // 3. Make Your Own Box Customizer State
-  const [customSelection, setCustomSelection] = useState({
-    essentials: ['Organic Day & Night Pads'],
-    relief: ['Herbal Cramp Heat Patches'],
-    treats: ['70% Sea-Salt Dark Chocolate']
-  });
-  const [isCustomizerOpen, setIsCustomizerOpen] = useState(false);
-
-  // 4. Contents Filter State
+  // 3. Contents Filter State
   const [activeContentFilter, setActiveContentFilter] = useState('All');
 
-  // 5. FAQ Accordion State
+  // 4. FAQ Accordion State
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
+
+  // 5. Mobile Testimonials Auto-Slider State
+  const [reviewSlide, setReviewSlide] = useState(0);
+  const [reviewTransition, setReviewTransition] = useState(true);
+  const [reviewPaused, setReviewPaused] = useState(false);
+  const reviewTouchStartXRef = useRef(0);
 
   // Scroll to top on mount
   useEffect(() => {
@@ -302,53 +313,94 @@ export default function HappyPeriodBoxPage() {
     return () => clearInterval(timer);
   }, [heroPaused]);
 
-  // Update horizontal scroll indicator bar for the 5 sub-category boxes
-  const handleSubCarouselScroll = () => {
-    const el = subCarouselRef.current;
-    if (!el) return;
-    const maxScroll = el.scrollWidth - el.clientWidth;
-    if (maxScroll <= 0) {
-      setScrollProgress(100);
-      return;
+  // Auto-advance mobile testimonials slider
+  useEffect(() => {
+    if (reviewPaused) return;
+    const timer = setInterval(() => {
+      setReviewTransition(true);
+      setReviewSlide((prev) => (prev >= REVIEWS_LIST.length ? 1 : prev + 1));
+    }, 3200);
+    return () => clearInterval(timer);
+  }, [reviewPaused]);
+
+  const handleReviewTransitionEnd = () => {
+    if (reviewSlide >= REVIEWS_LIST.length) {
+      setReviewTransition(false);
+      setReviewSlide(0);
     }
-    const pct = Math.min(100, Math.max(0, (el.scrollLeft / maxScroll) * 100));
-    setScrollProgress(pct);
   };
 
-  const scrollSubCarousel = (direction) => {
-    const el = subCarouselRef.current;
-    if (!el) return;
-    const cardWidth = el.querySelector('.sub-box-card')?.offsetWidth || 300;
-    const scrollAmount = direction === 'next' ? cardWidth + 24 : -(cardWidth + 24);
-    el.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  // Measure card step width for infinite sub-category slider
+  useEffect(() => {
+    const updateStepWidth = () => {
+      const firstCard = subTrackRef.current?.querySelector('.sub-box-card');
+      if (firstCard) {
+        setSubStepPx(firstCard.offsetWidth + 20);
+      }
+    };
+    updateStepWidth();
+    window.addEventListener('resize', updateStepWidth);
+    return () => window.removeEventListener('resize', updateStepWidth);
+  }, []);
+
+  // Auto-advance infinite sub-category slider
+  useEffect(() => {
+    if (subPaused || subDraggingRef.current) return;
+    const timer = setInterval(() => {
+      setSubTransition(true);
+      setSubSlideIndex((prev) => {
+        const base =
+          prev >= BOX_COUNT * 2 || prev < BOX_COUNT
+            ? BOX_COUNT + (((prev % BOX_COUNT) + BOX_COUNT) % BOX_COUNT)
+            : prev;
+        return base + 1;
+      });
+    }, 2800);
+    return () => clearInterval(timer);
+  }, [subPaused]);
+
+  const handleSubTransitionEnd = () => {
+    if (subSlideIndex >= BOX_COUNT * 2 || subSlideIndex < BOX_COUNT) {
+      setSubTransition(false);
+      setSubSlideIndex(
+        BOX_COUNT + (((subSlideIndex % BOX_COUNT) + BOX_COUNT) % BOX_COUNT)
+      );
+    }
   };
 
-  const toggleCustomItem = (category, item) => {
-    setCustomSelection((prev) => {
-      const exists = prev[category].includes(item);
-      const updated = exists
-        ? prev[category].filter((i) => i !== item)
-        : [...prev[category], item];
-      return { ...prev, [category]: updated };
-    });
+  const handleSubPointerStart = (clientX) => {
+    subDraggingRef.current = true;
+    subDragStartXRef.current = clientX;
+    setSubPaused(true);
+    setSubTransition(false);
+    if (subSlideIndex >= BOX_COUNT * 2 || subSlideIndex < BOX_COUNT) {
+      setSubSlideIndex(
+        BOX_COUNT + (((subSlideIndex % BOX_COUNT) + BOX_COUNT) % BOX_COUNT)
+      );
+    }
   };
 
-  const handleOrderSubBoxOnWhatsApp = (box) => {
-    const msg = `Hi Lovdare! I would like to order the "${box.title}" (${box.price}) from the Happy Period Box collection. Could you please share the details?`;
-    const url = `https://wa.me/${LOVDARE_CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
+  const handleSubPointerMove = (clientX) => {
+    if (!subDraggingRef.current) return;
+    setSubDragOffset(clientX - subDragStartXRef.current);
   };
 
-  const handleOrderCustomBoxOnWhatsApp = () => {
-    const allItems = [
-      ...customSelection.essentials,
-      ...customSelection.relief,
-      ...customSelection.treats
-    ];
-    const msg = `Hi Lovdare! I want to build my own custom "Happy Period Box" with the following items:\n- ${allItems.join('\n- ')}\nCould you please help me customize and place this order?`;
-    const url = `https://wa.me/${LOVDARE_CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
+  const handleSubPointerEnd = () => {
+    if (!subDraggingRef.current) return;
+    subDraggingRef.current = false;
+    const delta = subDragOffset;
+    setSubDragOffset(0);
+    setSubTransition(true);
+    if (delta < -40) {
+      setSubSlideIndex((prev) => prev + 1);
+    } else if (delta > 40) {
+      setSubSlideIndex((prev) => prev - 1);
+    }
+    setSubPaused(false);
   };
+
+  const activeSubIndex = ((subSlideIndex % BOX_COUNT) + BOX_COUNT) % BOX_COUNT;
+  const infiniteScrollProgress = ((activeSubIndex + 1) / BOX_COUNT) * 100;
 
   const filteredContents =
     activeContentFilter === 'All'
@@ -360,25 +412,9 @@ export default function HappyPeriodBoxPage() {
       <Navbar isDetailPage={true} />
 
       {/* =====================================================================
-          1. CATEGORY BREADCRUMB, INTRO HEADER & TOP IMAGE CAROUSEL
+          1. INTRO HEADER & TOP IMAGE CAROUSEL
          ===================================================================== */}
       <section className="pt-28 pb-12 md:pt-32 md:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        {/* Breadcrumb */}
-        <nav
-          aria-label="Breadcrumb"
-          className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-slate-500 mb-6"
-        >
-          <Link to="/" className="hover:text-[#E07A5F] transition-colors no-underline text-slate-500">
-            Home
-          </Link>
-          <span>/</span>
-          <Link to="/#boxes" className="hover:text-[#E07A5F] transition-colors no-underline text-slate-500">
-            Categories
-          </Link>
-          <span>/</span>
-          <span className="font-semibold text-[#4A2835]">Happy Period Box</span>
-        </nav>
-
         {/* Intro Header */}
         <div className="text-center max-w-3xl mx-auto mb-8 md:mb-10">
           <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase bg-[#E07A5F]/15 text-[#E07A5F] border border-[#E07A5F]/30 mb-4">
@@ -412,21 +448,6 @@ export default function HappyPeriodBoxPage() {
                   alt={slide.title}
                   className="w-full h-full object-cover object-center"
                 />
-                {/* Warm Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#2B161E]/85 via-[#2B161E]/35 to-transparent" />
-
-                {/* Slide Caption Content */}
-                <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-8 md:p-10 text-white max-w-2xl">
-                  <span className="inline-block px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider bg-[#E07A5F] text-white mb-2.5">
-                    {slide.tag}
-                  </span>
-                  <h2 className="font-serif text-xl sm:text-3xl md:text-4xl font-semibold text-white mb-1.5">
-                    {slide.title}
-                  </h2>
-                  <p className="text-xs sm:text-sm md:text-base text-white/90 leading-relaxed mb-0">
-                    {slide.caption}
-                  </p>
-                </div>
               </div>
             ))}
 
@@ -477,70 +498,72 @@ export default function HappyPeriodBoxPage() {
       </section>
 
       {/* =====================================================================
-          2. SUB-CATEGORY BOXES (5 Boxes — 4 Visible on Desktop + Scroll Bar)
+          2. SUB-CATEGORY BOXES (5 Boxes — Infinite Slider)
          ===================================================================== */}
       <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
-          <div>
-            <span className="text-xs font-semibold uppercase tracking-widest text-[#E07A5F] block mb-1.5">
-              CHOOSE HER CARE LEVEL
-            </span>
-            <h2 className="font-serif text-2xl sm:text-4xl font-semibold text-[#4A2835] mb-0">
-              5 Curated Happy Period Editions
-            </h2>
-          </div>
-
-          {/* Desktop Scroll Buttons */}
-          <div className="flex items-center gap-2 self-end sm:self-auto">
-            <button
-              type="button"
-              onClick={() => scrollSubCarousel('prev')}
-              aria-label="Scroll boxes left"
-              className="w-10 h-10 rounded-full bg-white border border-[#4A2835]/15 text-[#4A2835] hover:bg-[#E07A5F] hover:text-white hover:border-[#E07A5F] flex items-center justify-center shadow-sm transition-all cursor-pointer"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollSubCarousel('next')}
-              aria-label="Scroll boxes right"
-              className="w-10 h-10 rounded-full bg-white border border-[#4A2835]/15 text-[#4A2835] hover:bg-[#E07A5F] hover:text-white hover:border-[#E07A5F] flex items-center justify-center shadow-sm transition-all cursor-pointer"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
+        <div className="mb-8">
+          <span className="text-xs font-semibold uppercase tracking-widest text-[#E07A5F] block mb-1.5">
+            CHOOSE HER CARE LEVEL
+          </span>
+          <h2 className="font-serif text-2xl sm:text-4xl font-semibold text-[#4A2835] mb-0">
+            5 Curated Happy Period Editions
+          </h2>
         </div>
 
-        {/* Horizontal Carousel Container (4 cards visible on desktop, 5th revealed on scroll) */}
+        {/* Infinite Slider Viewport */}
         <div
-          ref={subCarouselRef}
-          onScroll={handleSubCarouselScroll}
-          className="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth no-scrollbar"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          className="overflow-hidden py-2 cursor-grab active:cursor-grabbing select-none"
+          onMouseEnter={() => setSubPaused(true)}
+          onMouseLeave={() => {
+            if (subDraggingRef.current) {
+              handleSubPointerEnd();
+            } else {
+              setSubPaused(false);
+            }
+          }}
+          onMouseDown={(e) => handleSubPointerStart(e.clientX)}
+          onMouseMove={(e) => handleSubPointerMove(e.clientX)}
+          onMouseUp={handleSubPointerEnd}
+          onTouchStart={(e) => handleSubPointerStart(e.touches[0].clientX)}
+          onTouchMove={(e) => handleSubPointerMove(e.touches[0].clientX)}
+          onTouchEnd={handleSubPointerEnd}
         >
-          {SUB_CATEGORY_BOXES.map((box) => (
-            <div
-              key={box.id}
-              className="sub-box-card snap-start shrink-0 w-[82%] sm:w-[46%] lg:w-[calc(25%-15px)] bg-white rounded-2xl border border-[#4A2835]/10 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col overflow-hidden"
-            >
-              {/* Box Image */}
-              <div className="relative aspect-[4/3] w-full bg-[#F7EFE8] overflow-hidden">
-                <img
-                  src={box.image}
-                  alt={box.title}
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                  loading="lazy"
-                />
-              </div>
+          <div
+            ref={subTrackRef}
+            onTransitionEnd={handleSubTransitionEnd}
+            className="flex gap-5"
+            style={{
+              transform: `translate3d(${-(subSlideIndex * subStepPx) + subDragOffset}px, 0, 0)`,
+              transition: subTransition
+                ? 'transform 500ms cubic-bezier(0.22, 1, 0.36, 1)'
+                : 'none'
+            }}
+          >
+            {INFINITE_SUB_BOXES.map((box, idx) => (
+              <div
+                key={`${box.id}-${idx}`}
+                className="sub-box-card shrink-0 w-[78%] sm:w-[46%] lg:w-[calc(25%-15px)] bg-white rounded-2xl border border-[#4A2835]/10 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col overflow-hidden"
+              >
+                {/* Box Image */}
+                <div className="relative aspect-[4/3] w-full bg-[#F7EFE8] overflow-hidden">
+                  <img
+                    src={box.image}
+                    alt={box.title}
+                    draggable={false}
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    loading="lazy"
+                  />
+                </div>
 
-              {/* Card Title */}
-              <div className="p-4 sm:p-5 text-center">
-                <h3 className="font-serif text-xl font-semibold text-[#4A2835] mb-0">
-                  {box.title}
-                </h3>
+                {/* Card Title */}
+                <div className="p-4 sm:p-5 text-center">
+                  <h3 className="font-serif text-xl font-semibold text-[#4A2835] mb-0">
+                    {box.title}
+                  </h3>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* Scroll / Progress Indicator Bar Centered Below the Cards */}
@@ -548,78 +571,23 @@ export default function HappyPeriodBoxPage() {
           <div className="w-48 sm:w-64 h-1.5 bg-[#4A2835]/15 rounded-full overflow-hidden">
             <div
               className="h-full bg-[#E07A5F] rounded-full transition-all duration-300"
-              style={{ width: `${Math.max(25, scrollProgress)}%` }}
+              style={{ width: `${infiniteScrollProgress}%` }}
             />
           </div>
-          <span className="text-[11px] text-slate-500 mt-1.5">
-            Swipe or use arrows to explore all 5 curated editions
-          </span>
         </div>
       </section>
 
       {/* =====================================================================
-          4. ALTERNATING FEATURE SECTIONS (Z-Pattern Layout: 3 Rows)
+          3. WHY THE HAPPY PERIOD BOX MATTERS (Shared Image-Description Section)
          ===================================================================== */}
-      <section className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <span className="text-xs font-semibold uppercase tracking-widest text-[#E07A5F] block mb-2">
-            WHY THE HAPPY PERIOD BOX MATTERS
-          </span>
-          <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-[#4A2835]">
-            Designed Around How Her Body Actually Feels
-          </h2>
-        </div>
+      <section className="section-padding product-section">
+        <div className="container">
+          <div className="text-center">
+            <span className="tag-badge orange">WHY THE HAPPY PERIOD BOX MATTERS</span>
+            <h2 className="section-title">Designed Around How Her Body Actually Feels</h2>
+          </div>
 
-        <div className="space-y-16 md:space-y-24">
-          {Z_PATTERN_FEATURES.map((row) => (
-            <div
-              key={row.id}
-              className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
-            >
-              {/* Image Column */}
-              <div
-                className={`lg:col-span-6 ${
-                  row.reverse ? 'lg:order-2' : 'lg:order-1'
-                }`}
-              >
-                <div className="relative rounded-2xl overflow-hidden shadow-lg border border-[#4A2835]/10 aspect-[3/2] bg-white">
-                  <img
-                    src={row.image}
-                    alt={row.imageAlt}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-
-              {/* Text Column */}
-              <div
-                className={`lg:col-span-6 ${
-                  row.reverse ? 'lg:order-1' : 'lg:order-2'
-                }`}
-              >
-                <span className="inline-block px-3.5 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-[#E07A5F]/15 text-[#E07A5F] mb-3">
-                  {row.badge}
-                </span>
-                <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold text-[#4A2835] mb-4 leading-snug">
-                  {row.title}
-                </h3>
-                <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-6">
-                  {row.description}
-                </p>
-                <ul className="space-y-3 pl-0 list-none mb-0">
-                  {row.points.map((pt) => (
-                    <li key={pt} className="flex items-start gap-3 text-sm text-slate-700">
-                      <span className="w-5 h-5 rounded-full bg-[#E07A5F]/20 text-[#E07A5F] flex items-center justify-center shrink-0 mt-0.5">
-                        <Check className="w-3.5 h-3.5" />
-                      </span>
-                      <span>{pt}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ))}
+          <CollectionImageDescriptions sectionId="happyPeriodExpandedSection" />
         </div>
       </section>
 
@@ -640,7 +608,7 @@ export default function HappyPeriodBoxPage() {
               Every element inside the box has a clear purpose—from soothing physical cramps to lifting emotional fatigue.
             </p>
 
-            {/* Interactive Category Filter Pills */}
+            {/* Interactive Category Filter Pills (Commented Out)
             <div className="flex flex-wrap items-center justify-center gap-2 mt-6">
               {[
                 'All',
@@ -663,25 +631,26 @@ export default function HappyPeriodBoxPage() {
                 </button>
               ))}
             </div>
+            */}
           </div>
 
-          {/* Alternating Product → How to Use Rows */}
-          <div className="space-y-8 md:space-y-10">
+          {/* Alternating Product → How to Use Rows (Side-by-Side on Mobile & Desktop) */}
+          <div className="space-y-4 sm:space-y-8 md:space-y-10">
             {filteredContents.map((item, idx) => {
               const isEven = idx % 2 === 1;
               return (
                 <div
                   key={item.id}
-                  className="bg-[#FDF6F0] rounded-2xl p-5 sm:p-7 border border-[#4A2835]/10 shadow-sm hover:shadow-md transition-shadow"
+                  className="bg-[#FDF6F0] rounded-2xl p-3.5 sm:p-7 border border-[#4A2835]/10 shadow-sm hover:shadow-md transition-shadow"
                 >
-                  <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
+                  <div className="flex flex-row items-center gap-3.5 sm:gap-8">
                     {/* Circular / Rounded Product Image Badge */}
                     <div
                       className={`shrink-0 ${
-                        isEven ? 'sm:order-2' : 'sm:order-1'
+                        isEven ? 'order-2' : 'order-1'
                       }`}
                     >
-                      <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-4 border-white shadow-md bg-white">
+                      <div className="w-20 h-20 sm:w-36 sm:h-36 rounded-full overflow-hidden border-2 sm:border-4 border-white shadow-md bg-white">
                         <img
                           src={item.image}
                           alt={item.productName}
@@ -693,29 +662,29 @@ export default function HappyPeriodBoxPage() {
 
                     {/* Product Title → How to Use */}
                     <div
-                      className={`flex-1 text-center sm:text-left ${
-                        isEven ? 'sm:order-1' : 'sm:order-2'
+                      className={`flex-1 min-w-0 text-left ${
+                        isEven ? 'order-1' : 'order-2'
                       }`}
                     >
-                      <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-2">
-                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#E07A5F]">
+                      <div className="flex flex-wrap items-center justify-start gap-1.5 sm:gap-2 mb-1 sm:mb-2">
+                        <span className="text-[9px] sm:text-[11px] font-bold uppercase tracking-wider text-[#E07A5F]">
                           {item.category}
                         </span>
-                        <span className="text-slate-300">•</span>
-                        <span className="text-xs font-medium text-[#4A2835]/80 bg-white px-2.5 py-0.5 rounded-full border border-[#4A2835]/10">
+                        <span className="text-slate-300 text-[10px] sm:text-xs">•</span>
+                        <span className="text-[9px] sm:text-xs font-medium text-[#4A2835]/80 bg-white px-2 sm:px-2.5 py-0.5 rounded-full border border-[#4A2835]/10">
                           {item.tag}
                         </span>
                       </div>
 
-                      <h3 className="font-serif text-xl sm:text-2xl font-semibold text-[#4A2835] flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-2.5">
+                      <h3 className="font-serif text-sm sm:text-2xl font-semibold text-[#4A2835] flex flex-wrap items-center justify-start gap-1.5 sm:gap-2 mb-1 sm:mb-2.5 leading-snug">
                         <span>{item.productName}</span>
-                        <span className="inline-flex items-center gap-1 text-xs font-sans font-semibold px-2.5 py-1 rounded-full bg-[#E07A5F] text-white">
-                          <ArrowRight className="w-3.5 h-3.5" />
+                        <span className="inline-flex items-center gap-1 text-[9px] sm:text-xs font-sans font-semibold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#E07A5F] text-white">
+                          <ArrowRight className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5" />
                           How to Use
                         </span>
                       </h3>
 
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-0">
+                      <p className="text-[11px] sm:text-sm text-slate-600 leading-snug sm:leading-relaxed mb-0">
                         {item.howToUse}
                       </p>
                     </div>
@@ -742,7 +711,8 @@ export default function HappyPeriodBoxPage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Desktop View: 3 Cards in One Row */}
+          <div className="hidden md:grid md:grid-cols-3 gap-6">
             {REVIEWS_LIST.map((rev) => (
               <div
                 key={rev.id}
@@ -771,6 +741,89 @@ export default function HappyPeriodBoxPage() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Mobile View: Single-Row Automatic Infinite Slider */}
+          <div
+            className="md:hidden overflow-hidden"
+            onTouchStart={(e) => {
+              setReviewPaused(true);
+              reviewTouchStartXRef.current = e.touches[0].clientX;
+            }}
+            onTouchEnd={(e) => {
+              const delta = e.changedTouches[0].clientX - reviewTouchStartXRef.current;
+              setReviewTransition(true);
+              if (delta < -40) {
+                setReviewSlide((prev) => (prev >= REVIEWS_LIST.length ? 1 : prev + 1));
+              } else if (delta > 40) {
+                setReviewSlide((prev) =>
+                  prev <= 0 ? REVIEWS_LIST.length - 1 : prev - 1
+                );
+              }
+              setReviewPaused(false);
+            }}
+          >
+            <div
+              onTransitionEnd={handleReviewTransitionEnd}
+              className="flex"
+              style={{
+                transform: `translate3d(-${reviewSlide * 100}%, 0, 0)`,
+                transition: reviewTransition
+                  ? 'transform 500ms cubic-bezier(0.22, 1, 0.36, 1)'
+                  : 'none'
+              }}
+            >
+              {[...REVIEWS_LIST, REVIEWS_LIST[0]].map((rev, idx) => (
+                <div key={`${rev.id}-${idx}`} className="w-full shrink-0 px-1">
+                  <div className="bg-white rounded-2xl p-5 border border-[#4A2835]/10 shadow-sm flex flex-col justify-between h-full">
+                    <div>
+                      <div className="flex items-center gap-1 text-amber-500 mb-2.5">
+                        {[...Array(rev.rating)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                        ))}
+                      </div>
+                      <p className="text-xs sm:text-sm text-slate-700 italic leading-relaxed mb-4">
+                        “{rev.comment}”
+                      </p>
+                    </div>
+                    <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+                      <div>
+                        <strong className="text-sm font-semibold text-[#4A2835] block">
+                          {rev.name}
+                        </strong>
+                        <span className="text-xs text-slate-400">{rev.location}</span>
+                      </div>
+                      <span className="text-[11px] font-medium px-2.5 py-1 rounded-full bg-[#FDF6F0] text-[#E07A5F]">
+                        {rev.boxPurchased}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Mobile Slider Dots */}
+            <div className="flex items-center justify-center gap-2 mt-4">
+              {REVIEWS_LIST.map((rev, idx) => {
+                const activeDot = reviewSlide % REVIEWS_LIST.length;
+                return (
+                  <button
+                    key={rev.id}
+                    type="button"
+                    aria-label={`Go to review ${idx + 1}`}
+                    onClick={() => {
+                      setReviewTransition(true);
+                      setReviewSlide(idx);
+                    }}
+                    className={`h-2 rounded-full transition-all duration-300 border-0 cursor-pointer ${
+                      activeDot === idx
+                        ? 'w-6 bg-[#E07A5F]'
+                        : 'w-2 bg-[#4A2835]/25'
+                    }`}
+                  />
+                );
+              })}
+            </div>
           </div>
         </div>
 
