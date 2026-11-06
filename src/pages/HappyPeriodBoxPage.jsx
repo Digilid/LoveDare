@@ -343,22 +343,6 @@ export default function HappyPeriodBoxPage() {
     return () => window.removeEventListener('resize', updateStepWidth);
   }, []);
 
-  // Auto-advance infinite sub-category slider
-  useEffect(() => {
-    if (subPaused || subDraggingRef.current) return;
-    const timer = setInterval(() => {
-      setSubTransition(true);
-      setSubSlideIndex((prev) => {
-        const base =
-          prev >= BOX_COUNT * 2 || prev < BOX_COUNT
-            ? BOX_COUNT + (((prev % BOX_COUNT) + BOX_COUNT) % BOX_COUNT)
-            : prev;
-        return base + 1;
-      });
-    }, 2800);
-    return () => clearInterval(timer);
-  }, [subPaused]);
-
   const handleSubTransitionEnd = () => {
     if (subSlideIndex >= BOX_COUNT * 2 || subSlideIndex < BOX_COUNT) {
       setSubTransition(false);
