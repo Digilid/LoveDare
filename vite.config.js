@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import fs from 'fs';
 import path from 'path';
+import os from 'os';
 
 function githubPagesCacheBustPlugin() {
   return {
@@ -25,7 +26,7 @@ function githubPagesCacheBustPlugin() {
 export default defineConfig({
   plugins: [react(), githubPagesCacheBustPlugin()],
   base: './',
-  cacheDir: '.vite_cache',
+  cacheDir: path.join(os.tmpdir(), 'lovdare-vite-cache'),
   server: {
     port: 5173,
     open: true

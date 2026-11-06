@@ -798,7 +798,7 @@ export default function HappyPeriodBoxPage() {
           </div>
         </div>
 
-        {/* 4 Collapsible FAQ Items */}
+        {/* 4 Collapsible FAQ Items (Commented Out)
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-8">
             <span className="text-xs font-semibold uppercase tracking-widest text-[#E07A5F] block mb-1.5">
@@ -841,6 +841,7 @@ export default function HappyPeriodBoxPage() {
             })}
           </div>
         </div>
+        */}
       </section>
 
       <Footer />
