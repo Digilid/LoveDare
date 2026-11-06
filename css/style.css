@@ -1,3 +1,6 @@
+@tailwind components;
+@tailwind utilities;
+
 /* ==========================================================================
    LOVDARE — E-Commerce Wellness Gifting
    Premium, Neutral, Chic & Modern Aesthetics
@@ -758,15 +761,6 @@ img {
 }
 
 .lovdare-product-card:hover {
-  box-shadow: var(--shadow-md);
-  border-color: var(--color-mocha);
-}
-
-.lovdare-product-card[data-href] {
-  cursor: pointer;
-}
-
-.lovdare-product-card:hover {
   transform: translateY(-8px);
   box-shadow: var(--shadow-lg);
   border-color: var(--color-mocha);
@@ -956,29 +950,6 @@ img {
     padding: 0.42rem 0.55rem;
     gap: 0.25rem;
   }
-}
-
-.link-discover {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--color-chocolate);
-  transition: color var(--transition-fast), transform var(--transition-fast);
-}
-
-.link-discover i {
-  transition: transform var(--transition-fast);
-  font-size: 0.9rem;
-}
-
-.lovdare-product-card:hover .link-discover {
-  color: var(--color-mocha);
-}
-
-.lovdare-product-card:hover .link-discover i {
-  transform: translateX(4px);
 }
 
 .btn-card-buy {
