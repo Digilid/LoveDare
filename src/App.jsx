@@ -4,8 +4,11 @@ import HomePage from './pages/HomePage';
 import HappyPeriodBoxPage from './pages/HappyPeriodBoxPage';
 
 export default function App() {
+  const match = window.location.pathname.match(/^\/(lovedare)(?:\/|$)/i);
+  const basename = match ? `/${match[1]}` : '/';
+
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/index.html" element={<HomePage />} />
@@ -16,4 +19,3 @@ export default function App() {
     </BrowserRouter>
   );
 }
-

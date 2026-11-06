@@ -1,8 +1,7 @@
 # Dependencies
 node_modules/
 
-# Build output
-dist/
+# Build output (dist/ is tracked so GitHub Pages master root works out-of-the-box)
 dist-ssr/
 
 # Vite cache
