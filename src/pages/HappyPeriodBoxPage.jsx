@@ -276,15 +276,12 @@ export default function HappyPeriodBoxPage() {
   const [heroSlide, setHeroSlide] = useState(0);
   const [heroPaused, setHeroPaused] = useState(false);
 
-  // 2. Sub-Category Infinite Slider State
-  const subTrackRef = useRef(null);
-  const [subSlideIndex, setSubSlideIndex] = useState(BOX_COUNT);
-  const [subTransition, setSubTransition] = useState(true);
-  const [subPaused, setSubPaused] = useState(false);
-  const [subStepPx, setSubStepPx] = useState(290);
-  const [subDragOffset, setSubDragOffset] = useState(0);
+  // 2. Sub-Category Infinite Manual Slider State
+  const subScrollRef = useRef(null);
+  const [activeSubIndex, setActiveSubIndex] = useState(0);
   const subDraggingRef = useRef(false);
   const subDragStartXRef = useRef(0);
+  const subDragScrollLeftRef = useRef(0);
 
   // 3. Contents Filter State
   const [activeContentFilter, setActiveContentFilter] = useState('All');
@@ -330,60 +327,65 @@ export default function HappyPeriodBoxPage() {
     }
   };
 
-  // Measure card step width for infinite sub-category slider
+  // Initialize infinite sub-category scroll position to middle set
   useEffect(() => {
-    const updateStepWidth = () => {
-      const firstCard = subTrackRef.current?.querySelector('.sub-box-card');
-      if (firstCard) {
-        setSubStepPx(firstCard.offsetWidth + 20);
+    const el = subScrollRef.current;
+    if (!el) return;
+    const initScroll = () => {
+      const cards = el.querySelectorAll('.sub-box-card');
+      if (cards.length > BOX_COUNT) {
+        const setWidth = cards[BOX_COUNT].offsetLeft - cards[0].offsetLeft;
+        if (setWidth > 0) {
+          el.scrollLeft = setWidth;
+        }
       }
     };
-    updateStepWidth();
-    window.addEventListener('resize', updateStepWidth);
-    return () => window.removeEventListener('resize', updateStepWidth);
+    initScroll();
+    window.addEventListener('resize', initScroll);
+    return () => window.removeEventListener('resize', initScroll);
   }, []);
 
-  const handleSubTransitionEnd = () => {
-    if (subSlideIndex >= BOX_COUNT * 2 || subSlideIndex < BOX_COUNT) {
-      setSubTransition(false);
-      setSubSlideIndex(
-        BOX_COUNT + (((subSlideIndex % BOX_COUNT) + BOX_COUNT) % BOX_COUNT)
-      );
+  const handleSubScroll = () => {
+    const el = subScrollRef.current;
+    if (!el) return;
+    const cards = el.querySelectorAll('.sub-box-card');
+    if (cards.length <= BOX_COUNT) return;
+
+    const setWidth = cards[BOX_COUNT].offsetLeft - cards[0].offsetLeft;
+    if (setWidth <= 0) return;
+
+    if (el.scrollLeft < setWidth * 0.25) {
+      el.scrollLeft += setWidth;
+    } else if (el.scrollLeft > setWidth * 1.75) {
+      el.scrollLeft -= setWidth;
     }
+
+    const relativeScroll = ((el.scrollLeft - setWidth) % setWidth + setWidth) % setWidth;
+    const currentIdx = Math.round((relativeScroll / setWidth) * BOX_COUNT) % BOX_COUNT;
+    setActiveSubIndex(currentIdx);
   };
 
-  const handleSubPointerStart = (clientX) => {
+  const handleSubMouseDown = (e) => {
+    const el = subScrollRef.current;
+    if (!el) return;
     subDraggingRef.current = true;
-    subDragStartXRef.current = clientX;
-    setSubPaused(true);
-    setSubTransition(false);
-    if (subSlideIndex >= BOX_COUNT * 2 || subSlideIndex < BOX_COUNT) {
-      setSubSlideIndex(
-        BOX_COUNT + (((subSlideIndex % BOX_COUNT) + BOX_COUNT) % BOX_COUNT)
-      );
-    }
+    subDragStartXRef.current = e.clientX;
+    subDragScrollLeftRef.current = el.scrollLeft;
   };
 
-  const handleSubPointerMove = (clientX) => {
+  const handleSubMouseMove = (e) => {
     if (!subDraggingRef.current) return;
-    setSubDragOffset(clientX - subDragStartXRef.current);
+    const el = subScrollRef.current;
+    if (!el) return;
+    e.preventDefault();
+    const walk = e.clientX - subDragStartXRef.current;
+    el.scrollLeft = subDragScrollLeftRef.current - walk;
   };
 
-  const handleSubPointerEnd = () => {
-    if (!subDraggingRef.current) return;
+  const handleSubMouseUp = () => {
     subDraggingRef.current = false;
-    const delta = subDragOffset;
-    setSubDragOffset(0);
-    setSubTransition(true);
-    if (delta < -40) {
-      setSubSlideIndex((prev) => prev + 1);
-    } else if (delta > 40) {
-      setSubSlideIndex((prev) => prev - 1);
-    }
-    setSubPaused(false);
   };
 
-  const activeSubIndex = ((subSlideIndex % BOX_COUNT) + BOX_COUNT) % BOX_COUNT;
   const infiniteScrollProgress = ((activeSubIndex + 1) / BOX_COUNT) * 100;
 
   const filteredContents =
@@ -494,60 +496,45 @@ export default function HappyPeriodBoxPage() {
           </h2>
         </div>
 
-        {/* Infinite Slider Viewport */}
+        {/* Infinite Smooth Manual Slider Viewport (Full-Bleed Horizontal Edges) */}
         <div
-          className="overflow-hidden py-2 cursor-grab active:cursor-grabbing select-none"
-          onMouseEnter={() => setSubPaused(true)}
-          onMouseLeave={() => {
-            if (subDraggingRef.current) {
-              handleSubPointerEnd();
-            } else {
-              setSubPaused(false);
-            }
+          ref={subScrollRef}
+          onScroll={handleSubScroll}
+          onMouseDown={handleSubMouseDown}
+          onMouseMove={handleSubMouseMove}
+          onMouseUp={handleSubMouseUp}
+          onMouseLeave={handleSubMouseUp}
+          className="-mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 py-4 flex gap-5 overflow-x-auto no-scrollbar cursor-grab active:cursor-grabbing select-none"
+          style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+            WebkitOverflowScrolling: 'touch'
           }}
-          onMouseDown={(e) => handleSubPointerStart(e.clientX)}
-          onMouseMove={(e) => handleSubPointerMove(e.clientX)}
-          onMouseUp={handleSubPointerEnd}
-          onTouchStart={(e) => handleSubPointerStart(e.touches[0].clientX)}
-          onTouchMove={(e) => handleSubPointerMove(e.touches[0].clientX)}
-          onTouchEnd={handleSubPointerEnd}
         >
-          <div
-            ref={subTrackRef}
-            onTransitionEnd={handleSubTransitionEnd}
-            className="flex gap-5"
-            style={{
-              transform: `translate3d(${-(subSlideIndex * subStepPx) + subDragOffset}px, 0, 0)`,
-              transition: subTransition
-                ? 'transform 500ms cubic-bezier(0.22, 1, 0.36, 1)'
-                : 'none'
-            }}
-          >
-            {INFINITE_SUB_BOXES.map((box, idx) => (
-              <div
-                key={`${box.id}-${idx}`}
-                className="sub-box-card shrink-0 w-[78%] sm:w-[46%] lg:w-[calc(25%-15px)] bg-white rounded-2xl border border-[#4A2835]/10 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col overflow-hidden"
-              >
-                {/* Box Image */}
-                <div className="relative aspect-[4/3] w-full bg-[#F7EFE8] overflow-hidden">
-                  <img
-                    src={box.image}
-                    alt={box.title}
-                    draggable={false}
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                    loading="lazy"
-                  />
-                </div>
-
-                {/* Card Title */}
-                <div className="p-4 sm:p-5 text-center">
-                  <h3 className="font-serif text-xl font-semibold text-[#4A2835] mb-0">
-                    {box.title}
-                  </h3>
-                </div>
+          {INFINITE_SUB_BOXES.map((box, idx) => (
+            <div
+              key={`${box.id}-${idx}`}
+              className="sub-box-card shrink-0 w-[76%] sm:w-[45%] lg:w-[calc(25%-15px)] bg-white rounded-2xl border border-[#4A2835]/10 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col overflow-hidden"
+            >
+              {/* Box Image */}
+              <div className="relative aspect-[4/3] w-full bg-[#F7EFE8] overflow-hidden">
+                <img
+                  src={box.image}
+                  alt={box.title}
+                  draggable={false}
+                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                  loading="lazy"
+                />
               </div>
-            ))}
-          </div>
+
+              {/* Card Title */}
+              <div className="p-4 sm:p-5 text-center">
+                <h3 className="font-serif text-xl font-semibold text-[#4A2835] mb-0">
+                  {box.title}
+                </h3>
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* Scroll / Progress Indicator Bar Centered Below the Cards */}
