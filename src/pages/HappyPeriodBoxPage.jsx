@@ -466,8 +466,9 @@ export default function HappyPeriodBoxPage() {
 
         {/* Top Centered Header Content (Positioned Over the Raised Open Box Lid) */}
         <div className="relative z-20 max-w-3xl mx-auto px-4 sm:px-6 text-center mb-4 sm:mb-6">
+          {/*
           <span
-            className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase text-[#F7F4EF] mb-4"
+            className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest text-[#F7F4EF] mb-4"
             style={{
               color: '#F7F4EF',
               background: 'rgba(75, 54, 42, 0.62)',
@@ -477,9 +478,9 @@ export default function HappyPeriodBoxPage() {
               boxShadow: '0 4px 16px rgba(28, 20, 15, 0.28)'
             }}
           >
-            <Sparkles className="w-3.5 h-3.5 text-[#E6DCC6]" />
-            MENSTRUAL CARE
+            Happy Period Box
           </span>
+          */}
           <h1
             className="font-serif text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-tight mb-3 sm:mb-4"
             style={{
@@ -502,21 +503,6 @@ export default function HappyPeriodBoxPage() {
 
         {/* Lower-Center Floating 3D Coverflow Carousel (Emerging Above the Open Box Interior) */}
         <div className="relative z-20 w-full max-w-6xl mx-auto px-4 flex flex-col items-center">
-          {/* Subtle Edition Eyebrow */}
-          <span
-            className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-3 sm:mb-4 px-3.5 py-1 rounded-full"
-            style={{
-              color: '#F7F4EF',
-              background: 'rgba(43, 33, 27, 0.48)',
-              border: '1px solid rgba(230, 220, 198, 0.3)',
-              backdropFilter: 'blur(8px)',
-              WebkitBackdropFilter: 'blur(8px)',
-              textShadow: '0 1px 6px rgba(28, 20, 15, 0.6)'
-            }}
-          >
-            CHOOSE HER CARE LEVEL · 5 CURATED EDITIONS
-          </span>
-
           {/* 3D Perspective Stage */}
           <div
             className="relative w-full h-[340px] sm:h-[380px] lg:h-[405px] flex items-center justify-center cursor-grab active:cursor-grabbing"
@@ -626,12 +612,12 @@ export default function HappyPeriodBoxPage() {
               })}
             </div>
 
-            {/* Glassmorphic Left Navigation Arrow */}
+            {/* Glassmorphic Left Navigation Arrow (Hidden on Mobile View) */}
             <button
               type="button"
               onClick={prevCoverflowSlide}
               aria-label="Previous edition"
-              className="absolute left-1 sm:left-4 lg:left-6 top-1/2 -translate-y-1/2 z-40 w-10 h-10 sm:w-11 sm:h-11 rounded-full text-white flex items-center justify-center transition-all duration-200 hover:scale-110 hover:bg-[#7A5E4A] cursor-pointer"
+              className="hidden sm:flex absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 z-40 w-11 h-11 rounded-full text-white items-center justify-center transition-all duration-200 hover:scale-110 hover:bg-[#7A5E4A] cursor-pointer"
               style={{
                 color: '#F7F4EF',
                 background: 'rgba(75, 54, 42, 0.55)',
@@ -644,12 +630,12 @@ export default function HappyPeriodBoxPage() {
               <ChevronLeft className="w-5 h-5" />
             </button>
 
-            {/* Glassmorphic Right Navigation Arrow */}
+            {/* Glassmorphic Right Navigation Arrow (Hidden on Mobile View) */}
             <button
               type="button"
               onClick={nextCoverflowSlide}
               aria-label="Next edition"
-              className="absolute right-1 sm:right-4 lg:right-6 top-1/2 -translate-y-1/2 z-40 w-10 h-10 sm:w-11 sm:h-11 rounded-full text-white flex items-center justify-center transition-all duration-200 hover:scale-110 hover:bg-[#7A5E4A] cursor-pointer"
+              className="hidden sm:flex absolute right-4 lg:right-6 top-1/2 -translate-y-1/2 z-40 w-11 h-11 rounded-full text-white items-center justify-center transition-all duration-200 hover:scale-110 hover:bg-[#7A5E4A] cursor-pointer"
               style={{
                 color: '#F7F4EF',
                 background: 'rgba(75, 54, 42, 0.55)',
