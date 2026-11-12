@@ -436,7 +436,7 @@ export default function HappyPeriodBoxPage() {
       {/* =====================================================================
           1 & 2 MERGED: IMMERSIVE HERO + 3D COVERFLOW GLASSMORPHISM CAROUSEL
          ===================================================================== */}
-      <section className="relative w-full min-h-[700px] sm:min-h-[780px] lg:min-h-[840px] pt-28 pb-12 sm:pt-32 sm:pb-16 overflow-hidden flex flex-col justify-between select-none bg-[#3B2B20]">
+      <section className="relative w-full min-h-[656px] sm:min-h-[780px] lg:min-h-[840px] pt-[100px] pb-10 sm:pt-32 sm:pb-16 overflow-hidden flex flex-col justify-between select-none bg-[#3B2B20]">
         {/* Full-Bleed Open Luxury Kraft Gift Box Background with Subtle Depth-of-Field Blur */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
@@ -465,7 +465,7 @@ export default function HappyPeriodBoxPage() {
         </div>
 
         {/* Top Centered Header Content (Positioned Over the Raised Open Box Lid) */}
-        <div className="relative z-20 max-w-3xl mx-auto px-4 sm:px-6 text-center mb-4 sm:mb-6">
+        <div className="relative z-20 max-w-3xl mx-auto px-4 sm:px-6 text-center mb-0 md:mb-6">
           {/*
           <span
             className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest text-[#F7F4EF] mb-4"
@@ -482,7 +482,7 @@ export default function HappyPeriodBoxPage() {
           </span>
           */}
           <h1
-            className="font-serif text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-tight mb-3 sm:mb-4"
+            className="font-serif text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-tight mb-2.5 sm:mb-4"
             style={{
               color: '#F7F4EF',
               textShadow: '0 3px 20px rgba(28, 20, 15, 0.75), 0 1px 4px rgba(28, 20, 15, 0.55)'
@@ -502,10 +502,10 @@ export default function HappyPeriodBoxPage() {
         </div>
 
         {/* Lower-Center Floating 3D Coverflow Carousel (Emerging Above the Open Box Interior) */}
-        <div className="relative z-20 w-full max-w-6xl mx-auto px-4 flex flex-col items-center">
+        <div className="relative z-20 w-full max-w-6xl mx-auto px-4 flex flex-col items-center -mt-1 md:mt-0">
           {/* 3D Perspective Stage */}
           <div
-            className="relative w-full h-[340px] sm:h-[380px] lg:h-[405px] flex items-center justify-center cursor-grab active:cursor-grabbing"
+            className="relative w-full h-[325px] sm:h-[380px] lg:h-[405px] flex items-center justify-center cursor-grab active:cursor-grabbing"
             style={{
               perspective: '1000px'
             }}
@@ -757,7 +757,6 @@ export default function HappyPeriodBoxPage() {
                 '0 8px 22px -4px rgba(75, 54, 42, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.25)'
             }}
           >
-            <Sparkles className="w-3.5 h-3.5 text-[#E6DCC6]" />
             <span>Make Your Box</span>
             <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
           </button>
