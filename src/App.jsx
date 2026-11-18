@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import HappyPeriodBoxPage from './pages/HappyPeriodBoxPage';
+import PainReliefBoxPage from './pages/PainReliefBoxPage';
 
 export default function App() {
   const match = window.location.pathname.match(/^\/(lovedare)(?:\/|$)/i);
@@ -14,6 +15,8 @@ export default function App() {
         <Route path="/index.html" element={<HomePage />} />
         <Route path="/happy-period-box" element={<HappyPeriodBoxPage />} />
         <Route path="/happy-period-box.html" element={<HappyPeriodBoxPage />} />
+        <Route path="/pain-relief-box" element={<PainReliefBoxPage />} />
+        <Route path="/pain-relief-box.html" element={<PainReliefBoxPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

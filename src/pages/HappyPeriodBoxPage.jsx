@@ -589,22 +589,41 @@ export default function HappyPeriodBoxPage() {
                             : 'opacity-0 translate-y-1 pointer-events-none h-0 overflow-hidden'
                         }`}
                       >
-                        <a
-                          href="#happyPeriodContentsSection"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                          }}
-                          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[11px] font-semibold no-underline transition-all hover:scale-105"
-                          style={{
-                            color: '#F7F4EF',
-                            background: 'rgba(122, 94, 74, 0.95)',
-                            border: '1px solid rgba(247, 244, 239, 0.48)',
-                            boxShadow: '0 4px 14px rgba(28, 20, 15, 0.45)'
-                          }}
-                        >
-                          <span>Explore Box</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
-                        </a>
+                        {box.id === 'pain-relief-box' ? (
+                          <Link
+                            to="/pain-relief-box"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                            }}
+                            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[11px] font-semibold no-underline transition-all hover:scale-105"
+                            style={{
+                              color: '#F7F4EF',
+                              background: 'rgba(122, 94, 74, 0.95)',
+                              border: '1px solid rgba(247, 244, 239, 0.48)',
+                              boxShadow: '0 4px 14px rgba(28, 20, 15, 0.45)'
+                            }}
+                          >
+                            <span>Explore Box</span>
+                            <ArrowRight className="w-3.5 h-3.5" />
+                          </Link>
+                        ) : (
+                          <a
+                            href="#happyPeriodContentsSection"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                            }}
+                            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[11px] font-semibold no-underline transition-all hover:scale-105"
+                            style={{
+                              color: '#F7F4EF',
+                              background: 'rgba(122, 94, 74, 0.95)',
+                              border: '1px solid rgba(247, 244, 239, 0.48)',
+                              boxShadow: '0 4px 14px rgba(28, 20, 15, 0.45)'
+                            }}
+                          >
+                            <span>Explore Box</span>
+                            <ArrowRight className="w-3.5 h-3.5" />
+                          </a>
+                        )}
                       </div>
                     </div>
                   </div>
