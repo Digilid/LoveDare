@@ -166,11 +166,11 @@ export default function HeroSection() {
       {/* Full-Bleed Open Luxury Kraft Gift Box Background with Subtle Depth-of-Field Blur */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <img
-          src="assets/images/hero-open-box.jpg"
-          alt="Lovdare Open Gift Box Studio Showcase"
-          className="w-full h-full object-cover object-[50%_38%] scale-[1.03] transition-transform duration-1000"
+          src="assets/images/main-hero-open-box.jpg"
+          alt="Lovdare Open Keepsake Gift Box Studio Showcase"
+          className="w-full h-full object-cover object-[50%_40%] scale-[1.02] transition-transform duration-1000"
           style={{
-            filter: 'blur(2.5px) brightness(0.92) contrast(1.03)'
+            filter: 'blur(1.5px) brightness(0.95) contrast(1.04)'
           }}
         />
         {/* Balanced Warm Studio Vignette & Depth Overlay */}
@@ -178,14 +178,14 @@ export default function HeroSection() {
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(180deg, rgba(43, 33, 27, 0.62) 0%, rgba(75, 54, 42, 0.32) 44%, rgba(43, 33, 27, 0.68) 100%)'
+              'linear-gradient(180deg, rgba(43, 33, 27, 0.56) 0%, rgba(75, 54, 42, 0.26) 46%, rgba(43, 33, 27, 0.64) 100%)'
           }}
         />
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              'radial-gradient(circle at 50% 24%, rgba(43, 33, 27, 0.42) 0%, transparent 52%), radial-gradient(circle at 50% 60%, rgba(247, 244, 239, 0.18) 0%, transparent 58%)'
+              'radial-gradient(circle at 50% 24%, rgba(43, 33, 27, 0.38) 0%, transparent 52%), radial-gradient(circle at 50% 60%, rgba(247, 244, 239, 0.2) 0%, transparent 58%)'
           }}
         />
       </div>
