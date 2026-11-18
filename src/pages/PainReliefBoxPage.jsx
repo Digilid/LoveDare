@@ -593,43 +593,29 @@ export default function PainReliefBoxPage() {
       {/* =====================================================================
           SECTION 1: TOP PRODUCT IMAGES 3D SLIDER + SYNCHRONIZED CENTER DETAILS
          ===================================================================== */}
-      <section className="relative w-full pt-[96px] pb-12 sm:pt-28 sm:pb-16 overflow-hidden select-none bg-[#3B2B20]">
-        {/* Full-Bleed Open Luxury Kraft Gift Box Background */}
+      <section className="relative w-full pt-[96px] pb-12 sm:pt-28 sm:pb-16 overflow-hidden select-none bg-[#2B211B]">
+        {/* Full-Bleed Apothecary & Comfort Sanctuary Studio Background */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
-            src="assets/images/hero-open-box.jpg"
-            alt="Pain Relief Box Open Studio Showcase"
-            className="w-full h-full object-cover object-[50%_38%] scale-[1.03]"
+            src="assets/images/pain-relief-hero-bg.jpg"
+            alt="Pain Relief Box Apothecary & Warm Comfort Studio Showcase"
+            className="w-full h-full object-cover object-center scale-[1.02]"
             style={{
-              filter: 'blur(2.5px) brightness(0.9) contrast(1.03)'
+              filter: 'blur(1.5px) brightness(0.88) contrast(1.04)'
             }}
           />
           <div
             className="absolute inset-0"
             style={{
               background:
-                'linear-gradient(180deg, rgba(43, 33, 27, 0.68) 0%, rgba(75, 54, 42, 0.36) 44%, rgba(43, 33, 27, 0.82) 100%)'
+                'linear-gradient(180deg, rgba(28, 20, 15, 0.64) 0%, rgba(75, 54, 42, 0.34) 44%, rgba(28, 20, 15, 0.78) 100%)'
             }}
           />
         </div>
 
         <div className="relative z-20 max-w-6xl mx-auto px-4 sm:px-6">
-          {/* Top Back Link & Edition Heading */}
+          {/* Top Edition Heading */}
           <div className="flex flex-col items-center text-center mb-2 sm:mb-4">
-            <Link
-              to="/happy-period-box"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-medium mb-3 no-underline transition-transform hover:-translate-x-0.5"
-              style={{
-                color: '#F7F4EF',
-                background: 'rgba(75, 54, 42, 0.62)',
-                border: '1px solid rgba(247, 244, 239, 0.38)',
-                backdropFilter: 'blur(10px)'
-              }}
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Back to Happy Period Box</span>
-            </Link>
-
             <h1
               className="font-serif text-3xl sm:text-5xl font-semibold tracking-tight mb-1.5"
               style={{
