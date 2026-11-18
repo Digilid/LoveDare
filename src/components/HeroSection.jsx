@@ -163,29 +163,29 @@ export default function HeroSection() {
       id="hero"
       className="relative w-full min-h-[656px] sm:min-h-[780px] lg:min-h-[840px] pt-[100px] pb-10 sm:pt-32 sm:pb-16 overflow-hidden flex flex-col justify-between select-none bg-[#3B2B20]"
     >
-      {/* Full-Bleed Open Luxury Kraft Gift Box Background with Subtle Depth-of-Field Blur */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
+      {/* Full-Bleed Open Luxury Kraft Gift Box Background with Mobile & Desktop Framing */}
+      <div className="absolute inset-0 z-0 overflow-hidden bg-[#241913]">
         <img
           src="assets/images/main-hero-open-box.jpg"
           alt="Lovdare Open Keepsake Gift Box Studio Showcase"
-          className="w-full h-full object-cover object-[50%_40%] scale-[1.02] transition-transform duration-1000"
+          className="w-full h-full object-cover object-[50%_54%] sm:object-[50%_48%] transition-transform duration-1000"
           style={{
-            filter: 'blur(1.5px) brightness(0.95) contrast(1.04)'
+            filter: 'blur(1px) brightness(0.88) contrast(1.05)'
           }}
         />
-        {/* Balanced Warm Studio Vignette & Depth Overlay */}
+        {/* Balanced Darker Warm Espresso Studio Vignette & Depth Overlay */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(180deg, rgba(43, 33, 27, 0.56) 0%, rgba(75, 54, 42, 0.26) 46%, rgba(43, 33, 27, 0.64) 100%)'
+              'linear-gradient(180deg, rgba(28, 20, 15, 0.58) 0%, rgba(43, 33, 27, 0.28) 46%, rgba(28, 20, 15, 0.68) 100%)'
           }}
         />
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              'radial-gradient(circle at 50% 24%, rgba(43, 33, 27, 0.38) 0%, transparent 52%), radial-gradient(circle at 50% 60%, rgba(247, 244, 239, 0.2) 0%, transparent 58%)'
+              'radial-gradient(circle at 50% 24%, rgba(28, 20, 15, 0.42) 0%, transparent 52%), radial-gradient(circle at 50% 62%, rgba(230, 220, 198, 0.14) 0%, transparent 56%)'
           }}
         />
       </div>

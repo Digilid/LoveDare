@@ -27,6 +27,11 @@ export default function Navbar({ isDetailPage = false }) {
     e.preventDefault();
     setIsMenuOpen(false);
 
+    if (sectionId === 'contact' && document.getElementById('contact')) {
+      scrollToSectionId('contact');
+      return;
+    }
+
     if (location.pathname === '/' || location.pathname === '/index.html') {
       scrollToSectionId(sectionId);
     } else {
@@ -86,25 +91,7 @@ export default function Navbar({ isDetailPage = false }) {
                 href="#boxes"
                 onClick={(e) => handleSectionClick(e, 'boxes')}
               >
-                Our Boxes
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                className="nav-link"
-                href="#story"
-                onClick={(e) => handleSectionClick(e, 'story')}
-              >
-                Our Story
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                className="nav-link"
-                href="#values"
-                onClick={(e) => handleSectionClick(e, 'values')}
-              >
-                Our Values
+                Products
               </a>
             </li>
             <li className="nav-item">
