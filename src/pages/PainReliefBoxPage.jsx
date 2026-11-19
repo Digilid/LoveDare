@@ -21,108 +21,48 @@ import Footer from '../components/Footer';
 import { LOVDARE_CONFIG } from '../config/lovdareConfig';
 
 /* ============================================================================
-   1. TOP HERO SLIDER ITEMS (Synchronized with Product Details Below)
+   1. TOP HERO SLIDER ITEMS (5 Curated Pain Relief Products)
    ============================================================================ */
 const PAIN_BOX_SLIDER_PRODUCTS = [
   {
-    id: 'complete-pain-box',
+    id: 'heating-pad-hot-water-bag',
     step: '01 / 05',
-    badge: 'Complete Curated Edition',
-    title: 'The Complete Pain Relief Box',
-    subtitle: 'Full-Spectrum Thermal & Botanical Cramp Sanctuary',
-    category: 'Signature Gift Box',
-    priceTag: 'Included in ₹1,299 Box',
-    image: 'assets/images/box-period.jpg',
-    shortSummary:
-      'Every essential inside works together to relax uterine smooth muscles, ease lower-back ache, and restore calm.',
-    detailedDescription:
-      'Thoughtfully assembled for Day 1 and Day 2 heavy-flow cramps. Combines 8-hour air-activated thermal warmth, antispasmodic herbal tea, topical aromatherapy, and magnesium-rich 70% dark cacao inside a reusable keepsake gift box.',
-    howItHelps: [
-      'Targets prostaglandin-driven cramps with steady 40°C heat',
-      'Replenishes magnesium to naturally relax pelvic tension',
-      'Ready-to-gift luxury kraft packaging with handwritten note card'
-    ],
-    specs: ['5 Full-Size Comfort Items', '100% Toxin-Free', 'Doctor-Backed Botanicals']
+    badge: 'Soothing Warmth',
+    title: 'Heating Pad / Hot Water Bag',
+    description: 'For soothing warmth and menstrual cramp comfort.',
+    image: 'assets/images/pain-prod-heating-pad.jpg'
   },
   {
-    id: 'herbal-heat-patches',
+    id: 'relaxing-massage-oil',
     step: '02 / 05',
-    badge: 'Core Thermal Therapy',
-    title: 'Air-Activated Herbal Heat Patches (3x Pack)',
-    subtitle: '8 Hours of Sustained 40°C Deep Pelvic Warmth',
-    category: 'Targeted Cramp Relief',
-    priceTag: '3 Patches Included',
-    image: 'assets/images/hero-1.jpg',
-    shortSummary:
-      'Ultra-thin, discreet self-heating patches that warm up on contact with air to soothe abdominal & lower-back cramps.',
-    detailedDescription:
-      'Unlike bulky hot water bottles that cool down in 30 minutes, our air-activated herbal patches adhere discreetly to the outside of your underwear—delivering 8 continuous hours of therapeutic 40°C warmth whether you are resting in bed or at work.',
-    howItHelps: [
-      'Boosts pelvic blood circulation to ease ischemic cramp pain',
-      'Odorless, ultra-thin cotton exterior—invisible under clothing',
-      'Safe, steady temperature engineered for sensitive cycle days'
-    ],
-    specs: ['8-Hour Continuous Heat', '40°C Therapeutic Temp', '100% Breathable Cotton']
+    badge: 'Gentle Relaxation',
+    title: 'Relaxing Massage Oil',
+    description: 'For gentle abdominal massage and relaxation.',
+    image: 'assets/images/pain-prod-massage-oil.jpg'
   },
   {
-    id: 'cramp-comfort-roll-on',
+    id: 'reusable-hot-cold-gel-pack',
     step: '03 / 05',
-    badge: 'Botanical Aromatherapy',
-    title: 'Clary Sage & Lavender Cramp Comfort Roll-On',
-    subtitle: 'Fast-Absorbing Topical Essential Oil Blend',
-    category: 'Topical Soothing Balm',
-    priceTag: '10ml Glass Roller Included',
-    image: 'assets/images/box-menopause.jpg',
-    shortSummary:
-      'Pure therapeutic clary sage, Roman chamomile, and lavender in a soothing sweet-almond carrier oil.',
-    detailedDescription:
-      'Formulated with clinical-grade Clary Sage and Lavender essential oils known for their natural antispasmodic and calming properties. Glide directly over the lower abdomen, lower back, or wrists for soothing aromatic relief within minutes.',
-    howItHelps: [
-      'Clary sage helps calm smooth muscle spasms and pelvic tightness',
-      'Lavender & chamomile ease cycle-related anxiety and headache tension',
-      'Zero synthetic fragrance, parabens, or mineral oil'
-    ],
-    specs: ['100% Pure Essential Oils', 'Pocket-Sized 10ml Roller', 'Dermatologist Tested']
+    badge: 'Dual Therapy',
+    title: 'Reusable Hot & Cold Gel Pack',
+    description: 'A reusable comfort pack.',
+    image: 'assets/images/pain-prod-gel-pack.jpg'
   },
   {
-    id: 'magnesium-dark-cacao',
+    id: 'herbal-tea-bags',
     step: '04 / 05',
-    badge: 'Nutritional Relief',
-    title: 'Artisanal 70% Magnesium Dark Chocolate',
-    subtitle: 'Single-Origin Dark Cacao with Roasted Pumpkin Seeds',
-    category: 'Cramp-Calming Treat',
-    priceTag: '80g Artisanal Bar Included',
-    image: 'assets/images/box-iron.jpg',
-    shortSummary:
-      'Rich in bioavailable magnesium and iron to relax tense muscles, lift serotonin, and satisfy cycle cravings.',
-    detailedDescription:
-      'Magnesium levels naturally dip right before menstruation, intensifying uterine contractions and fatigue. Our 70% dark cacao bar is studded with zinc- and magnesium-rich pumpkin seeds to nourish her body while feeling like pure indulgence.',
-    howItHelps: [
-      'Natural dietary magnesium supports muscle relaxation',
-      'Rich polyphenols and theobromine gently elevate mood',
-      'Refined-sugar-free, vegan, and crafted in small batches'
-    ],
-    specs: ['70% Single-Origin Cacao', '3x Magnesium Boost', 'Zero Refined Sugar']
+    badge: 'Calming Infusion',
+    title: 'Herbal Tea Bags',
+    description: 'Ginger or chamomile tea for a soothing experience.',
+    image: 'assets/images/pain-prod-herbal-tea.jpg'
   },
   {
-    id: 'ginger-chamomile-tea',
+    id: 'disposable-heat-patches',
     step: '05 / 05',
-    badge: 'Soothing Herbal Sip',
-    title: 'Organic Ginger, Chamomile & Peppermint Infusion',
-    subtitle: 'Caffeine-Free Whole-Flower Pyramid Tea Bags',
-    category: 'Digestive & Cramp Calm',
-    priceTag: '10 Pyramid Tea Bags Included',
-    image: 'assets/images/box-postpartum.jpg',
-    shortSummary:
-      'Warm botanical infusion that calms period nausea, reduces abdominal bloating, and promotes deep rest.',
-    detailedDescription:
-      'Blended with whole Egyptian chamomile blossoms, dried Cochin ginger root, and cooling peppermint leaves. Each warm cup works from the inside out to settle prostaglandin-induced digestive upset and wrap her in calm.',
-    howItHelps: [
-      'Gingerol compounds naturally counter inflammation and nausea',
-      'Peppermint relaxes gastrointestinal and pelvic tension',
-      '100% plastic-free biodegradable pyramid sachets'
-    ],
-    specs: ['10 Whole-Leaf Sachets', '100% Caffeine-Free', 'Anti-Bloat Botanical Blend']
+    badge: 'On-the-Go Relief',
+    title: 'Disposable Heat Patches',
+    description: 'Portable heat patches for convenient use.',
+    image: 'assets/images/pain-prod-heat-patches.jpg'
   }
 ];
 
@@ -615,9 +555,9 @@ export default function PainReliefBoxPage() {
 
         <div className="relative z-20 max-w-6xl mx-auto px-4 sm:px-6">
           {/* Top Edition Heading */}
-          <div className="flex flex-col items-center text-center mb-2 sm:mb-4">
+          <div className="flex flex-col items-center text-center mb-3 sm:mb-6">
             <h1
-              className="font-serif text-3xl sm:text-5xl font-semibold tracking-tight mb-1.5"
+              className="font-serif text-3xl sm:text-5xl font-semibold tracking-tight mb-2"
               style={{
                 color: '#F7F4EF',
                 textShadow: '0 3px 20px rgba(28, 20, 15, 0.75)'
@@ -632,14 +572,14 @@ export default function PainReliefBoxPage() {
                 textShadow: '0 2px 12px rgba(28, 20, 15, 0.7)'
               }}
             >
-              Swipe or tap any item in the box below—the product in the center reveals its full therapeutic details underneath.
+              Thoughtfully curated thermal and botanical comfort essentials designed to soothe menstrual cramps and restore calm.
             </p>
           </div>
 
           {/* 3D Coverflow Product Images Slider */}
           <div className="relative w-full flex flex-col items-center">
             <div
-              className="relative w-full h-[300px] sm:h-[345px] lg:h-[365px] flex items-center justify-center cursor-grab active:cursor-grabbing"
+              className="relative w-full h-[320px] sm:h-[365px] lg:h-[385px] flex items-center justify-center cursor-grab active:cursor-grabbing"
               style={{ perspective: '1000px' }}
               onMouseDown={(e) => handleHeroPointerDown(e.clientX)}
               onMouseMove={(e) => handleHeroPointerMove(e.clientX)}
@@ -654,12 +594,11 @@ export default function PainReliefBoxPage() {
                 style={{ transformStyle: 'preserve-3d' }}
               >
                 {PAIN_BOX_SLIDER_PRODUCTS.map((prod, idx) => {
-                  const { offset, style } = getCoverflowStyle(
+                  const { style } = getCoverflowStyle(
                     idx,
                     activeProductIdx,
                     SLIDER_COUNT
                   );
-                  const isActive = offset === 0;
 
                   return (
                     <div
@@ -669,9 +608,9 @@ export default function PainReliefBoxPage() {
                         setActiveProductIdx(idx);
                       }}
                       style={style}
-                      className="absolute w-[225px] sm:w-[265px] lg:w-[290px] p-3 sm:p-3.5 flex flex-col cursor-pointer"
+                      className="absolute w-[235px] sm:w-[275px] lg:w-[305px] p-3 sm:p-3.5 flex flex-col cursor-pointer"
                     >
-                      <div className="relative aspect-[4/3] w-full rounded-[14px] overflow-hidden mb-2.5 bg-black/25 border border-white/25">
+                      <div className="relative aspect-[4/3] w-full rounded-[14px] overflow-hidden mb-3 bg-black/25 border border-white/25">
                         <img
                           src={prod.image}
                           alt={prod.title}
@@ -687,13 +626,13 @@ export default function PainReliefBoxPage() {
                             border: '1px solid rgba(247, 244, 239, 0.38)'
                           }}
                         >
-                          {prod.step} · {prod.badge}
+                          {prod.badge}
                         </span>
                       </div>
 
-                      <div className="px-1 text-center">
+                      <div className="px-1.5 pb-1 text-center">
                         <h3
-                          className="font-serif text-base sm:text-lg font-semibold mb-0.5 line-clamp-1"
+                          className="font-serif text-base sm:text-lg font-semibold mb-1 line-clamp-1"
                           style={{
                             color: '#F7F4EF',
                             textShadow: '0 2px 8px rgba(28, 20, 15, 0.65)'
@@ -702,10 +641,13 @@ export default function PainReliefBoxPage() {
                           {prod.title}
                         </h3>
                         <p
-                          className="text-[11px] mb-0 line-clamp-1"
-                          style={{ color: '#E6DCC6' }}
+                          className="text-[11px] sm:text-xs leading-snug mb-0 line-clamp-2"
+                          style={{
+                            color: '#E6DCC6',
+                            textShadow: '0 1px 6px rgba(28, 20, 15, 0.5)'
+                          }}
                         >
-                          {isActive ? '● Centered — Details Shown Below' : prod.category}
+                          {prod.description}
                         </p>
                       </div>
                     </div>
@@ -747,8 +689,8 @@ export default function PainReliefBoxPage() {
               </button>
             </div>
 
-            {/* Pagination Dots + Quick Product Selector Pills */}
-            <div className="flex items-center justify-center gap-2 mt-2 mb-5">
+            {/* Pagination Dots */}
+            <div className="flex items-center justify-center gap-2 mt-4">
               {PAIN_BOX_SLIDER_PRODUCTS.map((prod, idx) => {
                 const isActive = idx === activeProductIdx;
                 return (
@@ -765,101 +707,6 @@ export default function PainReliefBoxPage() {
                   />
                 );
               })}
-            </div>
-
-            {/* =================================================================
-                SYNCHRONIZED CENTER PRODUCT DETAILS PANEL (Updates with Slider)
-               ================================================================= */}
-            <div
-              key={currentCenterProduct.id}
-              className="w-full max-w-4xl mx-auto rounded-[22px] p-5 sm:p-7 transition-all duration-500"
-              style={{
-                backdropFilter: 'blur(18px)',
-                WebkitBackdropFilter: 'blur(18px)',
-                background:
-                  'linear-gradient(145deg, rgba(247, 244, 239, 0.95) 0%, rgba(230, 220, 198, 0.92) 100%)',
-                border: '1px solid rgba(247, 244, 239, 0.65)',
-                boxShadow: '0 22px 48px -12px rgba(20, 14, 10, 0.55)'
-              }}
-            >
-              <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-[#B89F8A]/35">
-                <div className="flex items-center gap-2">
-                  <span className="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-[#7A5E4A] text-[#F7F4EF]">
-                    Active Center Item · {currentCenterProduct.step}
-                  </span>
-                  <span className="text-xs font-semibold text-[#7A5E4A] hidden sm:inline">
-                    {currentCenterProduct.category}
-                  </span>
-                </div>
-                <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#F7F4EF] text-[#4B362A] border border-[#B89F8A]/45">
-                  {currentCenterProduct.priceTag}
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
-                <div className="md:col-span-7 text-left">
-                  <h2 className="font-serif text-2xl sm:text-3xl font-semibold text-[#4B362A] mb-1">
-                    {currentCenterProduct.title}
-                  </h2>
-                  <p className="text-xs sm:text-sm font-semibold text-[#7A5E4A] mb-2.5">
-                    {currentCenterProduct.subtitle}
-                  </p>
-                  <p className="text-xs sm:text-sm text-[#2B2B2B]/90 leading-relaxed mb-3">
-                    {currentCenterProduct.detailedDescription}
-                  </p>
-
-                  {/* Spec Pills */}
-                  <div className="flex flex-wrap gap-1.5">
-                    {currentCenterProduct.specs.map((spec) => (
-                      <span
-                        key={spec}
-                        className="px-2.5 py-1 rounded-full text-[11px] font-medium bg-[#F7F4EF] text-[#4B362A] border border-[#B89F8A]/40"
-                      >
-                        ✦ {spec}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Why It Works Box */}
-                <div className="md:col-span-5 bg-[#F7F4EF]/85 rounded-2xl p-4 border border-[#B89F8A]/35">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#7A5E4A] block mb-2">
-                    How This Item Relieves Her Pain
-                  </span>
-                  <ul className="space-y-2 m-0 p-0 list-none">
-                    {currentCenterProduct.howItHelps.map((point) => (
-                      <li key={point} className="flex items-start gap-2 text-xs text-[#2B2B2B]">
-                        <span className="w-4 h-4 rounded-full bg-[#7A5E4A]/15 text-[#7A5E4A] flex items-center justify-center shrink-0 mt-0.5">
-                          <Check className="w-3 h-3" />
-                        </span>
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="mt-3 pt-3 border-t border-[#E6DCC6] flex items-center justify-between">
-                    <button
-                      type="button"
-                      onClick={prevHeroProduct}
-                      className="text-xs font-semibold text-[#7A5E4A] hover:text-[#4B362A] inline-flex items-center gap-1 bg-transparent border-0 cursor-pointer p-0"
-                    >
-                      <ChevronLeft className="w-3.5 h-3.5" />
-                      Prev Item
-                    </button>
-                    <span className="text-[11px] text-[#57524E]">
-                      Swipe cards above
-                    </span>
-                    <button
-                      type="button"
-                      onClick={nextHeroProduct}
-                      className="text-xs font-semibold text-[#7A5E4A] hover:text-[#4B362A] inline-flex items-center gap-1 bg-transparent border-0 cursor-pointer p-0"
-                    >
-                      Next Item
-                      <ChevronRight className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
