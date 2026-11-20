@@ -905,8 +905,7 @@ export default function PainReliefBoxPage() {
       </section>
 
       {/* =====================================================================
-          SECTION 4: "THE CARE & DESIGN DIARY" (Single Wide Page — Half Visible
-                     on Mobile with Slow Slide / Pan Controls)
+          SECTION 4: "THE CARE & DESIGN DIARY" (Full-Bleed 100% Width Diary Image)
          ===================================================================== */}
       <section className="py-12 sm:py-16 bg-[#E6DCC6]/40 border-b border-[#B89F8A]/35 overflow-hidden">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -922,91 +921,89 @@ export default function PainReliefBoxPage() {
               Slide slowly across our craft notebook page to explore the raw materials, botanicals, and thermal science inside.
             </p>
           </div>
+        </div>
 
-          {/* Single Notebook Page Viewport:
-              On mobile (<768px), the inner diary page is 190vw wide so ~half of the single page is visible initially,
-              allowing the user to slowly slide/pan across the rest of the page! */}
-          <div className="relative rounded-[22px] overflow-hidden border-2 border-[#B89F8A]/60 shadow-lg bg-[#EAE3D5]">
-            <div
-              ref={diaryScrollRef}
-              onScroll={handleDiaryScroll}
-              onMouseDown={(e) => {
-                setIsDiaryAutoSliding(false);
-                diaryDragStartRef.current = {
-                  isDown: true,
-                  startX: e.pageX - diaryScrollRef.current.offsetLeft,
-                  scrollLeft: diaryScrollRef.current.scrollLeft
-                };
-              }}
-              onMouseLeave={() => {
-                diaryDragStartRef.current.isDown = false;
-              }}
-              onMouseUp={() => {
-                diaryDragStartRef.current.isDown = false;
-              }}
-              onMouseMove={(e) => {
-                if (!diaryDragStartRef.current.isDown) return;
-                e.preventDefault();
-                const x = e.pageX - diaryScrollRef.current.offsetLeft;
-                const walk = (x - diaryDragStartRef.current.startX) * 1.2;
-                diaryScrollRef.current.scrollLeft =
-                  diaryDragStartRef.current.scrollLeft - walk;
-              }}
-              onTouchStart={() => setIsDiaryAutoSliding(false)}
-              className="overflow-x-auto cursor-grab active:cursor-grabbing select-none no-scrollbar"
-              style={{
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none',
-                WebkitOverflowScrolling: 'touch'
-              }}
-            >
-              {/* Single Wide Diary Page (190vw on mobile = ~half page visible at once) */}
-              <div className="w-[190vw] sm:w-[145%] lg:w-[125%] relative">
-                <img
-                  src="assets/images/pain-relief-diary.jpg"
-                  alt="Lovdare Pain Relief Box Design Diary — Craft & Botanical Notes"
-                  draggable={false}
-                  className="w-full h-auto block object-cover"
-                />
-              </div>
-            </div>
-
-            {/* Subtle Floating Hint Pill on Mobile */}
-            <div
-              className="pointer-events-none absolute bottom-3 right-3 px-3 py-1 rounded-full text-[11px] font-semibold flex items-center gap-1.5 shadow-md"
-              style={{
-                color: '#F7F4EF',
-                background: 'rgba(75, 54, 42, 0.86)',
-                backdropFilter: 'blur(8px)',
-                border: '1px solid rgba(247, 244, 239, 0.35)'
-              }}
-            >
-              <span>Slide Diary Page</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+        {/* Full-Width (100% Edge-to-Edge, No Left/Right Padding) Notebook Page Viewport */}
+        <div className="relative w-full overflow-hidden border-y-2 border-[#B89F8A]/60 shadow-lg bg-[#EAE3D5]">
+          <div
+            ref={diaryScrollRef}
+            onScroll={handleDiaryScroll}
+            onMouseDown={(e) => {
+              setIsDiaryAutoSliding(false);
+              diaryDragStartRef.current = {
+                isDown: true,
+                startX: e.pageX - diaryScrollRef.current.offsetLeft,
+                scrollLeft: diaryScrollRef.current.scrollLeft
+              };
+            }}
+            onMouseLeave={() => {
+              diaryDragStartRef.current.isDown = false;
+            }}
+            onMouseUp={() => {
+              diaryDragStartRef.current.isDown = false;
+            }}
+            onMouseMove={(e) => {
+              if (!diaryDragStartRef.current.isDown) return;
+              e.preventDefault();
+              const x = e.pageX - diaryScrollRef.current.offsetLeft;
+              const walk = (x - diaryDragStartRef.current.startX) * 1.2;
+              diaryScrollRef.current.scrollLeft =
+                diaryDragStartRef.current.scrollLeft - walk;
+            }}
+            onTouchStart={() => setIsDiaryAutoSliding(false)}
+            className="w-full overflow-x-auto cursor-grab active:cursor-grabbing select-none no-scrollbar"
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+              WebkitOverflowScrolling: 'touch'
+            }}
+          >
+            {/* Single Wide Diary Page (190vw on mobile = ~half page visible at once, 100% width on desktop) */}
+            <div className="w-[190vw] sm:w-full relative">
+              <img
+                src="assets/images/pain-relief-diary.jpg"
+                alt="Lovdare Pain Relief Box Design Diary — Craft & Botanical Notes"
+                draggable={false}
+                className="w-full h-auto block object-cover"
+              />
             </div>
           </div>
 
-          {/* Smooth Scrubber Bar Below Diary Page */}
-          <div className="mt-4 flex items-center gap-3 max-w-xl mx-auto">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-[#7A5E4A] shrink-0">
-              Left Half
-            </span>
-            <input
-              type="range"
-              min="0"
-              max="100"
-              value={diaryProgress}
-              onChange={(e) => {
-                setIsDiaryAutoSliding(false);
-                handleDiaryScrub(Number(e.target.value));
-              }}
-              aria-label="Slide across the design diary page"
-              className="w-full accent-[#7A5E4A] cursor-pointer h-1.5 bg-[#B89F8A]/40 rounded-lg"
-            />
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-[#7A5E4A] shrink-0">
-              Right Half
-            </span>
+          {/* Subtle Floating Hint Pill on Mobile */}
+          <div
+            className="sm:hidden pointer-events-none absolute bottom-3 right-3 px-3 py-1 rounded-full text-[11px] font-semibold flex items-center gap-1.5 shadow-md"
+            style={{
+              color: '#F7F4EF',
+              background: 'rgba(75, 54, 42, 0.86)',
+              backdropFilter: 'blur(8px)',
+              border: '1px solid rgba(247, 244, 239, 0.35)'
+            }}
+          >
+            <span>Slide Diary Page</span>
+            <ArrowRight className="w-3.5 h-3.5" />
           </div>
+        </div>
+
+        {/* Smooth Scrubber Bar Below Diary Page (Mobile View) */}
+        <div className="sm:hidden max-w-6xl mx-auto px-4 mt-4 flex items-center gap-3">
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-[#7A5E4A] shrink-0">
+            Left Half
+          </span>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={diaryProgress}
+            onChange={(e) => {
+              setIsDiaryAutoSliding(false);
+              handleDiaryScrub(Number(e.target.value));
+            }}
+            aria-label="Slide across the design diary page"
+            className="w-full accent-[#7A5E4A] cursor-pointer h-1.5 bg-[#B89F8A]/40 rounded-lg"
+          />
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-[#7A5E4A] shrink-0">
+            Right Half
+          </span>
         </div>
       </section>
 
