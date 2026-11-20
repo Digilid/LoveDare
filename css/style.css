@@ -348,22 +348,29 @@ img {
   border-bottom: 1px solid rgba(184, 159, 138, 0.2);
 }
 
+.lovdare-nav-collapse {
+  visibility: visible !important;
+}
+
 @media (max-width: 991px) {
+  .navbar-collapse {
+    background-color: var(--color-charcoal);
+    padding: 1.25rem 1.5rem;
+    border-radius: var(--radius-md);
+    margin-top: 1rem;
+    border: 1px solid rgba(184, 159, 138, 0.25);
+    box-shadow: var(--shadow-xl);
+  }
   .navbar-nav .nav-link {
-    padding: 0.4rem 0.65rem !important;
-    font-size: 0.8rem;
+    padding: 0.75rem 0.5rem !important;
+    border-bottom: 1px solid rgba(184, 159, 138, 0.12);
+  }
+  .navbar-nav .nav-item:last-child .nav-link {
     border-bottom: none;
   }
-  .brand-title {
-    font-size: 1.35rem;
-  }
-  .brand-tagline {
-    font-size: 0.52rem;
-  }
-  .brand-logo-mark {
-    width: 32px;
-    height: 32px;
-    font-size: 1rem;
+  .nav-action-btn {
+    width: 100%;
+    margin-top: 1rem;
   }
 }
 

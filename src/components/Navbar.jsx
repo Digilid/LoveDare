@@ -45,7 +45,7 @@ export default function Navbar({ isDetailPage = false }) {
       id="mainNavbar"
       aria-label="Main Navigation"
     >
-      <div className="container d-flex align-items-center justify-content-between flex-wrap gap-2">
+      <div className="container">
         <Link className="navbar-brand-wrapper" to="/" onClick={() => setIsMenuOpen(false)}>
           <div className="brand-logo-mark" aria-hidden="true">
             <i className="bi bi-flower2"></i>
@@ -56,61 +56,77 @@ export default function Navbar({ isDetailPage = false }) {
           </div>
         </Link>
 
-        {/* Always-Visible Header Navigation Links: Home, Products, Contact */}
-        <ul className="navbar-nav d-flex flex-row align-items-center justify-content-center gap-1 gap-sm-3 mx-auto my-0">
-          <li className="nav-item">
-            <Link
-              className={`nav-link ${!isDetailPage ? 'active' : ''}`}
-              aria-current={!isDetailPage ? 'page' : undefined}
-              to="/"
-              onClick={() => {
-                setIsMenuOpen(false);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-            >
-              Home
-            </Link>
-          </li>
-          <li className="nav-item">
-            <a
-              className={`nav-link ${isDetailPage ? 'active' : ''}`}
-              href="#boxes"
-              onClick={(e) => handleSectionClick(e, 'boxes')}
-            >
-              Products
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              className="nav-link"
-              href="#contact"
-              onClick={(e) => handleSectionClick(e, 'contact')}
-            >
-              Contact
-            </a>
-          </li>
-        </ul>
+        <button
+          className="navbar-toggler"
+          type="button"
+          onClick={() => setIsMenuOpen((prev) => !prev)}
+          aria-controls="navbarLovdareContent"
+          aria-expanded={isMenuOpen}
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
 
-        <div className="d-none d-lg-flex align-items-center gap-3">
-          {isDetailPage ? (
-            <a
-              href="#boxes"
-              className="btn-lovdare btn-lovdare-primary nav-action-btn"
-              onClick={(e) => handleSectionClick(e, 'boxes')}
-            >
-              <i className="bi bi-arrow-left"></i>
-              <span>All Boxes</span>
-            </a>
-          ) : (
-            <a
-              href="#boxes"
-              className="btn-lovdare btn-lovdare-primary nav-action-btn"
-              onClick={(e) => handleSectionClick(e, 'boxes')}
-            >
-              <span>Explore the Boxes</span>
-              <i className="bi bi-arrow-right"></i>
-            </a>
-          )}
+        <div
+          className={`navbar-collapse lovdare-nav-collapse ${
+            isMenuOpen ? 'd-block show' : 'd-none'
+          } d-lg-flex`}
+          id="navbarLovdareContent"
+        >
+          <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+              <Link
+                className={`nav-link ${!isDetailPage ? 'active' : ''}`}
+                aria-current={!isDetailPage ? 'page' : undefined}
+                to="/"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+              >
+                Home
+              </Link>
+            </li>
+            <li className="nav-item">
+              <a
+                className={`nav-link ${isDetailPage ? 'active' : ''}`}
+                href="#boxes"
+                onClick={(e) => handleSectionClick(e, 'boxes')}
+              >
+                Products
+              </a>
+            </li>
+            <li className="nav-item">
+              <a
+                className="nav-link"
+                href="#contact"
+                onClick={(e) => handleSectionClick(e, 'contact')}
+              >
+                Contact
+              </a>
+            </li>
+          </ul>
+          <div className="d-flex align-items-center gap-3">
+            {isDetailPage ? (
+              <a
+                href="#boxes"
+                className="btn-lovdare btn-lovdare-primary nav-action-btn"
+                onClick={(e) => handleSectionClick(e, 'boxes')}
+              >
+                <i className="bi bi-arrow-left"></i>
+                <span>All Boxes</span>
+              </a>
+            ) : (
+              <a
+                href="#boxes"
+                className="btn-lovdare btn-lovdare-primary nav-action-btn"
+                onClick={(e) => handleSectionClick(e, 'boxes')}
+              >
+                <span>Explore the Boxes</span>
+                <i className="bi bi-arrow-right"></i>
+              </a>
+            )}
+          </div>
         </div>
       </div>
     </nav>
