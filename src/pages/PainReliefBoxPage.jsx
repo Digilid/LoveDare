@@ -911,67 +911,16 @@ export default function PainReliefBoxPage() {
       <section className="py-12 sm:py-16 bg-[#E6DCC6]/40 border-b border-[#B89F8A]/35 overflow-hidden">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           {/* Header Matching Screenshot ("BEHIND THE CRAFT / The Design Diary") */}
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-5">
-            <div>
-              <span className="text-xs font-semibold uppercase tracking-[0.22em] text-[#7A5E4A] block mb-1">
-                BEHIND THE CRAFT
-              </span>
-              <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-[#4B362A] m-0">
-                The Care &amp; Design Diary
-              </h2>
-              <p className="text-xs sm:text-sm text-[#57524E] mt-1 mb-0">
-                Slide slowly across our craft notebook page to explore the raw materials, botanicals, and thermal science inside.
-              </p>
-            </div>
-
-            {/* Slow-Slide Interactive Controls */}
-            <div className="flex items-center gap-2 self-start sm:self-auto">
-              <button
-                type="button"
-                onClick={() => setIsDiaryAutoSliding((prev) => !prev)}
-                className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold transition-all cursor-pointer border ${
-                  isDiaryAutoSliding
-                    ? 'bg-[#4B362A] text-[#F7F4EF] border-[#4B362A]'
-                    : 'bg-[#F7F4EF] text-[#4B362A] border-[#B89F8A]/60 hover:bg-[#7A5E4A] hover:text-[#F7F4EF]'
-                }`}
-              >
-                {isDiaryAutoSliding ? (
-                  <>
-                    <Pause className="w-3.5 h-3.5" />
-                    <span>Pause Slow Slide</span>
-                  </>
-                ) : (
-                  <>
-                    <Play className="w-3.5 h-3.5" />
-                    <span>Slow Auto-Slide</span>
-                  </>
-                )}
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setIsDiaryAutoSliding(false);
-                  slideDiarySlowly(-1);
-                }}
-                aria-label="Slide diary left"
-                className="w-9 h-9 rounded-full bg-[#F7F4EF] hover:bg-[#7A5E4A] text-[#4B362A] hover:text-[#F7F4EF] flex items-center justify-center border border-[#B89F8A]/50 transition-colors cursor-pointer"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setIsDiaryAutoSliding(false);
-                  slideDiarySlowly(1);
-                }}
-                aria-label="Slide diary right"
-                className="w-9 h-9 rounded-full bg-[#F7F4EF] hover:bg-[#7A5E4A] text-[#4B362A] hover:text-[#F7F4EF] flex items-center justify-center border border-[#B89F8A]/50 transition-colors cursor-pointer"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
+          <div className="mb-5">
+            <span className="text-xs font-semibold uppercase tracking-[0.22em] text-[#7A5E4A] block mb-1">
+              BEHIND THE CRAFT
+            </span>
+            <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-[#4B362A] m-0">
+              The Care &amp; Design Diary
+            </h2>
+            <p className="text-xs sm:text-sm text-[#57524E] mt-1 mb-0">
+              Slide slowly across our craft notebook page to explore the raw materials, botanicals, and thermal science inside.
+            </p>
           </div>
 
           {/* Single Notebook Page Viewport:
@@ -1322,196 +1271,126 @@ export default function PainReliefBoxPage() {
       </section>
 
       {/* =====================================================================
-          SECTION 6: CUSTOMER FEEDBACK 3D SLIDER (Real Pain Relief Stories)
+          SECTION 6: CUSTOMER FEEDBACK (Normal Cards & Slider Like Happy Period Box)
          ===================================================================== */}
-      <section className="py-14 sm:py-18 px-4 sm:px-6 bg-[#E6DCC6]/35 overflow-hidden select-none">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
-            <span className="text-xs font-semibold uppercase tracking-widest text-[#7A5E4A] block mb-1.5">
-              CUSTOMER FEEDBACK
+      <section className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="mb-4">
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <span className="text-xs font-semibold uppercase tracking-widest text-[#7A5E4A] block mb-2">
+              LOVED BY WOMEN &amp; THOUGHTFUL GIFTERS
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-[#4B362A] mb-2">
+            <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-[#4B362A]">
               Real Stories of Comfort &amp; Relief
             </h2>
-            <p className="text-xs sm:text-sm text-[#57524E] mb-0">
-              Swipe through feedback from women and partners who gifted the Pain Relief Box.
-            </p>
           </div>
 
-          {/* 3D Coverflow Feedback Slider */}
-          <div className="relative w-full flex flex-col items-center">
+          {/* Desktop View: 3 Cards in One Row */}
+          <div className="hidden md:grid md:grid-cols-3 gap-6">
+            {PAIN_RELIEF_FEEDBACK.slice(0, 3).map((rev) => (
+              <div
+                key={rev.id}
+                className="bg-white rounded-2xl p-6 border border-[#B89F8A]/35 shadow-sm flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center gap-1 text-[#7A5E4A] mb-3">
+                    {[...Array(rev.rating)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-[#B89F8A] text-[#7A5E4A]" />
+                    ))}
+                  </div>
+                  <p className="text-sm text-[#2B2B2B] italic leading-relaxed mb-5">
+                    “{rev.comment}”
+                  </p>
+                </div>
+                <div className="pt-3 border-t border-[#E6DCC6] flex items-center justify-between">
+                  <div>
+                    <strong className="text-sm font-semibold text-[#4B362A] block">
+                      {rev.name}
+                    </strong>
+                    <span className="text-xs text-[#57524E]">{rev.location}</span>
+                  </div>
+                  <span className="text-[11px] font-medium px-2.5 py-1 rounded-full bg-[#F7F4EF] text-[#7A5E4A] border border-[#B89F8A]/30">
+                    Pain Relief Box
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Mobile View: Normal Single-Row Horizontal Slider */}
+          <div
+            className="md:hidden overflow-hidden"
+            onTouchStart={(e) => {
+              feedbackDragStartXRef.current = e.touches[0].clientX;
+            }}
+            onTouchEnd={(e) => {
+              if (feedbackDragStartXRef.current === null) return;
+              const delta = e.changedTouches[0].clientX - feedbackDragStartXRef.current;
+              feedbackDragStartXRef.current = null;
+              if (delta < -40) {
+                setActiveFeedbackIdx(
+                  (prev) => (prev + 1) % PAIN_RELIEF_FEEDBACK.slice(0, 3).length
+                );
+              } else if (delta > 40) {
+                setActiveFeedbackIdx(
+                  (prev) =>
+                    (prev - 1 + PAIN_RELIEF_FEEDBACK.slice(0, 3).length) %
+                    PAIN_RELIEF_FEEDBACK.slice(0, 3).length
+                );
+              }
+            }}
+          >
             <div
-              className="relative w-full h-[290px] sm:h-[300px] flex items-center justify-center cursor-grab active:cursor-grabbing"
-              style={{ perspective: '1000px' }}
-              onMouseDown={(e) => {
-                feedbackDragStartXRef.current = e.clientX;
-                feedbackDragDeltaRef.current = 0;
-              }}
-              onMouseMove={(e) => {
-                if (feedbackDragStartXRef.current === null) return;
-                feedbackDragDeltaRef.current =
-                  e.clientX - feedbackDragStartXRef.current;
-              }}
-              onMouseUp={() => {
-                if (feedbackDragStartXRef.current === null) return;
-                const d = feedbackDragDeltaRef.current;
-                feedbackDragStartXRef.current = null;
-                feedbackDragDeltaRef.current = 0;
-                if (d < -35) {
-                  setActiveFeedbackIdx((prev) => (prev + 1) % PAIN_RELIEF_FEEDBACK.length);
-                } else if (d > 35) {
-                  setActiveFeedbackIdx(
-                    (prev) =>
-                      (prev - 1 + PAIN_RELIEF_FEEDBACK.length) %
-                      PAIN_RELIEF_FEEDBACK.length
-                  );
-                }
-              }}
-              onMouseLeave={() => {
-                feedbackDragStartXRef.current = null;
-              }}
-              onTouchStart={(e) => {
-                feedbackDragStartXRef.current = e.touches[0].clientX;
-                feedbackDragDeltaRef.current = 0;
-              }}
-              onTouchMove={(e) => {
-                if (feedbackDragStartXRef.current === null) return;
-                feedbackDragDeltaRef.current =
-                  e.touches[0].clientX - feedbackDragStartXRef.current;
-              }}
-              onTouchEnd={() => {
-                if (feedbackDragStartXRef.current === null) return;
-                const d = feedbackDragDeltaRef.current;
-                feedbackDragStartXRef.current = null;
-                feedbackDragDeltaRef.current = 0;
-                if (d < -35) {
-                  setActiveFeedbackIdx((prev) => (prev + 1) % PAIN_RELIEF_FEEDBACK.length);
-                } else if (d > 35) {
-                  setActiveFeedbackIdx(
-                    (prev) =>
-                      (prev - 1 + PAIN_RELIEF_FEEDBACK.length) %
-                      PAIN_RELIEF_FEEDBACK.length
-                  );
-                }
+              className="flex"
+              style={{
+                transform: `translate3d(-${(activeFeedbackIdx % 3) * 100}%, 0, 0)`,
+                transition: 'transform 500ms cubic-bezier(0.22, 1, 0.36, 1)'
               }}
             >
-              <div
-                className="relative w-full h-full flex items-center justify-center"
-                style={{ transformStyle: 'preserve-3d' }}
-              >
-                {PAIN_RELIEF_FEEDBACK.map((fb, idx) => {
-                  const { offset, style } = getLightCoverflowStyle(
-                    idx,
-                    activeFeedbackIdx,
-                    PAIN_RELIEF_FEEDBACK.length
-                  );
-                  const isActive = offset === 0;
-
-                  return (
-                    <div
-                      key={fb.id}
-                      onClick={() => {
-                        if (Math.abs(feedbackDragDeltaRef.current) > 15) return;
-                        setActiveFeedbackIdx(idx);
-                      }}
-                      style={{
-                        ...style,
-                        background: '#F7F4EF',
-                        border: isActive
-                          ? '1.5px solid #7A5E4A'
-                          : '1px solid rgba(184, 159, 138, 0.45)',
-                        boxShadow: isActive
-                          ? '0 22px 45px -12px rgba(75, 54, 42, 0.22)'
-                          : '0 10px 24px -8px rgba(75, 54, 42, 0.1)'
-                      }}
-                      className="absolute w-[275px] sm:w-[360px] lg:w-[400px] p-5 sm:p-6 flex flex-col justify-between cursor-pointer"
-                    >
-                      <div>
-                        <div className="flex items-center justify-between mb-2.5">
-                          <div className="flex items-center gap-1 text-[#7A5E4A]">
-                            {[...Array(fb.rating)].map((_, i) => (
-                              <Star
-                                key={i}
-                                className="w-3.5 h-3.5 fill-[#B89F8A] text-[#7A5E4A]"
-                              />
-                            ))}
-                          </div>
-                          <span className="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-[#E6DCC6]/75 text-[#4B362A]">
-                            {fb.tag}
-                          </span>
-                        </div>
-
-                        <h3 className="font-serif text-base sm:text-lg font-semibold text-[#4B362A] mb-1.5">
-                          “{fb.highlight}”
-                        </h3>
-
-                        <p className="text-xs text-[#2B2B2B]/85 italic leading-relaxed mb-4">
-                          {fb.comment}
-                        </p>
+              {PAIN_RELIEF_FEEDBACK.slice(0, 3).map((rev) => (
+                <div key={rev.id} className="w-full shrink-0 px-1">
+                  <div className="bg-white rounded-2xl p-5 border border-[#B89F8A]/35 shadow-sm flex flex-col justify-between h-full">
+                    <div>
+                      <div className="flex items-center gap-1 text-[#7A5E4A] mb-2.5">
+                        {[...Array(rev.rating)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-[#B89F8A] text-[#7A5E4A]" />
+                        ))}
                       </div>
-
-                      <div className="pt-3 border-t border-[#E6DCC6] flex items-center justify-between">
-                        <div>
-                          <strong className="text-xs sm:text-sm font-semibold text-[#4B362A] block">
-                            {fb.name}
-                          </strong>
-                          <span className="text-[11px] text-[#57524E]">
-                            {fb.location}
-                          </span>
-                        </div>
-                        <span className="text-[10px] font-semibold text-[#7A5E4A]">
-                          Pain Relief Box
-                        </span>
-                      </div>
+                      <p className="text-xs sm:text-sm text-[#2B2B2B] italic leading-relaxed mb-4">
+                        “{rev.comment}”
+                      </p>
                     </div>
-                  );
-                })}
-              </div>
-
-              {/* Desktop Arrows */}
-              <button
-                type="button"
-                onClick={() =>
-                  setActiveFeedbackIdx(
-                    (prev) =>
-                      (prev - 1 + PAIN_RELIEF_FEEDBACK.length) %
-                      PAIN_RELIEF_FEEDBACK.length
-                  )
-                }
-                aria-label="Previous review"
-                className="hidden sm:flex absolute left-2 lg:left-6 top-1/2 -translate-y-1/2 z-40 w-10 h-10 rounded-full bg-[#4B362A] text-[#F7F4EF] items-center justify-center hover:bg-[#7A5E4A] transition-all border-0 cursor-pointer shadow-md"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button
-                type="button"
-                onClick={() =>
-                  setActiveFeedbackIdx(
-                    (prev) => (prev + 1) % PAIN_RELIEF_FEEDBACK.length
-                  )
-                }
-                aria-label="Next review"
-                className="hidden sm:flex absolute right-2 lg:right-6 top-1/2 -translate-y-1/2 z-40 w-10 h-10 rounded-full bg-[#4B362A] text-[#F7F4EF] items-center justify-center hover:bg-[#7A5E4A] transition-all border-0 cursor-pointer shadow-md"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
+                    <div className="pt-3 border-t border-[#E6DCC6] flex items-center justify-between">
+                      <div>
+                        <strong className="text-sm font-semibold text-[#4B362A] block">
+                          {rev.name}
+                        </strong>
+                        <span className="text-xs text-[#57524E]">{rev.location}</span>
+                      </div>
+                      <span className="text-[11px] font-medium px-2.5 py-1 rounded-full bg-[#F7F4EF] text-[#7A5E4A] border border-[#B89F8A]/30">
+                        Pain Relief Box
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
 
-            {/* Dots */}
-            <div className="flex items-center justify-center gap-2 mt-3">
-              {PAIN_RELIEF_FEEDBACK.map((fb, idx) => (
-                <button
-                  key={fb.id}
-                  type="button"
-                  aria-label={`Select review ${idx + 1}`}
-                  onClick={() => setActiveFeedbackIdx(idx)}
-                  className={`h-2 rounded-full transition-all duration-300 border-0 cursor-pointer ${
-                    activeFeedbackIdx === idx
-                      ? 'w-7 bg-[#7A5E4A]'
-                      : 'w-2 bg-[#B89F8A]/50'
-                  }`}
-                />
-              ))}
+            {/* Mobile Slider Dots */}
+            <div className="flex items-center justify-center gap-2 mt-4">
+              {PAIN_RELIEF_FEEDBACK.slice(0, 3).map((rev, idx) => {
+                const activeDot = activeFeedbackIdx % 3;
+                return (
+                  <button
+                    key={rev.id}
+                    type="button"
+                    aria-label={`Go to review ${idx + 1}`}
+                    onClick={() => setActiveFeedbackIdx(idx)}
+                    className={`h-2 rounded-full transition-all duration-300 border-0 cursor-pointer ${
+                      activeDot === idx ? 'w-6 bg-[#7A5E4A]' : 'w-2 bg-[#B89F8A]/45'
+                    }`}
+                  />
+                );
+              })}
             </div>
           </div>
         </div>
