@@ -923,8 +923,8 @@ export default function PainReliefBoxPage() {
           </div>
         </div>
 
-        {/* Full-Width (100% Edge-to-Edge, No Left/Right Padding) Notebook Page Viewport */}
-        <div className="relative w-full overflow-hidden border-y-2 border-[#B89F8A]/60 shadow-lg bg-[#EAE3D5]">
+        {/* Full-Width on Mobile (100% Edge-to-Edge), Compact Centered Size on Desktop */}
+        <div className="relative w-full md:max-w-4xl lg:max-w-[920px] md:mx-auto md:rounded-[22px] overflow-hidden border-y-2 md:border-2 border-[#B89F8A]/60 shadow-lg bg-[#EAE3D5]">
           <div
             ref={diaryScrollRef}
             onScroll={handleDiaryScroll}
@@ -958,8 +958,8 @@ export default function PainReliefBoxPage() {
               WebkitOverflowScrolling: 'touch'
             }}
           >
-            {/* Single Wide Diary Page (190vw on mobile = ~half page visible at once, 100% width on desktop) */}
-            <div className="w-[190vw] sm:w-full relative">
+            {/* Single Wide Diary Page (190vw on mobile = ~half page visible at once, compact full fit on desktop) */}
+            <div className="w-[190vw] md:w-full relative">
               <img
                 src="assets/images/pain-relief-diary.jpg"
                 alt="Lovdare Pain Relief Box Design Diary — Craft & Botanical Notes"
