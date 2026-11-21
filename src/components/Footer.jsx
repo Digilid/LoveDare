@@ -81,7 +81,9 @@ export default function Footer() {
 
         {/* Footer Bottom */}
         <div className="footer-bottom text-center">
-          <p className="mb-0">&copy; 2026 Lovdare. All rights reserved.</p>
+          <p className="mb-0" style={{ color: '#E6DCC6' }}>
+            &copy; {new Date().getFullYear()} Lovdare. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

@@ -1725,8 +1725,12 @@ img {
   margin-top: 2.5rem;
   padding-top: 1.5rem;
   border-top: 1px solid rgba(184, 159, 138, 0.18);
-  font-size: 0.8rem;
-  color: var(--color-taupe);
+  font-size: 0.85rem;
+  color: var(--color-beige);
+}
+
+.footer-bottom p {
+  color: var(--color-beige);
 }
 
 @media (max-width: 991px) {
