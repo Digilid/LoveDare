@@ -968,20 +968,6 @@ export default function PainReliefBoxPage() {
               />
             </div>
           </div>
-
-          {/* Subtle Floating Hint Pill on Mobile */}
-          <div
-            className="sm:hidden pointer-events-none absolute bottom-3 right-3 px-3 py-1 rounded-full text-[11px] font-semibold flex items-center gap-1.5 shadow-md"
-            style={{
-              color: '#F7F4EF',
-              background: 'rgba(75, 54, 42, 0.86)',
-              backdropFilter: 'blur(8px)',
-              border: '1px solid rgba(247, 244, 239, 0.35)'
-            }}
-          >
-            <span>Slide Diary Page</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </div>
         </div>
 
         {/* Smooth Scrubber Bar Below Diary Page (Mobile View) */}
