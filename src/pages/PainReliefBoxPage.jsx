@@ -974,34 +974,14 @@ export default function PainReliefBoxPage() {
          ===================================================================== */}
       <section className="py-12 sm:py-16 bg-[#F7F4EF] border-b border-[#B89F8A]/30">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          {/* Header Row with Left Arrow, Centered Title, Right Arrow (Matches Screenshot) */}
-          <div className="flex items-center justify-between max-w-4xl mx-auto mb-6 sm:mb-8">
-            <button
-              type="button"
-              onClick={() => scrollIncludedBy(-1)}
-              aria-label="Previous included item"
-              className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#E6DCC6]/70 hover:bg-[#7A5E4A] text-[#4B362A] hover:text-[#F7F4EF] flex items-center justify-center transition-colors border border-[#B89F8A]/40 cursor-pointer"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-
-            <div className="text-center">
-              <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#7A5E4A] block mb-1">
-                BOX CONTENTS
-              </span>
-              <h2 className="font-serif text-2xl sm:text-4xl font-semibold text-[#4B362A] m-0">
-                What&apos;s Included?
-              </h2>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => scrollIncludedBy(1)}
-              aria-label="Next included item"
-              className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#E6DCC6]/70 hover:bg-[#7A5E4A] text-[#4B362A] hover:text-[#F7F4EF] flex items-center justify-center transition-colors border border-[#B89F8A]/40 cursor-pointer"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
+          {/* Centered Title Header */}
+          <div className="text-center max-w-4xl mx-auto mb-6 sm:mb-8">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#7A5E4A] block mb-1">
+              BOX CONTENTS
+            </span>
+            <h2 className="font-serif text-2xl sm:text-4xl font-semibold text-[#4B362A] m-0">
+              What&apos;s Included?
+            </h2>
           </div>
 
           {/* Horizontal Peek Slider (Large Framed Cards with Right-Side Peek on Mobile & Desktop) */}
