@@ -31,6 +31,7 @@ const PAIN_BOX_SLIDER_PRODUCTS = [
     step: '01 / 05',
     badge: 'Soothing Warmth',
     title: 'Heating Pad / Hot Water Bag',
+    description: 'For soothing warmth and menstrual cramp comfort.',
     image: 'assets/images/pain-prod-heating-pad.jpg',
     subImages: [
       {
@@ -56,6 +57,7 @@ const PAIN_BOX_SLIDER_PRODUCTS = [
     step: '02 / 05',
     badge: 'Gentle Relaxation',
     title: 'Relaxing Massage Oil',
+    description: 'For gentle abdominal massage and relaxation.',
     image: 'assets/images/pain-prod-massage-oil.jpg',
     subImages: [
       {
@@ -81,6 +83,7 @@ const PAIN_BOX_SLIDER_PRODUCTS = [
     step: '03 / 05',
     badge: 'Dual Therapy',
     title: 'Reusable Hot & Cold Gel Pack',
+    description: 'A reusable comfort pack for hot & cold relief.',
     image: 'assets/images/pain-prod-gel-pack.jpg',
     subImages: [
       {
@@ -106,6 +109,7 @@ const PAIN_BOX_SLIDER_PRODUCTS = [
     step: '04 / 05',
     badge: 'Calming Infusion',
     title: 'Herbal Tea Bags',
+    description: 'Ginger or chamomile tea for a soothing experience.',
     image: 'assets/images/pain-prod-herbal-tea.jpg',
     subImages: [
       {
@@ -131,6 +135,7 @@ const PAIN_BOX_SLIDER_PRODUCTS = [
     step: '05 / 05',
     badge: 'On-the-Go Relief',
     title: 'Disposable Heat Patches',
+    description: 'Portable heat patches for convenient use.',
     image: 'assets/images/pain-prod-heat-patches.jpg',
     subImages: [
       {
@@ -673,7 +678,7 @@ export default function PainReliefBoxPage() {
           {/* 3D Coverflow Product Images Slider */}
           <div className="relative w-full flex flex-col items-center">
             <div
-              className="relative w-full h-[290px] sm:h-[335px] lg:h-[355px] flex items-center justify-center cursor-grab active:cursor-grabbing"
+              className="relative w-full h-[315px] sm:h-[360px] lg:h-[380px] flex items-center justify-center cursor-grab active:cursor-grabbing"
               style={{ perspective: '1000px' }}
               onMouseDown={(e) => handleHeroPointerDown(e.clientX)}
               onMouseMove={(e) => handleHeroPointerMove(e.clientX)}
@@ -735,7 +740,7 @@ export default function PainReliefBoxPage() {
 
                       <div className="px-1.5 pb-0.5 text-center">
                         <h3
-                          className="font-serif text-base sm:text-lg font-semibold mb-0 line-clamp-1"
+                          className="font-serif text-base sm:text-lg font-semibold mb-1 line-clamp-1"
                           style={{
                             color: '#F7F4EF',
                             textShadow: '0 2px 8px rgba(28, 20, 15, 0.65)'
@@ -743,6 +748,15 @@ export default function PainReliefBoxPage() {
                         >
                           {prod.title}
                         </h3>
+                        <p
+                          className="text-[11px] sm:text-xs leading-snug mb-0 line-clamp-2"
+                          style={{
+                            color: '#E6DCC6',
+                            textShadow: '0 1px 6px rgba(28, 20, 15, 0.5)'
+                          }}
+                        >
+                          {prod.description}
+                        </p>
                       </div>
                     </div>
                   );
