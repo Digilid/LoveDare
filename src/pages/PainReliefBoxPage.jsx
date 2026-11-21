@@ -357,15 +357,18 @@ export default function PainReliefBoxPage() {
 
   useEffect(() => {
     const handleScrollPacking = () => {
-      const sectionEl = packingSectionRef.current;
-      if (!sectionEl) return;
-      const rect = sectionEl.getBoundingClientRect();
+      const boxStageEl = packingSectionRef.current;
+      if (!boxStageEl) return;
+      const rect = boxStageEl.getBoundingClientRect();
       const winH = window.innerHeight || 800;
 
-      // Start packing as section approaches center-top of viewport; finish before user leaves the sticky track
-      const scrollableDistance = Math.max(1, rect.height - winH * 0.72);
-      const scrolledInto = winH * 0.28 - rect.top;
-      const rawProgress = scrolledInto / scrollableDistance;
+      // Measure the vertical center of the box stage relative to the viewport:
+      // Starts open at 78% viewport height (lower middle), packs items between 78% -> 54%,
+      // and finishes closing the box at 36% viewport height (right as the Buy Now button sits at center screen).
+      const boxCenterY = rect.top + rect.height * 0.5;
+      const startY = winH * 0.78;
+      const endY = winH * 0.36;
+      const rawProgress = (startY - boxCenterY) / Math.max(1, startY - endY);
       const clamped = Math.max(0, Math.min(1, rawProgress));
       setPackScrollProgress(clamped);
     };
@@ -995,184 +998,182 @@ export default function PainReliefBoxPage() {
            Scroll Up   -> Box Opens & Products Lift Back Out)
          ===================================================================== */}
       {(() => {
-        // First 60% of scroll puts all 5 products into the open LovDare box;
-        // Remaining 40% of scroll closes the LovDare box lid with satin bow.
-        const itemsPackOverall = Math.max(0, Math.min(1, packScrollProgress / 0.58));
+        // First 56% of scroll range puts all 5 products into the open LovDare box;
+        // Remaining 44% of scroll range closes the LovDare box lid with satin bow.
+        const itemsPackOverall = Math.max(0, Math.min(1, packScrollProgress / 0.56));
         const boxCloseProgress = Math.max(
           0,
-          Math.min(1, (packScrollProgress - 0.58) / 0.34)
+          Math.min(1, (packScrollProgress - 0.56) / 0.44)
         );
         const isBoxFullyClosed = boxCloseProgress > 0.75;
 
         return (
-          <section
-            ref={packingSectionRef}
-            className="relative h-[155vh] sm:h-[165vh] bg-[#F7F4EF] border-b border-[#B89F8A]/30 select-none"
-          >
-            <div className="sticky top-[68px] sm:top-[78px] min-h-[calc(100vh-74px)] flex flex-col items-center justify-center py-6 sm:py-8 px-4 sm:px-6 overflow-hidden">
-              <div className="max-w-4xl mx-auto w-full flex flex-col items-center text-center">
-                {/* Matched Brand Color Eyebrow, Heading & Subtitle */}
-                <span className="inline-block px-3.5 py-1 rounded-full text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] bg-[#7A5E4A]/12 text-[#7A5E4A] border border-[#7A5E4A]/25 mb-2">
-                  ALL 5 COMFORT ESSENTIALS IN ONE BOX
-                </span>
-                <h2 className="font-serif text-2xl sm:text-4xl font-semibold text-[#4B362A] mb-1.5">
-                  {isBoxFullyClosed
-                    ? 'Sealed in Your LovDare Keepsake Box'
-                    : 'Packed With Care, Ready for Her Comfort'}
-                </h2>
-                <p className="text-xs sm:text-sm text-[#57524E] max-w-lg mx-auto mb-2 sm:mb-3">
-                  {isBoxFullyClosed
-                    ? 'All 5 pain relief essentials are packed inside. Scroll up to reopen the box, or click Buy Now below.'
-                    : 'Scroll down to pack all 5 comfort essentials into the LovDare box and seal it for gifting.'}
-                </p>
+          <section className="relative py-10 sm:py-14 px-4 sm:px-6 bg-[#F7F4EF] border-b border-[#B89F8A]/30 overflow-hidden select-none">
+            <div className="max-w-4xl mx-auto w-full flex flex-col items-center text-center">
+              {/* Matched Brand Color Eyebrow, Heading & Subtitle */}
+              <span className="inline-block px-3.5 py-1 rounded-full text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] bg-[#7A5E4A]/12 text-[#7A5E4A] border border-[#7A5E4A]/25 mb-2">
+                ALL 5 COMFORT ESSENTIALS IN ONE BOX
+              </span>
+              <h2 className="font-serif text-2xl sm:text-4xl font-semibold text-[#4B362A] mb-1.5">
+                {isBoxFullyClosed
+                  ? 'Sealed in Your LovDare Keepsake Box'
+                  : 'Packed With Care, Ready for Her Comfort'}
+              </h2>
+              <p className="text-xs sm:text-sm text-[#57524E] max-w-lg mx-auto mb-6 sm:mb-8">
+                {isBoxFullyClosed
+                  ? 'All 5 pain relief essentials are packed inside. Scroll up to reopen the box, or click Buy Now below.'
+                  : 'Scroll down to pack all 5 comfort essentials into the LovDare box and seal it for gifting.'}
+              </p>
 
-                {/* Scroll Stage: Realistic Open/Closed "LovDare" Box + 5 Products */}
-                <div className="relative w-full max-w-[460px] sm:max-w-[540px] aspect-[4/3] flex items-center justify-center my-1">
-                  {/* 1. REALISTIC OPEN "LOVDARE" BOX BASE LAYER */}
-                  <img
-                    src="assets/images/lovdare-real-box-open.jpg"
-                    alt="LovDare Open Keepsake Gift Box"
-                    draggable={false}
-                    className="absolute inset-0 w-full h-full object-contain z-10 pointer-events-none"
-                    style={{
-                      opacity: 1 - boxCloseProgress,
-                      transform: `scale(${1 - boxCloseProgress * 0.015})`,
-                      transition: 'opacity 90ms linear, transform 90ms linear'
-                    }}
-                  />
+              {/* Scroll Stage: Realistic Open/Closed "LovDare" Box + 5 Products */}
+              <div
+                ref={packingSectionRef}
+                className="relative w-full max-w-[440px] sm:max-w-[520px] aspect-[4/3] flex items-center justify-center mt-6 sm:mt-8 mb-2"
+              >
+                {/* 1. REALISTIC OPEN "LOVDARE" BOX BASE LAYER */}
+                <img
+                  src="assets/images/lovdare-real-box-open.jpg"
+                  alt="LovDare Open Keepsake Gift Box"
+                  draggable={false}
+                  className="absolute inset-0 w-full h-full object-contain z-10 pointer-events-none"
+                  style={{
+                    opacity: 1 - boxCloseProgress,
+                    transform: `scale(${1 - boxCloseProgress * 0.015})`,
+                    transition: 'opacity 60ms linear, transform 60ms linear'
+                  }}
+                />
 
-                  {/* 2. ALL 5 PRODUCTS GLIDING INTO / OUT OF THE OPEN BOX ON SCROLL */}
-                  <div
-                    className="absolute inset-0 z-20 pointer-events-none flex items-center justify-center"
-                    style={{
-                      opacity: 1 - boxCloseProgress * 0.95,
-                      transition: 'opacity 80ms linear'
-                    }}
-                  >
-                    {PAIN_BOX_SLIDER_PRODUCTS.map((prod, idx) => {
-                      // Stagger each product slightly along the scroll progress (0 -> 1)
-                      const staggerStart = idx * 0.08;
-                      const staggerSpan = 0.68;
-                      const rawItemT =
-                        (itemsPackOverall - staggerStart) / staggerSpan;
-                      const itemT = Math.max(0, Math.min(1, rawItemT));
-                      // Smooth cubic ease-in-out
-                      const easedT =
-                        itemT < 0.5
-                          ? 4 * itemT * itemT * itemT
-                          : 1 - Math.pow(-2 * itemT + 2, 3) / 2;
+                {/* 2. ALL 5 PRODUCTS GLIDING INTO / OUT OF THE OPEN BOX ON SCROLL */}
+                <div
+                  className="absolute inset-0 z-20 pointer-events-none flex items-center justify-center"
+                  style={{
+                    opacity: 1 - boxCloseProgress * 0.96,
+                    transition: 'opacity 60ms linear'
+                  }}
+                >
+                  {PAIN_BOX_SLIDER_PRODUCTS.map((prod, idx) => {
+                    // Tight stagger so all 5 items smoothly enter before the lid begins closing
+                    const staggerStart = idx * 0.07;
+                    const staggerSpan = 0.72;
+                    const rawItemT =
+                      (itemsPackOverall - staggerStart) / staggerSpan;
+                    const itemT = Math.max(0, Math.min(1, rawItemT));
+                    // Smooth cubic ease-in-out
+                    const easedT =
+                      itemT < 0.5
+                        ? 4 * itemT * itemT * itemT
+                        : 1 - Math.pow(-2 * itemT + 2, 3) / 2;
 
-                      // Floating arc positions above the open LovDare box
-                      const isMobileView = viewportWidth < 640;
-                      const spreadPositions = [
-                        { x: -145, y: -118, rot: -14 },
-                        { x: -74, y: -142, rot: -7 },
-                        { x: 0, y: -152, rot: 0 },
-                        { x: 74, y: -142, rot: 7 },
-                        { x: 145, y: -118, rot: 14 }
-                      ];
-                      // Target positions inside the open crinkle-paper cavity of the LovDare box
-                      const insidePositions = [
-                        { x: -34, y: 42, rot: -6 },
-                        { x: -12, y: 34, rot: -2 },
-                        { x: 10, y: 30, rot: 1 },
-                        { x: 32, y: 36, rot: 4 },
-                        { x: 52, y: 44, rot: 7 }
-                      ];
+                    // Floating arc positions above the open LovDare box
+                    const isMobileView = viewportWidth < 640;
+                    const spreadPositions = [
+                      { x: -140, y: -112, rot: -14 },
+                      { x: -72, y: -136, rot: -7 },
+                      { x: 0, y: -146, rot: 0 },
+                      { x: 72, y: -136, rot: 7 },
+                      { x: 140, y: -112, rot: 14 }
+                    ];
+                    // Target positions inside the open crinkle-paper cavity of the LovDare box
+                    const insidePositions = [
+                      { x: -34, y: 42, rot: -6 },
+                      { x: -12, y: 34, rot: -2 },
+                      { x: 10, y: 30, rot: 1 },
+                      { x: 32, y: 36, rot: 4 },
+                      { x: 52, y: 44, rot: 7 }
+                    ];
 
-                      const sPos = spreadPositions[idx];
-                      const iPos = insidePositions[idx];
-                      const mobileFactor = isMobileView ? 0.74 : 1;
+                    const sPos = spreadPositions[idx];
+                    const iPos = insidePositions[idx];
+                    const mobileFactor = isMobileView ? 0.74 : 1;
 
-                      const currentX =
-                        sPos.x * mobileFactor * (1 - easedT) +
-                        iPos.x * mobileFactor * easedT;
-                      const currentY =
-                        sPos.y * mobileFactor * (1 - easedT) +
-                        iPos.y * mobileFactor * easedT;
-                      const currentRot =
-                        sPos.rot * (1 - easedT) + iPos.rot * easedT;
-                      const startScale = isMobileView ? 0.88 : 1;
-                      const endScale = isMobileView ? 0.48 : 0.56;
-                      const currentScale =
-                        startScale * (1 - easedT) + endScale * easedT;
+                    const currentX =
+                      sPos.x * mobileFactor * (1 - easedT) +
+                      iPos.x * mobileFactor * easedT;
+                    const currentY =
+                      sPos.y * mobileFactor * (1 - easedT) +
+                      iPos.y * mobileFactor * easedT;
+                    const currentRot =
+                      sPos.rot * (1 - easedT) + iPos.rot * easedT;
+                    const startScale = isMobileView ? 0.88 : 1;
+                    const endScale = isMobileView ? 0.48 : 0.56;
+                    const currentScale =
+                      startScale * (1 - easedT) + endScale * easedT;
 
-                      return (
-                        <div
-                          key={`scroll-pack-${prod.id}`}
-                          style={{
-                            transform: `translate3d(${currentX}px, ${currentY}px, 0px) rotate(${currentRot}deg) scale(${currentScale})`,
-                            transition: 'transform 70ms linear'
-                          }}
-                          className="absolute w-[84px] sm:w-[100px] rounded-xl bg-white p-1.5 shadow-[0_10px_24px_rgba(75,54,42,0.22)] border border-[#B89F8A]/70 flex flex-col items-center"
-                        >
-                          <div className="w-full aspect-[4/3] rounded-lg overflow-hidden bg-[#E6DCC6]">
-                            <img
-                              src={prod.image}
-                              alt={prod.title}
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                          <span className="text-[9px] sm:text-[10px] font-semibold text-[#4B362A] mt-1 line-clamp-1 leading-tight px-0.5">
-                            {prod.title.split('/')[0].trim()}
-                          </span>
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  {/* 3. OPEN BOX FRONT WALL OVERLAY (So Products Tuck Behind the "LovDare" Front Panel) */}
-                  <img
-                    src="assets/images/lovdare-real-box-open.jpg"
-                    alt=""
-                    aria-hidden="true"
-                    draggable={false}
-                    className="absolute inset-0 w-full h-full object-contain z-30 pointer-events-none"
-                    style={{
-                      clipPath: 'polygon(26% 68%, 78% 59%, 79% 94%, 26% 94%)',
-                      opacity: 1 - boxCloseProgress,
-                      transform: `scale(${1 - boxCloseProgress * 0.015})`,
-                      transition: 'opacity 90ms linear, transform 90ms linear'
-                    }}
-                  />
-
-                  {/* 4. REALISTIC CLOSED "LOVDARE" BOX WITH RIBBON BOW (Appears as Lid Closes on Scroll Down) */}
-                  <img
-                    src="assets/images/lovdare-real-box-closed.jpg"
-                    alt="LovDare Closed Keepsake Gift Box with Ribbon"
-                    draggable={false}
-                    className="absolute inset-0 w-full h-full object-contain z-40 pointer-events-none"
-                    style={{
-                      opacity: boxCloseProgress,
-                      transform: `scale(${0.985 + boxCloseProgress * 0.015})`,
-                      transition: 'opacity 90ms linear, transform 90ms linear'
-                    }}
-                  />
-                </div>
-
-                {/* Scroll Progress Indicator Pill + Primary "Buy Now" Button Below Box */}
-                <div className="mt-1 flex flex-col items-center gap-3">
-                  <div className="flex items-center gap-2 text-[11px] font-semibold text-[#7A5E4A]">
-                    <span>Open Box</span>
-                    <div className="w-28 sm:w-36 h-1.5 rounded-full bg-[#E6DCC6] overflow-hidden border border-[#B89F8A]/40">
+                    return (
                       <div
-                        className="h-full bg-[#7A5E4A] rounded-full transition-all duration-75"
-                        style={{ width: `${Math.round(packScrollProgress * 100)}%` }}
-                      />
-                    </div>
-                    <span>Closed Box</span>
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={() => handleOrderWhatsApp(false)}
-                    className="group inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-full text-sm sm:text-base font-semibold text-[#F7F4EF] bg-[#4B362A] hover:bg-[#7A5E4A] transition-all duration-300 hover:-translate-y-0.5 cursor-pointer border-0 shadow-lg"
-                  >
-                    <Package className="w-4 h-4 text-[#E6DCC6]" />
-                    <span>Buy Now</span>
-                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-                  </button>
+                        key={`scroll-pack-${prod.id}`}
+                        style={{
+                          transform: `translate3d(${currentX}px, ${currentY}px, 0px) rotate(${currentRot}deg) scale(${currentScale})`,
+                          transition: 'transform 55ms linear'
+                        }}
+                        className="absolute w-[84px] sm:w-[100px] rounded-xl bg-white p-1.5 shadow-[0_10px_24px_rgba(75,54,42,0.22)] border border-[#B89F8A]/70 flex flex-col items-center"
+                      >
+                        <div className="w-full aspect-[4/3] rounded-lg overflow-hidden bg-[#E6DCC6]">
+                          <img
+                            src={prod.image}
+                            alt={prod.title}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <span className="text-[9px] sm:text-[10px] font-semibold text-[#4B362A] mt-1 line-clamp-1 leading-tight px-0.5">
+                          {prod.title.split('/')[0].trim()}
+                        </span>
+                      </div>
+                    );
+                  })}
                 </div>
+
+                {/* 3. OPEN BOX FRONT WALL OVERLAY (So Products Tuck Behind the "LovDare" Front Panel) */}
+                <img
+                  src="assets/images/lovdare-real-box-open.jpg"
+                  alt=""
+                  aria-hidden="true"
+                  draggable={false}
+                  className="absolute inset-0 w-full h-full object-contain z-30 pointer-events-none"
+                  style={{
+                    clipPath: 'polygon(26% 68%, 78% 59%, 79% 94%, 26% 94%)',
+                    opacity: 1 - boxCloseProgress,
+                    transform: `scale(${1 - boxCloseProgress * 0.015})`,
+                    transition: 'opacity 60ms linear, transform 60ms linear'
+                  }}
+                />
+
+                {/* 4. REALISTIC CLOSED "LOVDARE" BOX WITH RIBBON BOW (Appears as Lid Closes on Scroll Down) */}
+                <img
+                  src="assets/images/lovdare-real-box-closed.jpg"
+                  alt="LovDare Closed Keepsake Gift Box with Ribbon"
+                  draggable={false}
+                  className="absolute inset-0 w-full h-full object-contain z-40 pointer-events-none"
+                  style={{
+                    opacity: boxCloseProgress,
+                    transform: `scale(${0.985 + boxCloseProgress * 0.015})`,
+                    transition: 'opacity 60ms linear, transform 60ms linear'
+                  }}
+                />
+              </div>
+
+              {/* Scroll Progress Indicator Pill + Primary "Buy Now" Button Below Box */}
+              <div className="mt-2 flex flex-col items-center gap-3">
+                <div className="flex items-center gap-2 text-[11px] font-semibold text-[#7A5E4A]">
+                  <span>Open Box</span>
+                  <div className="w-28 sm:w-36 h-1.5 rounded-full bg-[#E6DCC6] overflow-hidden border border-[#B89F8A]/40">
+                    <div
+                      className="h-full bg-[#7A5E4A] rounded-full transition-all duration-75"
+                      style={{ width: `${Math.round(packScrollProgress * 100)}%` }}
+                    />
+                  </div>
+                  <span>Closed Box</span>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => handleOrderWhatsApp(false)}
+                  className="group inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-full text-sm sm:text-base font-semibold text-[#F7F4EF] bg-[#4B362A] hover:bg-[#7A5E4A] transition-all duration-300 hover:-translate-y-0.5 cursor-pointer border-0 shadow-lg"
+                >
+                  <Package className="w-4 h-4 text-[#E6DCC6]" />
+                  <span>Buy Now</span>
+                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                </button>
               </div>
             </div>
           </section>
