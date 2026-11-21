@@ -14,14 +14,16 @@ import {
   Sparkles,
   Play,
   Pause,
-  Plus
+  Plus,
+  X,
+  ZoomIn
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { LOVDARE_CONFIG } from '../config/lovdareConfig';
 
 /* ============================================================================
-   1. TOP HERO SLIDER ITEMS (5 Curated Pain Relief Products)
+   1. TOP HERO SLIDER ITEMS (5 Curated Pain Relief Products + Sub-Images Gallery)
    ============================================================================ */
 const PAIN_BOX_SLIDER_PRODUCTS = [
   {
@@ -29,40 +31,125 @@ const PAIN_BOX_SLIDER_PRODUCTS = [
     step: '01 / 05',
     badge: 'Soothing Warmth',
     title: 'Heating Pad / Hot Water Bag',
-    description: 'For soothing warmth and menstrual cramp comfort.',
-    image: 'assets/images/pain-prod-heating-pad.jpg'
+    image: 'assets/images/pain-prod-heating-pad.jpg',
+    subImages: [
+      {
+        src: 'assets/images/pain-prod-heating-pad.jpg',
+        label: 'Knitted Cotton Heating Pad'
+      },
+      {
+        src: 'assets/images/box-period.jpg',
+        label: 'Inside the Pain Relief Box'
+      },
+      {
+        src: 'assets/images/hero-1.jpg',
+        label: 'Cozy Cramp Comfort Ritual'
+      },
+      {
+        src: 'assets/images/pain-relief-hero-bg.jpg',
+        label: 'Warm Linen Studio Detail'
+      }
+    ]
   },
   {
     id: 'relaxing-massage-oil',
     step: '02 / 05',
     badge: 'Gentle Relaxation',
     title: 'Relaxing Massage Oil',
-    description: 'For gentle abdominal massage and relaxation.',
-    image: 'assets/images/pain-prod-massage-oil.jpg'
+    image: 'assets/images/pain-prod-massage-oil.jpg',
+    subImages: [
+      {
+        src: 'assets/images/pain-prod-massage-oil.jpg',
+        label: 'Herbal Abdominal Massage Oil'
+      },
+      {
+        src: 'assets/images/box-menopause.jpg',
+        label: 'Botanical Essential Oil Blend'
+      },
+      {
+        src: 'assets/images/hero-2.jpg',
+        label: 'Calming Aromatherapy Care'
+      },
+      {
+        src: 'assets/images/about-story.jpg',
+        label: 'Gentle Self-Care Application'
+      }
+    ]
   },
   {
     id: 'reusable-hot-cold-gel-pack',
     step: '03 / 05',
     badge: 'Dual Therapy',
     title: 'Reusable Hot & Cold Gel Pack',
-    description: 'A reusable comfort pack.',
-    image: 'assets/images/pain-prod-gel-pack.jpg'
+    image: 'assets/images/pain-prod-gel-pack.jpg',
+    subImages: [
+      {
+        src: 'assets/images/pain-prod-gel-pack.jpg',
+        label: 'Reusable Hot & Cold Gel Pack'
+      },
+      {
+        src: 'assets/images/box-postpartum.jpg',
+        label: 'Soft Fabric Comfort Sleeve'
+      },
+      {
+        src: 'assets/images/hero-1.jpg',
+        label: 'Dual Thermal & Cooling Relief'
+      },
+      {
+        src: 'assets/images/box-period.jpg',
+        label: 'Complete Comfort Bundle'
+      }
+    ]
   },
   {
     id: 'herbal-tea-bags',
     step: '04 / 05',
     badge: 'Calming Infusion',
     title: 'Herbal Tea Bags',
-    description: 'Ginger or chamomile tea for a soothing experience.',
-    image: 'assets/images/pain-prod-herbal-tea.jpg'
+    image: 'assets/images/pain-prod-herbal-tea.jpg',
+    subImages: [
+      {
+        src: 'assets/images/pain-prod-herbal-tea.jpg',
+        label: 'Chamomile & Ginger Pyramid Tea'
+      },
+      {
+        src: 'assets/images/box-iron.jpg',
+        label: 'Warming Botanical Sips'
+      },
+      {
+        src: 'assets/images/pain-relief-hero-bg.jpg',
+        label: 'Whole Dried Chamomile & Ginger'
+      },
+      {
+        src: 'assets/images/about-story.jpg',
+        label: 'Soothing Evening Tea Ritual'
+      }
+    ]
   },
   {
     id: 'disposable-heat-patches',
     step: '05 / 05',
     badge: 'On-the-Go Relief',
     title: 'Disposable Heat Patches',
-    description: 'Portable heat patches for convenient use.',
-    image: 'assets/images/pain-prod-heat-patches.jpg'
+    image: 'assets/images/pain-prod-heat-patches.jpg',
+    subImages: [
+      {
+        src: 'assets/images/pain-prod-heat-patches.jpg',
+        label: 'Air-Activated Disposable Heat Patches'
+      },
+      {
+        src: 'assets/images/box-period.jpg',
+        label: '8-Hour Portable Cramp Relief'
+      },
+      {
+        src: 'assets/images/hero-2.jpg',
+        label: 'Breathable 100% Cotton Surface'
+      },
+      {
+        src: 'assets/images/hero-1.jpg',
+        label: 'Discreet On-the-Go Warmth'
+      }
+    ]
   }
 ];
 
@@ -222,13 +309,20 @@ const PAIN_RELIEF_FEEDBACK = [
 const SLIDER_COUNT = PAIN_BOX_SLIDER_PRODUCTS.length;
 
 export default function PainReliefBoxPage() {
-  // 1. Top 3D Product Slider State (Synchronized with Product Details Below)
+  // 1. Top 3D Product Slider State + Sub-Images & Full Image Lightbox State
   const [activeProductIdx, setActiveProductIdx] = useState(0);
+  const [activeSubImageIdx, setActiveSubImageIdx] = useState(0);
+  const [lightboxImageIdx, setLightboxImageIdx] = useState(null);
   const [viewportWidth, setViewportWidth] = useState(
     typeof window !== 'undefined' ? window.innerWidth : 1280
   );
   const heroDragStartXRef = useRef(null);
   const heroDragDeltaRef = useRef(0);
+
+  // Reset highlighted sub-image to 0 whenever the active product card changes
+  useEffect(() => {
+    setActiveSubImageIdx(0);
+  }, [activeProductIdx]);
 
   // 2. "What's Included?" Slider State & Ref
   const includedScrollRef = useRef(null);
@@ -579,7 +673,7 @@ export default function PainReliefBoxPage() {
           {/* 3D Coverflow Product Images Slider */}
           <div className="relative w-full flex flex-col items-center">
             <div
-              className="relative w-full h-[320px] sm:h-[365px] lg:h-[385px] flex items-center justify-center cursor-grab active:cursor-grabbing"
+              className="relative w-full h-[290px] sm:h-[335px] lg:h-[355px] flex items-center justify-center cursor-grab active:cursor-grabbing"
               style={{ perspective: '1000px' }}
               onMouseDown={(e) => handleHeroPointerDown(e.clientX)}
               onMouseMove={(e) => handleHeroPointerMove(e.clientX)}
@@ -594,25 +688,34 @@ export default function PainReliefBoxPage() {
                 style={{ transformStyle: 'preserve-3d' }}
               >
                 {PAIN_BOX_SLIDER_PRODUCTS.map((prod, idx) => {
-                  const { style } = getCoverflowStyle(
+                  const { offset, style } = getCoverflowStyle(
                     idx,
                     activeProductIdx,
                     SLIDER_COUNT
                   );
+                  const isActive = offset === 0;
+                  const displayedImage =
+                    isActive && prod.subImages?.[activeSubImageIdx]
+                      ? prod.subImages[activeSubImageIdx].src
+                      : prod.image;
 
                   return (
                     <div
                       key={prod.id}
                       onClick={() => {
                         if (Math.abs(heroDragDeltaRef.current) > 15) return;
-                        setActiveProductIdx(idx);
+                        if (!isActive) {
+                          setActiveProductIdx(idx);
+                        } else {
+                          setLightboxImageIdx(activeSubImageIdx);
+                        }
                       }}
                       style={style}
                       className="absolute w-[235px] sm:w-[275px] lg:w-[305px] p-3 sm:p-3.5 flex flex-col cursor-pointer"
                     >
-                      <div className="relative aspect-[4/3] w-full rounded-[14px] overflow-hidden mb-3 bg-black/25 border border-white/25">
+                      <div className="relative aspect-[4/3] w-full rounded-[14px] overflow-hidden mb-2.5 bg-black/25 border border-white/25">
                         <img
-                          src={prod.image}
+                          src={displayedImage}
                           alt={prod.title}
                           draggable={false}
                           className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
@@ -630,9 +733,9 @@ export default function PainReliefBoxPage() {
                         </span>
                       </div>
 
-                      <div className="px-1.5 pb-1 text-center">
+                      <div className="px-1.5 pb-0.5 text-center">
                         <h3
-                          className="font-serif text-base sm:text-lg font-semibold mb-1 line-clamp-1"
+                          className="font-serif text-base sm:text-lg font-semibold mb-0 line-clamp-1"
                           style={{
                             color: '#F7F4EF',
                             textShadow: '0 2px 8px rgba(28, 20, 15, 0.65)'
@@ -640,15 +743,6 @@ export default function PainReliefBoxPage() {
                         >
                           {prod.title}
                         </h3>
-                        <p
-                          className="text-[11px] sm:text-xs leading-snug mb-0 line-clamp-2"
-                          style={{
-                            color: '#E6DCC6',
-                            textShadow: '0 1px 6px rgba(28, 20, 15, 0.5)'
-                          }}
-                        >
-                          {prod.description}
-                        </p>
                       </div>
                     </div>
                   );
@@ -690,7 +784,7 @@ export default function PainReliefBoxPage() {
             </div>
 
             {/* Pagination Dots */}
-            <div className="flex items-center justify-center gap-2 mt-4">
+            <div className="flex items-center justify-center gap-2 mt-3">
               {PAIN_BOX_SLIDER_PRODUCTS.map((prod, idx) => {
                 const isActive = idx === activeProductIdx;
                 return (
@@ -708,8 +802,149 @@ export default function PainReliefBoxPage() {
                 );
               })}
             </div>
+
+            {/* =================================================================
+                ACTIVE PRODUCT SUB-IMAGES ROW (Click Any Thumbnail for Full View)
+               ================================================================= */}
+            {currentCenterProduct?.subImages && (
+              <div className="mt-5 w-full max-w-md mx-auto flex flex-col items-center">
+                <div className="flex items-center justify-center gap-2.5 sm:gap-3.5 px-2">
+                  {currentCenterProduct.subImages.map((subImg, subIdx) => {
+                    const isSubSelected = subIdx === activeSubImageIdx;
+                    return (
+                      <button
+                        key={`${currentCenterProduct.id}-sub-${subIdx}`}
+                        type="button"
+                        onClick={() => {
+                          setActiveSubImageIdx(subIdx);
+                          setLightboxImageIdx(subIdx);
+                        }}
+                        title={`View full image: ${subImg.label}`}
+                        className={`group relative w-16 h-12 sm:w-20 sm:h-15 rounded-xl overflow-hidden transition-all duration-300 cursor-pointer p-0 bg-black/30 shrink-0 ${
+                          isSubSelected
+                            ? 'ring-2 ring-[#F7F4EF] scale-105 shadow-[0_6px_18px_rgba(0,0,0,0.45)]'
+                            : 'opacity-75 hover:opacity-100 hover:scale-105 border border-[#E6DCC6]/40'
+                        }`}
+                      >
+                        <img
+                          src={subImg.src}
+                          alt={subImg.label}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                          <ZoomIn className="w-3.5 h-3.5 text-[#F7F4EF]" />
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         </div>
+
+        {/* =====================================================================
+            FULL IMAGE LIGHTBOX MODAL (Opens When Clicking Sub-Images)
+           ===================================================================== */}
+        {lightboxImageIdx !== null && currentCenterProduct?.subImages && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md"
+            onClick={() => setLightboxImageIdx(null)}
+          >
+            <div
+              className="relative max-w-3xl w-full rounded-[24px] overflow-hidden bg-[#2B211B] border border-[#E6DCC6]/35 shadow-2xl p-3 sm:p-5"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Top Bar: Active Product Title & Close Button */}
+              <div className="flex items-center justify-between gap-3 pb-3 mb-3 border-b border-[#E6DCC6]/20 px-1">
+                <div>
+                  <span className="text-[10px] font-semibold uppercase tracking-widest text-[#B89F8A] block">
+                    {currentCenterProduct.title} · Image {lightboxImageIdx + 1} of{' '}
+                    {currentCenterProduct.subImages.length}
+                  </span>
+                  <h3
+                    className="font-serif text-lg sm:text-xl font-semibold m-0"
+                    style={{ color: '#F7F4EF' }}
+                  >
+                    {currentCenterProduct.subImages[lightboxImageIdx]?.label}
+                  </h3>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setLightboxImageIdx(null)}
+                  aria-label="Close full image view"
+                  className="w-9 h-9 rounded-full bg-[#4B362A] hover:bg-[#7A5E4A] text-[#F7F4EF] flex items-center justify-center border border-[#E6DCC6]/30 cursor-pointer transition-colors"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Main Full Image Showcase */}
+              <div className="relative aspect-[4/3] w-full rounded-[16px] overflow-hidden bg-black/40">
+                <img
+                  src={currentCenterProduct.subImages[lightboxImageIdx]?.src}
+                  alt={currentCenterProduct.subImages[lightboxImageIdx]?.label}
+                  className="w-full h-full object-contain sm:object-cover"
+                />
+
+                {/* Prev/Next Sub-Image Buttons Inside Lightbox */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    const total = currentCenterProduct.subImages.length;
+                    const prevIdx = (lightboxImageIdx - 1 + total) % total;
+                    setLightboxImageIdx(prevIdx);
+                    setActiveSubImageIdx(prevIdx);
+                  }}
+                  aria-label="Previous image"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#2B211B]/80 hover:bg-[#7A5E4A] text-[#F7F4EF] flex items-center justify-center border border-[#E6DCC6]/35 cursor-pointer transition-all"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    const total = currentCenterProduct.subImages.length;
+                    const nextIdx = (lightboxImageIdx + 1) % total;
+                    setLightboxImageIdx(nextIdx);
+                    setActiveSubImageIdx(nextIdx);
+                  }}
+                  aria-label="Next image"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#2B211B]/80 hover:bg-[#7A5E4A] text-[#F7F4EF] flex items-center justify-center border border-[#E6DCC6]/35 cursor-pointer transition-all"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Bottom Sub-Image Thumbnails Inside Modal */}
+              <div className="flex items-center justify-center gap-2.5 mt-3.5">
+                {currentCenterProduct.subImages.map((subImg, sIdx) => (
+                  <button
+                    key={`modal-thumb-${sIdx}`}
+                    type="button"
+                    onClick={() => {
+                      setLightboxImageIdx(sIdx);
+                      setActiveSubImageIdx(sIdx);
+                    }}
+                    className={`w-14 h-10 sm:w-16 sm:h-12 rounded-lg overflow-hidden p-0 cursor-pointer transition-all ${
+                      sIdx === lightboxImageIdx
+                        ? 'ring-2 ring-[#F7F4EF] scale-105'
+                        : 'opacity-55 hover:opacity-90 border border-[#E6DCC6]/30'
+                    }`}
+                  >
+                    <img
+                      src={subImg.src}
+                      alt={subImg.label}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </section>
 
       {/* =====================================================================
