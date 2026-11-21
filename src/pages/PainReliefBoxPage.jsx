@@ -713,70 +713,23 @@ export default function PainReliefBoxPage() {
       </section>
 
       {/* =====================================================================
-          SECTION 2: DESCRIPTION SECTION (Box Story, Empathy & Key Highlights)
+          SECTION 2: DESCRIPTION SECTION (Concise Box Story & Empathy)
          ===================================================================== */}
-      <section className="py-12 sm:py-16 px-4 sm:px-6 bg-[#F7F4EF] border-b border-[#B89F8A]/30">
-        <div className="max-w-5xl mx-auto">
-          <div className="bg-[#E6DCC6]/55 rounded-[24px] p-6 sm:p-10 border border-[#B89F8A]/40 shadow-sm">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
-              <div className="lg:col-span-8">
-                <span className="inline-block px-3.5 py-1 rounded-full text-[11px] font-semibold uppercase tracking-widest bg-[#7A5E4A]/15 text-[#7A5E4A] border border-[#7A5E4A]/25 mb-3">
-                  ABOUT THIS EDITION · DESCRIPTION
-                </span>
-                <h2 className="font-serif text-2xl sm:text-4xl font-semibold text-[#4B362A] mb-3">
-                  Designed for Her Heaviest, Cramp-Filled Days
-                </h2>
-                <p className="text-xs sm:text-base text-[#2B2B2B]/85 leading-relaxed mb-3">
-                  Period pain is caused by elevated prostaglandins that trigger intense uterine muscle contractions and restrict local blood flow. The <strong>Lovdare Pain Relief Box</strong> is curated to counter every layer of that discomfort naturally—combining continuous 40°C external heat therapy, antispasmodic botanical oils, warming herbal infusions, and magnesium-rich dark cacao.
-                </p>
-                <p className="text-xs sm:text-sm text-[#57524E] leading-relaxed mb-0">
-                  Whether you are gifting your partner, sister, daughter, best friend, or treating yourself, this box says: <em>“You don’t have to power through pain alone. Rest, warm up, and let yourself be cared for.”</em>
-                </p>
-              </div>
-
-              <div className="lg:col-span-4 bg-[#F7F4EF] rounded-2xl p-5 sm:p-6 border border-[#B89F8A]/40 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-baseline justify-between mb-2">
-                    <span className="text-xs uppercase tracking-wider font-semibold text-[#7A5E4A]">
-                      Curated Edition Price
-                    </span>
-                    <span className="font-serif text-2xl sm:text-3xl font-bold text-[#4B362A]">
-                      ₹1,299
-                    </span>
-                  </div>
-                  <p className="text-xs text-[#57524E] mb-4">
-                    Includes all 5 full-size pain relief essentials + luxury keepsake box &amp; custom handwritten note card.
-                  </p>
-                  <div className="space-y-2 mb-5 text-xs text-[#2B2B2B]">
-                    <div className="flex items-center gap-2">
-                      <ShieldCheck className="w-4 h-4 text-[#7A5E4A] shrink-0" />
-                      <span>100% Toxin-Free &amp; Doctor-Approved Botanicals</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Package className="w-4 h-4 text-[#7A5E4A] shrink-0" />
-                      <span>Discreet, Warm Kraft Gift Packaging</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-2">
-                  <button
-                    type="button"
-                    onClick={() => handleOrderWhatsApp(false)}
-                    className="w-full py-3 px-4 rounded-full text-xs sm:text-sm font-semibold text-[#F7F4EF] bg-[#4B362A] hover:bg-[#7A5E4A] transition-all cursor-pointer border-0 flex items-center justify-center gap-2 shadow-md"
-                  >
-                    <span>Order Pain Relief Box</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                  <a
-                    href="#addMoreProductsSection"
-                    className="w-full py-2.5 px-4 rounded-full text-xs font-semibold text-[#4B362A] bg-[#E6DCC6]/70 hover:bg-[#E6DCC6] transition-all text-center no-underline border border-[#B89F8A]/40"
-                  >
-                    + Add Extra Comfort Items Below
-                  </a>
-                </div>
-              </div>
-            </div>
+      <section className="py-10 sm:py-14 px-4 sm:px-6 bg-[#F7F4EF] border-b border-[#B89F8A]/30">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-[#E6DCC6]/55 rounded-[24px] p-6 sm:p-9 border border-[#B89F8A]/40 shadow-sm text-center">
+            <span className="inline-block px-3.5 py-1 rounded-full text-[11px] font-semibold uppercase tracking-widest bg-[#7A5E4A]/15 text-[#7A5E4A] border border-[#7A5E4A]/25 mb-3">
+              ABOUT THIS EDITION · DESCRIPTION
+            </span>
+            <h2 className="font-serif text-2xl sm:text-4xl font-semibold text-[#4B362A] mb-3">
+              Designed for Her Heaviest, Cramp-Filled Days
+            </h2>
+            <p className="text-xs sm:text-base text-[#2B2B2B]/85 leading-relaxed max-w-2xl mx-auto mb-2">
+              The <strong>Lovdare Pain Relief Box</strong> brings together soothing heat therapy, relaxing massage oils, and calming herbal infusions to ease period cramps naturally.
+            </p>
+            <p className="text-xs sm:text-sm text-[#57524E] leading-relaxed max-w-xl mx-auto mb-0 italic">
+              “You don’t have to power through pain alone—rest, warm up, and let yourself be cared for.”
+            </p>
           </div>
         </div>
       </section>
