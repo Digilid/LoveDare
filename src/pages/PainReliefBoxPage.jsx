@@ -1165,28 +1165,6 @@ export default function PainReliefBoxPage() {
       })()}
 
       {/* =====================================================================
-          SECTION 2: DESCRIPTION SECTION (Concise Box Story & Empathy)
-         ===================================================================== */}
-      <section className="py-10 sm:py-14 px-4 sm:px-6 bg-[#F7F4EF] border-b border-[#B89F8A]/30">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-[#E6DCC6]/55 rounded-[24px] p-6 sm:p-9 border border-[#B89F8A]/40 shadow-sm text-center">
-            <span className="inline-block px-3.5 py-1 rounded-full text-[11px] font-semibold uppercase tracking-widest bg-[#7A5E4A]/15 text-[#7A5E4A] border border-[#7A5E4A]/25 mb-3">
-              ABOUT THIS EDITION · DESCRIPTION
-            </span>
-            <h2 className="font-serif text-2xl sm:text-4xl font-semibold text-[#4B362A] mb-3">
-              Designed for Her Heaviest, Cramp-Filled Days
-            </h2>
-            <p className="text-xs sm:text-base text-[#2B2B2B]/85 leading-relaxed max-w-2xl mx-auto mb-2">
-              The <strong>Lovdare Pain Relief Box</strong> brings together soothing heat therapy, relaxing massage oils, and calming herbal infusions to ease period cramps naturally.
-            </p>
-            <p className="text-xs sm:text-sm text-[#57524E] leading-relaxed max-w-xl mx-auto mb-0 italic">
-              “You don’t have to power through pain alone—rest, warm up, and let yourself be cared for.”
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* =====================================================================
           SECTION 3: "WHAT'S INCLUDED?" CONTENTS SLIDER (TreatBox-Inspired)
          ===================================================================== */}
       <section className="py-12 sm:py-16 bg-[#F7F4EF] border-b border-[#B89F8A]/30">
