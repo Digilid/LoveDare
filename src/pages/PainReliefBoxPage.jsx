@@ -351,6 +351,53 @@ export default function PainReliefBoxPage() {
   const feedbackDragStartXRef = useRef(null);
   const feedbackDragDeltaRef = useRef(0);
 
+  // 6. Interactive Open-to-Closed Gift Box Packing Section State
+  const packingSectionRef = useRef(null);
+  const [packPhase, setPackPhase] = useState('spread'); // 'spread' | 'inside' | 'closed'
+  const [packCycleKey, setPackCycleKey] = useState(0);
+
+  const triggerPackingSequence = () => {
+    setPackPhase('spread');
+    setPackCycleKey((prev) => prev + 1);
+  };
+
+  // Run the spread -> products reach box -> box closes sequence whenever packCycleKey increments
+  useEffect(() => {
+    if (packCycleKey === 0) return;
+    setPackPhase('spread');
+    const toInsideTimer = setTimeout(() => {
+      setPackPhase('inside');
+    }, 650);
+    const toClosedTimer = setTimeout(() => {
+      setPackPhase('closed');
+    }, 1850);
+    return () => {
+      clearTimeout(toInsideTimer);
+      clearTimeout(toClosedTimer);
+    };
+  }, [packCycleKey]);
+
+  // Automatically start the packing animation when the section scrolls into view
+  useEffect(() => {
+    const el = packingSectionRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      setPackCycleKey(1);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setPackCycleKey((prev) => (prev === 0 ? 1 : prev));
+          }
+        });
+      },
+      { threshold: 0.35 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     document.title = 'Pain Relief Box | Happy Period Box Collection — Lovdare';
     window.scrollTo({ top: 0, behavior: 'auto' });
@@ -959,6 +1006,260 @@ export default function PainReliefBoxPage() {
             </div>
           </div>
         )}
+      </section>
+
+      {/* =====================================================================
+          SECTION 1.5: ANIMATED GIFT BOX PACKING SHOWCASE + "BUY NOW" CTA
+         ===================================================================== */}
+      <section
+        ref={packingSectionRef}
+        className="relative py-12 sm:py-16 px-4 sm:px-6 bg-gradient-to-b from-[#2B211B] via-[#3B2B20] to-[#F7F4EF] overflow-hidden select-none"
+      >
+        <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
+          <span className="inline-block px-3.5 py-1 rounded-full text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] bg-[#F7F4EF]/15 text-[#E6DCC6] border border-[#E6DCC6]/30 mb-2.5 backdrop-blur-sm">
+            ALL 5 COMFORT ESSENTIALS IN ONE BOX
+          </span>
+          <h2
+            className="font-serif text-2xl sm:text-4xl font-semibold mb-1.5"
+            style={{
+              color: '#F7F4EF',
+              textShadow: '0 2px 14px rgba(20, 14, 10, 0.55)'
+            }}
+          >
+            Packed With Care, Ready for Her Comfort
+          </h2>
+          <p className="text-xs sm:text-sm text-[#E6DCC6]/90 max-w-lg mx-auto mb-6">
+            {packPhase === 'closed'
+              ? 'All 5 pain relief essentials are tucked inside and sealed in our signature keepsake gift box.'
+              : 'Watch all 5 curated comfort essentials come together inside the Pain Relief Box.'}
+          </p>
+
+          {/* 3D Animated Open -> Products Reach Inside -> Closed Gift Box Stage */}
+          <div
+            onClick={triggerPackingSequence}
+            title="Click to replay box packing animation"
+            className="relative w-full max-w-2xl h-[300px] sm:h-[340px] flex items-end justify-center pb-5 cursor-pointer"
+            style={{ perspective: '1100px' }}
+          >
+            {/* Ambient Warm Studio Glow Behind the Box */}
+            <div
+              className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[260px] sm:w-[340px] h-[120px] rounded-full pointer-events-none transition-all duration-700"
+              style={{
+                background:
+                  packPhase === 'closed'
+                    ? 'radial-gradient(circle, rgba(230, 220, 198, 0.42) 0%, transparent 72%)'
+                    : 'radial-gradient(circle, rgba(184, 159, 138, 0.28) 0%, transparent 72%)',
+                filter: 'blur(18px)'
+              }}
+            />
+
+            {/* 1. OPEN BOX BACK WALL & RAISED OPEN LID (Behind the Flying Products) */}
+            <div className="relative w-[240px] sm:w-[300px] h-[145px] sm:h-[170px]">
+              {/* Open Lid Flipping Down from Back Edge */}
+              <div
+                className="absolute left-0 right-0 bottom-full h-[115px] sm:h-[135px] rounded-t-[16px] origin-bottom transition-all duration-700"
+                style={{
+                  background:
+                    'linear-gradient(180deg, #8D6E57 0%, #6E533F 55%, #584131 100%)',
+                  border: '2px solid rgba(230, 220, 198, 0.45)',
+                  borderBottom: 'none',
+                  boxShadow: '0 -10px 28px rgba(20, 14, 10, 0.45)',
+                  transform:
+                    packPhase === 'closed'
+                      ? 'rotateX(-180deg) translateY(2px)'
+                      : 'rotateX(-22deg)',
+                  opacity: packPhase === 'closed' ? 0 : 1,
+                  transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)'
+                }}
+              >
+                {/* Inner Kraft Lid Texture & Subtle Brand Mark */}
+                <div className="w-full h-full flex flex-col items-center justify-center p-3 border-b border-[#4B362A]/40">
+                  <span className="font-serif italic text-xs sm:text-sm text-[#F7F4EF]/80 tracking-widest">
+                    Lovdare · Love Darefully
+                  </span>
+                </div>
+              </div>
+
+              {/* Box Interior Back Wall + Cream Tissue Paper Lining */}
+              <div
+                className="absolute inset-0 rounded-[16px] overflow-hidden"
+                style={{
+                  background:
+                    'linear-gradient(180deg, #4B362A 0%, #3B2B20 100%)',
+                  border: '2px solid rgba(184, 159, 138, 0.45)',
+                  boxShadow: '0 22px 46px -10px rgba(20, 14, 10, 0.65)'
+                }}
+              >
+                {/* Soft Cream Tissue Paper Folds Inside the Open Box */}
+                <div
+                  className="absolute inset-x-2.5 top-2.5 bottom-3 rounded-[12px] transition-opacity duration-500"
+                  style={{
+                    background:
+                      'linear-gradient(135deg, #F7F4EF 0%, #E6DCC6 52%, #D8C7AE 100%)',
+                    boxShadow: 'inset 0 4px 14px rgba(75, 54, 42, 0.25)'
+                  }}
+                />
+              </div>
+
+              {/* 2. ALL 5 PRODUCTS FLYING / REACHING INTO THE OPEN BOX */}
+              <div className="absolute inset-0 z-20 pointer-events-none flex items-center justify-center">
+                {PAIN_BOX_SLIDER_PRODUCTS.map((prod, idx) => {
+                  // Spread positions (fan arc above the open box)
+                  const spreadOffsets = [
+                    { x: -135, y: -138, rot: -14 },
+                    { x: -68, y: -158, rot: -7 },
+                    { x: 0, y: -168, rot: 0 },
+                    { x: 68, y: -158, rot: 7 },
+                    { x: 135, y: -138, rot: 14 }
+                  ];
+                  // Inside-box nestled positions
+                  const insideOffsets = [
+                    { x: -64, y: -6, rot: -6 },
+                    { x: -32, y: -14, rot: -3 },
+                    { x: 0, y: -18, rot: 0 },
+                    { x: 32, y: -14, rot: 3 },
+                    { x: 64, y: -6, rot: 6 }
+                  ];
+
+                  const isMobileView = viewportWidth < 640;
+                  const spreadScaleFactor = isMobileView ? 0.76 : 1;
+                  const sPos = spreadOffsets[idx] || { x: 0, y: -140, rot: 0 };
+                  const iPos = insideOffsets[idx] || { x: 0, y: -10, rot: 0 };
+
+                  const isPacked = packPhase === 'inside' || packPhase === 'closed';
+                  const tx = isPacked
+                    ? iPos.x * (isMobileView ? 0.78 : 1)
+                    : sPos.x * spreadScaleFactor;
+                  const ty = isPacked
+                    ? iPos.y
+                    : sPos.y * (isMobileView ? 0.85 : 1);
+                  const rot = isPacked ? iPos.rot : sPos.rot;
+                  const sc =
+                    packPhase === 'closed'
+                      ? 0.42
+                      : packPhase === 'inside'
+                      ? 0.62
+                      : isMobileView
+                      ? 0.88
+                      : 1;
+
+                  return (
+                    <div
+                      key={`pack-item-${prod.id}`}
+                      style={{
+                        transform: `translate3d(${tx}px, ${ty}px, 0px) rotate(${rot}deg) scale(${sc})`,
+                        opacity: packPhase === 'closed' ? 0 : 1,
+                        transition: `transform 780ms cubic-bezier(0.22, 1, 0.36, 1) ${
+                          idx * 110
+                        }ms, opacity 420ms ease`
+                      }}
+                      className="absolute w-[78px] sm:w-[92px] rounded-xl bg-[#F7F4EF] p-1.5 shadow-xl border border-[#B89F8A]/60 flex flex-col items-center"
+                    >
+                      <div className="w-full aspect-[4/3] rounded-lg overflow-hidden bg-[#E6DCC6]">
+                        <img
+                          src={prod.image}
+                          alt={prod.title}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <span className="text-[9px] font-semibold text-[#4B362A] mt-1 line-clamp-1 leading-tight px-0.5">
+                        {prod.title.split('/')[0].trim()}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* 3. BOX FRONT WALL (Overlaps Lower Half of Products Once They Reach Inside) */}
+              <div
+                className="absolute inset-x-0 bottom-0 h-[86px] sm:h-[102px] rounded-b-[16px] z-30 flex flex-col items-center justify-center overflow-hidden"
+                style={{
+                  background:
+                    'linear-gradient(180deg, #7A5E4A 0%, #5E4636 100%)',
+                  border: '2px solid rgba(230, 220, 198, 0.45)',
+                  borderTop: '1px solid rgba(247, 244, 239, 0.35)',
+                  boxShadow: '0 -4px 14px rgba(28, 20, 15, 0.25)'
+                }}
+              >
+                <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#E6DCC6]/85">
+                  LOVDARE KEEPSAKE BOX
+                </span>
+                <span
+                  className="font-serif text-base sm:text-lg font-semibold mt-0.5"
+                  style={{ color: '#F7F4EF' }}
+                >
+                  Pain Relief Box
+                </span>
+              </div>
+
+              {/* 4. CLOSED BOX TOP LID + RIBBON SEAL (Appears Smoothly When Box Closes) */}
+              <div
+                className="absolute inset-0 rounded-[16px] z-40 flex flex-col items-center justify-center transition-all duration-700 overflow-hidden"
+                style={{
+                  background:
+                    'linear-gradient(145deg, #8B6C55 0%, #684E3B 55%, #4B362A 100%)',
+                  border: '2px solid rgba(247, 244, 239, 0.55)',
+                  boxShadow:
+                    '0 26px 55px -12px rgba(28, 20, 15, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.35)',
+                  transform:
+                    packPhase === 'closed'
+                      ? 'translateY(0px) scale(1)'
+                      : 'translateY(-45px) scale(0.95)',
+                  opacity: packPhase === 'closed' ? 1 : 0,
+                  pointerEvents: packPhase === 'closed' ? 'auto' : 'none',
+                  transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)'
+                }}
+              >
+                {/* Horizontal & Vertical Satin Ribbon Cross */}
+                <div
+                  className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-5"
+                  style={{
+                    background:
+                      'linear-gradient(90deg, rgba(230,220,198,0.75) 0%, rgba(247,244,239,0.92) 50%, rgba(230,220,198,0.75) 100%)',
+                    boxShadow: '0 2px 10px rgba(28, 20, 15, 0.25)'
+                  }}
+                />
+                <div
+                  className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-5"
+                  style={{
+                    background:
+                      'linear-gradient(180deg, rgba(230,220,198,0.75) 0%, rgba(247,244,239,0.92) 50%, rgba(230,220,198,0.75) 100%)',
+                    boxShadow: '0 2px 10px rgba(28, 20, 15, 0.25)'
+                  }}
+                />
+
+                {/* Center Seal Badge on Closed Box */}
+                <div className="relative z-10 px-4 py-2 rounded-full bg-[#4B362A] border-2 border-[#F7F4EF] shadow-lg flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-[#E6DCC6] stroke-[2.5]" />
+                  <span className="font-serif text-xs sm:text-sm font-semibold text-[#F7F4EF] tracking-wide">
+                    Ready to Gift · 5 Items Inside
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Primary "Buy Now" Button & Replay Trigger Below the Box */}
+          <div className="mt-4 flex flex-col items-center gap-2.5">
+            <button
+              type="button"
+              onClick={() => handleOrderWhatsApp(false)}
+              className="group inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-full text-sm sm:text-base font-semibold text-[#F7F4EF] bg-[#4B362A] hover:bg-[#7A5E4A] transition-all duration-300 hover:-translate-y-0.5 cursor-pointer border border-[#F7F4EF]/30 shadow-xl"
+            >
+              <Package className="w-4 h-4 text-[#E6DCC6]" />
+              <span>Buy Now</span>
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </button>
+
+            <button
+              type="button"
+              onClick={triggerPackingSequence}
+              className="text-xs font-semibold text-[#4B362A] hover:text-[#7A5E4A] bg-transparent border-0 cursor-pointer underline underline-offset-4"
+            >
+              {packPhase === 'closed' ? '↻ Replay Box Packing' : 'Packing items into box...'}
+            </button>
+          </div>
+        </div>
       </section>
 
       {/* =====================================================================
