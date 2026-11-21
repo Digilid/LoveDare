@@ -807,8 +807,8 @@ export default function PainReliefBoxPage() {
                 ACTIVE PRODUCT SUB-IMAGES ROW (Click Any Thumbnail for Full View)
                ================================================================= */}
             {currentCenterProduct?.subImages && (
-              <div className="mt-5 w-full max-w-md mx-auto flex flex-col items-center">
-                <div className="flex items-center justify-center gap-2.5 sm:gap-3.5 px-2">
+              <div className="mt-5 w-full max-w-xl mx-auto flex flex-col items-center">
+                <div className="flex items-center justify-center gap-3 sm:gap-4 px-2">
                   {currentCenterProduct.subImages.map((subImg, subIdx) => {
                     const isSubSelected = subIdx === activeSubImageIdx;
                     return (
@@ -820,10 +820,10 @@ export default function PainReliefBoxPage() {
                           setLightboxImageIdx(subIdx);
                         }}
                         title={`View full image: ${subImg.label}`}
-                        className={`group relative w-16 h-12 sm:w-20 sm:h-15 rounded-xl overflow-hidden transition-all duration-300 cursor-pointer p-0 bg-black/30 shrink-0 ${
+                        className={`group relative w-[76px] h-[58px] sm:w-[104px] sm:h-[78px] lg:w-[116px] lg:h-[86px] rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer p-0 bg-black/30 shrink-0 ${
                           isSubSelected
-                            ? 'ring-2 ring-[#F7F4EF] scale-105 shadow-[0_6px_18px_rgba(0,0,0,0.45)]'
-                            : 'opacity-75 hover:opacity-100 hover:scale-105 border border-[#E6DCC6]/40'
+                            ? 'ring-2 ring-[#F7F4EF] scale-105 shadow-[0_8px_22px_rgba(0,0,0,0.5)]'
+                            : 'opacity-80 hover:opacity-100 hover:scale-105 border border-[#E6DCC6]/45'
                         }`}
                       >
                         <img
@@ -832,7 +832,7 @@ export default function PainReliefBoxPage() {
                           className="w-full h-full object-cover"
                         />
                         <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                          <ZoomIn className="w-3.5 h-3.5 text-[#F7F4EF]" />
+                          <ZoomIn className="w-4 h-4 text-[#F7F4EF]" />
                         </div>
                       </button>
                     );
