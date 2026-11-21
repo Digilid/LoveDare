@@ -1010,20 +1010,15 @@ export default function PainReliefBoxPage() {
         return (
           <section className="relative py-10 sm:py-14 px-4 sm:px-6 bg-[#F7F4EF] border-b border-[#B89F8A]/30 overflow-hidden select-none">
             <div className="max-w-4xl mx-auto w-full flex flex-col items-center text-center">
-              {/* Matched Brand Color Eyebrow, Heading & Subtitle */}
+              {/* Matched Brand Color Eyebrow & Heading */}
               <span className="inline-block px-3.5 py-1 rounded-full text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] bg-[#7A5E4A]/12 text-[#7A5E4A] border border-[#7A5E4A]/25 mb-2">
                 ALL 5 COMFORT ESSENTIALS IN ONE BOX
               </span>
-              <h2 className="font-serif text-2xl sm:text-4xl font-semibold text-[#4B362A] mb-1.5">
+              <h2 className="font-serif text-2xl sm:text-4xl font-semibold text-[#4B362A] mb-6 sm:mb-8">
                 {isBoxFullyClosed
                   ? 'Sealed in Your LovDare Keepsake Box'
                   : 'Packed With Care, Ready for Her Comfort'}
               </h2>
-              <p className="text-xs sm:text-sm text-[#57524E] max-w-lg mx-auto mb-6 sm:mb-8">
-                {isBoxFullyClosed
-                  ? 'All 5 pain relief essentials are packed inside. Scroll up to reopen the box, or click Buy Now below.'
-                  : 'Scroll down to pack all 5 comfort essentials into the LovDare box and seal it for gifting.'}
-              </p>
 
               {/* Scroll Stage: Realistic Open/Closed "LovDare" Box + 5 Products */}
               <div
