@@ -1152,19 +1152,8 @@ export default function PainReliefBoxPage() {
                 />
               </div>
 
-              {/* Scroll Progress Indicator Pill + Primary "Buy Now" Button Below Box */}
-              <div className="mt-2 flex flex-col items-center gap-3">
-                <div className="flex items-center gap-2 text-[11px] font-semibold text-[#7A5E4A]">
-                  <span>Open Box</span>
-                  <div className="w-28 sm:w-36 h-1.5 rounded-full bg-[#E6DCC6] overflow-hidden border border-[#B89F8A]/40">
-                    <div
-                      className="h-full bg-[#7A5E4A] rounded-full transition-all duration-75"
-                      style={{ width: `${Math.round(packScrollProgress * 100)}%` }}
-                    />
-                  </div>
-                  <span>Closed Box</span>
-                </div>
-
+              {/* Primary "Buy Now" Button Below Box */}
+              <div className="mt-2 flex flex-col items-center">
                 <button
                   type="button"
                   onClick={() => handleOrderWhatsApp(false)}
