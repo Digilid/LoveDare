@@ -1147,8 +1147,8 @@ export default function PainReliefBoxPage() {
                 />
               </div>
 
-              {/* Primary "Buy Now" Button Below Box */}
-              <div className="mt-2 flex flex-col items-center">
+              {/* Primary "Buy Now" + "+ Add Extra Comfort Items Below" Buttons Below Box */}
+              <div className="mt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
                 <button
                   type="button"
                   onClick={() => handleOrderWhatsApp(false)}
@@ -1158,6 +1158,13 @@ export default function PainReliefBoxPage() {
                   <span>Buy Now</span>
                   <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </button>
+
+                <a
+                  href="#addMoreProductsSection"
+                  className="inline-flex items-center justify-center px-6 py-3.5 rounded-full text-xs sm:text-sm font-semibold text-[#4B362A] bg-[#E6DCC6]/75 hover:bg-[#E6DCC6] transition-all duration-300 hover:-translate-y-0.5 text-center no-underline border border-[#B89F8A]/50 shadow-sm"
+                >
+                  + Add Extra Comfort Items Below
+                </a>
               </div>
             </div>
           </section>
@@ -1220,12 +1227,6 @@ export default function PainReliefBoxPage() {
                     <span>Order Pain Relief Box</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
-                  <a
-                    href="#addMoreProductsSection"
-                    className="w-full py-2.5 px-4 rounded-full text-xs font-semibold text-[#4B362A] bg-[#E6DCC6]/70 hover:bg-[#E6DCC6] transition-all text-center no-underline border border-[#B89F8A]/40"
-                  >
-                    + Add Extra Comfort Items Below
-                  </a>
                 </div>
               </div>
             </div>
