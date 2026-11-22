@@ -1165,6 +1165,75 @@ export default function PainReliefBoxPage() {
       })()}
 
       {/* =====================================================================
+          SECTION 2: DESCRIPTION SECTION (Box Story, Empathy & Key Highlights)
+         ===================================================================== */}
+      <section className="py-12 sm:py-16 px-4 sm:px-6 bg-[#F7F4EF] border-b border-[#B89F8A]/30">
+        <div className="max-w-5xl mx-auto">
+          <div className="bg-[#E6DCC6]/55 rounded-[24px] p-6 sm:p-10 border border-[#B89F8A]/40 shadow-sm">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
+              <div className="lg:col-span-8">
+                <span className="inline-block px-3.5 py-1 rounded-full text-[11px] font-semibold uppercase tracking-widest bg-[#7A5E4A]/15 text-[#7A5E4A] border border-[#7A5E4A]/25 mb-3">
+                  ABOUT THIS EDITION · DESCRIPTION
+                </span>
+                <h2 className="font-serif text-2xl sm:text-4xl font-semibold text-[#4B362A] mb-3">
+                  Designed for Her Heaviest, Cramp-Filled Days
+                </h2>
+                <p className="text-xs sm:text-base text-[#2B2B2B]/85 leading-relaxed mb-3">
+                  Period pain is caused by elevated prostaglandins that trigger intense uterine muscle contractions and restrict local blood flow. The <strong>Lovdare Pain Relief Box</strong> is curated to counter every layer of that discomfort naturally—combining continuous 40°C external heat therapy, antispasmodic botanical oils, warming herbal infusions, and magnesium-rich dark cacao.
+                </p>
+                <p className="text-xs sm:text-sm text-[#57524E] leading-relaxed mb-0">
+                  Whether you are gifting your partner, sister, daughter, best friend, or treating yourself, this box says: <em>“You don’t have to power through pain alone. Rest, warm up, and let yourself be cared for.”</em>
+                </p>
+              </div>
+
+              <div className="lg:col-span-4 bg-[#F7F4EF] rounded-2xl p-5 sm:p-6 border border-[#B89F8A]/40 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-baseline justify-between mb-2">
+                    <span className="text-xs uppercase tracking-wider font-semibold text-[#7A5E4A]">
+                      Curated Edition Price
+                    </span>
+                    <span className="font-serif text-2xl sm:text-3xl font-bold text-[#4B362A]">
+                      ₹1,299
+                    </span>
+                  </div>
+                  <p className="text-xs text-[#57524E] mb-4">
+                    Includes all 5 full-size pain relief essentials + luxury keepsake box &amp; custom handwritten note card.
+                  </p>
+                  <div className="space-y-2 mb-5 text-xs text-[#2B2B2B]">
+                    <div className="flex items-center gap-2">
+                      <ShieldCheck className="w-4 h-4 text-[#7A5E4A] shrink-0" />
+                      <span>100% Toxin-Free &amp; Doctor-Approved Botanicals</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Package className="w-4 h-4 text-[#7A5E4A] shrink-0" />
+                      <span>Discreet, Warm Kraft Gift Packaging</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleOrderWhatsApp(false)}
+                    className="w-full py-3 px-4 rounded-full text-xs sm:text-sm font-semibold text-[#F7F4EF] bg-[#4B362A] hover:bg-[#7A5E4A] transition-all cursor-pointer border-0 flex items-center justify-center gap-2 shadow-md"
+                  >
+                    <span>Order Pain Relief Box</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                  <a
+                    href="#addMoreProductsSection"
+                    className="w-full py-2.5 px-4 rounded-full text-xs font-semibold text-[#4B362A] bg-[#E6DCC6]/70 hover:bg-[#E6DCC6] transition-all text-center no-underline border border-[#B89F8A]/40"
+                  >
+                    + Add Extra Comfort Items Below
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =====================================================================
           SECTION 3: "WHAT'S INCLUDED?" CONTENTS SLIDER (TreatBox-Inspired)
          ===================================================================== */}
       <section className="py-12 sm:py-16 bg-[#F7F4EF] border-b border-[#B89F8A]/30">
@@ -1353,6 +1422,266 @@ export default function PainReliefBoxPage() {
           <span className="text-[11px] font-semibold uppercase tracking-wider text-[#7A5E4A] shrink-0">
             Right Half
           </span>
+        </div>
+      </section>
+
+      {/* =====================================================================
+          SECTION 5: "ADD MORE PRODUCTS" 3D SLIDER + "MAKE YOUR OWN BOX" CTA
+         ===================================================================== */}
+      <section
+        id="addMoreProductsSection"
+        className="py-14 sm:py-18 px-4 sm:px-6 bg-[#F7F4EF] border-b border-[#B89F8A]/35 overflow-hidden select-none"
+      >
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
+            <span className="inline-block px-3.5 py-1 rounded-full text-[11px] font-semibold uppercase tracking-widest bg-[#7A5E4A]/12 text-[#7A5E4A] border border-[#7A5E4A]/25 mb-2">
+              CUSTOMIZE &amp; EXPAND
+            </span>
+            <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-[#4B362A] mb-2">
+              Add More Comfort Products
+            </h2>
+            <p className="text-xs sm:text-sm text-[#57524E] mb-0">
+              Swipe through extra comfort essentials and tap the checkmark (✓) to bundle them into your custom Pain Relief Box.
+            </p>
+          </div>
+
+          {/* 3D Perspective Coverflow Slider for Add-On Products */}
+          <div className="relative w-full flex flex-col items-center">
+            <div
+              className="relative w-full h-[355px] sm:h-[380px] flex items-center justify-center cursor-grab active:cursor-grabbing"
+              style={{ perspective: '1000px' }}
+              onMouseDown={(e) => {
+                addonDragStartXRef.current = e.clientX;
+                addonDragDeltaRef.current = 0;
+              }}
+              onMouseMove={(e) => {
+                if (addonDragStartXRef.current === null) return;
+                addonDragDeltaRef.current = e.clientX - addonDragStartXRef.current;
+              }}
+              onMouseUp={() => {
+                if (addonDragStartXRef.current === null) return;
+                const d = addonDragDeltaRef.current;
+                addonDragStartXRef.current = null;
+                addonDragDeltaRef.current = 0;
+                if (d < -35) nextAddonSlide();
+                else if (d > 35) prevAddonSlide();
+              }}
+              onMouseLeave={() => {
+                addonDragStartXRef.current = null;
+              }}
+              onTouchStart={(e) => {
+                addonDragStartXRef.current = e.touches[0].clientX;
+                addonDragDeltaRef.current = 0;
+              }}
+              onTouchMove={(e) => {
+                if (addonDragStartXRef.current === null) return;
+                addonDragDeltaRef.current =
+                  e.touches[0].clientX - addonDragStartXRef.current;
+              }}
+              onTouchEnd={() => {
+                if (addonDragStartXRef.current === null) return;
+                const d = addonDragDeltaRef.current;
+                addonDragStartXRef.current = null;
+                addonDragDeltaRef.current = 0;
+                if (d < -35) nextAddonSlide();
+                else if (d > 35) prevAddonSlide();
+              }}
+            >
+              <div
+                className="relative w-full h-full flex items-center justify-center"
+                style={{ transformStyle: 'preserve-3d' }}
+              >
+                {EXTRA_ADDON_PRODUCTS.map((addon, idx) => {
+                  const { offset, style } = getLightCoverflowStyle(
+                    idx,
+                    activeAddonSlideIdx,
+                    EXTRA_ADDON_PRODUCTS.length
+                  );
+                  const isActive = offset === 0;
+                  const isSelected = selectedAddons.includes(addon.id);
+
+                  return (
+                    <div
+                      key={addon.id}
+                      onClick={() => {
+                        if (Math.abs(addonDragDeltaRef.current) > 15) return;
+                        if (!isActive) {
+                          setActiveAddonSlideIdx(idx);
+                        } else {
+                          toggleAddonSelection(addon.id);
+                        }
+                      }}
+                      style={{
+                        ...style,
+                        background: isSelected
+                          ? 'linear-gradient(145deg, #4B362A 0%, #3B2B20 100%)'
+                          : 'linear-gradient(145deg, #FFFFFF 0%, #F7F4EF 100%)',
+                        border: isSelected
+                          ? '2px solid #B89F8A'
+                          : '1px solid rgba(184, 159, 138, 0.5)',
+                        boxShadow: isActive
+                          ? '0 24px 48px -12px rgba(75, 54, 42, 0.28)'
+                          : '0 12px 28px -8px rgba(75, 54, 42, 0.14)'
+                      }}
+                      className="absolute w-[245px] sm:w-[285px] lg:w-[305px] p-3.5 sm:p-4 flex flex-col justify-between cursor-pointer"
+                    >
+                      {/* Checkmark Toggle Badge in Corner (Matches Sketch ✓ Cards) */}
+                      <div className="relative aspect-[4/3] w-full rounded-[14px] overflow-hidden mb-3 bg-[#E6DCC6]">
+                        <img
+                          src={addon.image}
+                          alt={addon.title}
+                          draggable={false}
+                          className="w-full h-full object-cover"
+                        />
+                        <span className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-[#4B362A]/85 text-[#F7F4EF]">
+                          {addon.badge}
+                        </span>
+
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleAddonSelection(addon.id);
+                          }}
+                          aria-label={`Select ${addon.title}`}
+                          className={`absolute top-2.5 right-2.5 w-8 h-8 rounded-full flex items-center justify-center transition-all border cursor-pointer ${
+                            isSelected
+                              ? 'bg-[#7A5E4A] text-[#F7F4EF] border-[#F7F4EF] scale-105 shadow-md'
+                              : 'bg-[#F7F4EF]/90 text-[#4B362A] border-[#B89F8A]'
+                          }`}
+                        >
+                          {isSelected ? (
+                            <Check className="w-4 h-4 stroke-[2.5]" />
+                          ) : (
+                            <Plus className="w-4 h-4" />
+                          )}
+                        </button>
+                      </div>
+
+                      <div className="text-left px-1">
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                          <span
+                            className={`text-[10px] font-bold uppercase tracking-wider ${
+                              isSelected ? 'text-[#E6DCC6]' : 'text-[#7A5E4A]'
+                            }`}
+                          >
+                            {addon.category}
+                          </span>
+                          <span
+                            className={`text-xs font-bold px-2 py-0.5 rounded-full ${
+                              isSelected
+                                ? 'bg-[#7A5E4A] text-[#F7F4EF]'
+                                : 'bg-[#E6DCC6]/75 text-[#4B362A]'
+                            }`}
+                          >
+                            {addon.price}
+                          </span>
+                        </div>
+
+                        <h3
+                          className="font-serif text-base sm:text-lg font-semibold mb-1 line-clamp-1"
+                          style={{
+                            color: isSelected ? '#F7F4EF' : '#4B362A'
+                          }}
+                        >
+                          {addon.title}
+                        </h3>
+
+                        <p
+                          className="text-[11px] leading-snug line-clamp-2 mb-2.5"
+                          style={{
+                            color: isSelected ? '#E6DCC6' : '#57524E'
+                          }}
+                        >
+                          {addon.description}
+                        </p>
+
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleAddonSelection(addon.id);
+                          }}
+                          className={`w-full py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer border ${
+                            isSelected
+                              ? 'bg-[#F7F4EF] text-[#4B362A] border-[#F7F4EF]'
+                              : 'bg-[#7A5E4A] text-[#F7F4EF] border-[#7A5E4A]'
+                          }`}
+                        >
+                          {isSelected ? '✓ Added to Your Box' : '+ Add to Box'}
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Desktop Arrows */}
+              <button
+                type="button"
+                onClick={prevAddonSlide}
+                aria-label="Previous add-on"
+                className="hidden sm:flex absolute left-2 lg:left-6 top-1/2 -translate-y-1/2 z-40 w-10 h-10 rounded-full bg-[#4B362A] text-[#F7F4EF] items-center justify-center hover:bg-[#7A5E4A] transition-all border-0 cursor-pointer shadow-md"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                type="button"
+                onClick={nextAddonSlide}
+                aria-label="Next add-on"
+                className="hidden sm:flex absolute right-2 lg:right-6 top-1/2 -translate-y-1/2 z-40 w-10 h-10 rounded-full bg-[#4B362A] text-[#F7F4EF] items-center justify-center hover:bg-[#7A5E4A] transition-all border-0 cursor-pointer shadow-md"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Dots */}
+            <div className="flex items-center justify-center gap-2 mt-2 mb-6">
+              {EXTRA_ADDON_PRODUCTS.map((addon, idx) => (
+                <button
+                  key={addon.id}
+                  type="button"
+                  aria-label={`View ${addon.title}`}
+                  onClick={() => setActiveAddonSlideIdx(idx)}
+                  className={`h-2 rounded-full transition-all duration-300 border-0 cursor-pointer ${
+                    activeAddonSlideIdx === idx
+                      ? 'w-7 bg-[#7A5E4A]'
+                      : 'w-2 bg-[#B89F8A]/50'
+                  }`}
+                />
+              ))}
+            </div>
+
+            {/* "MAKE YOUR OWN BOX" SUMMARY BAR (Matches Bottom Box in Sketch) */}
+            <div className="w-full max-w-4xl mx-auto rounded-[20px] p-5 sm:p-6 bg-[#3B2B20] text-[#F7F4EF] border border-[#B89F8A]/45 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="text-center sm:text-left">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-[#E6DCC6] block mb-1">
+                  pain relief box (₹1,299) + {selectedAddonObjects.length} extra item
+                  {selectedAddonObjects.length === 1 ? '' : 's'}
+                </span>
+                <h3
+                  className="font-serif text-xl sm:text-2xl font-semibold m-0"
+                  style={{ color: '#F7F4EF' }}
+                >
+                  Make Your Own Box · Total: ₹{totalBoxPrice.toLocaleString('en-IN')}
+                </h3>
+                <p className="text-xs text-[#E6DCC6]/85 mt-1 mb-0">
+                  {selectedAddonObjects.length > 0
+                    ? `Added: ${selectedAddonObjects.map((a) => a.title).join(' · ')}`
+                    : 'Tap any product card above to add extra comfort items to your box.'}
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => handleOrderWhatsApp(true)}
+                className="px-6 py-3 rounded-full text-xs sm:text-sm font-semibold bg-[#7A5E4A] hover:bg-[#B89F8A] text-[#F7F4EF] hover:text-[#2B2B2B] transition-all cursor-pointer border border-[#F7F4EF]/30 shrink-0 inline-flex items-center gap-2 shadow-md"
+              >
+                <span>Make Your Own Box</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
         </div>
       </section>
 
