@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ArrowLeft,
   Plus,
   Minus,
   Trash2,
@@ -9,7 +8,6 @@ import {
   Check,
   X,
   ShoppingBag,
-  Sparkles,
   ChevronUp
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
@@ -566,35 +564,6 @@ export default function MakeYourBoxPage() {
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-            <Link
-              to="/happy-period-box"
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold no-underline transition-all hover:-translate-x-0.5 self-start"
-              style={{
-                color: '#F7F4EF',
-                background: 'rgba(122, 94, 74, 0.65)',
-                border: '1px solid rgba(247, 244, 239, 0.42)',
-                backdropFilter: 'blur(12px)'
-              }}
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Back to Happy Period Box</span>
-            </Link>
-
-            <span
-              className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-semibold tracking-wider uppercase self-start sm:self-auto"
-              style={{
-                color: '#E6DCC6',
-                background: 'rgba(43, 33, 27, 0.58)',
-                border: '1px solid rgba(230, 220, 198, 0.35)',
-                backdropFilter: 'blur(10px)'
-              }}
-            >
-              <Sparkles className="w-3.5 h-3.5 text-[#E6DCC6]" />
-              Custom Box Builder · Minimum {MIN_BOX_ITEMS} Items
-            </span>
-          </div>
-
           <div className="text-center max-w-2xl mx-auto">
             <h1
               className="font-serif text-3xl sm:text-5xl font-semibold tracking-tight mb-2"
