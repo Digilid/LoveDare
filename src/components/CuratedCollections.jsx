@@ -8,9 +8,6 @@ export default function CuratedCollections() {
         <div className="text-center">
           <span className="tag-badge orange fade-up-element">OUR CURATED COLLECTIONS</span>
           <h2 className="section-title fade-up-element">Every Stage Deserves Care</h2>
-          <p className="section-subtitle fade-up-element">
-            Explore our signature gift boxes—each thoughtfully designed to bring comfort, spark open dialogue, and celebrate women through life&apos;s most meaningful transitions.
-          </p>
         </div>
 
         {/* Curated Collections In-Depth Overview (4 Alternating Rows - One Per Box) */}
