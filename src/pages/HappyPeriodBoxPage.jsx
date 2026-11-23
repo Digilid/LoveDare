@@ -852,16 +852,6 @@ export default function HappyPeriodBoxPage() {
                         isEven ? 'order-1' : 'order-2'
                       }`}
                     >
-                      <div className="flex flex-wrap items-center justify-start gap-1.5 sm:gap-2 mb-1 sm:mb-2">
-                        <span className="text-[9px] sm:text-[11px] font-bold uppercase tracking-wider text-[#7A5E4A]">
-                          {item.category}
-                        </span>
-                        <span className="text-[#B89F8A] text-[10px] sm:text-xs">•</span>
-                        <span className="text-[9px] sm:text-xs font-medium text-[#4B362A] bg-[#F7F4EF] px-2 sm:px-2.5 py-0.5 rounded-full border border-[#B89F8A]/35">
-                          {item.tag}
-                        </span>
-                      </div>
-
                       <h3 className="font-serif text-sm sm:text-2xl font-semibold text-[#4B362A] flex flex-wrap items-center justify-start gap-1.5 sm:gap-2 mb-1 sm:mb-2.5 leading-snug">
                         <span>{item.productName}</span>
                         {/*
