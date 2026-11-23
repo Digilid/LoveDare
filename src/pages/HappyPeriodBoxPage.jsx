@@ -762,23 +762,18 @@ export default function HappyPeriodBoxPage() {
           </div>
 
           {/* Right Side: Tactile "Make Your Box →" Mocha Accent Button */}
-          <button
-            type="button"
-            onClick={() => {
-              const msg =
-                'Hi Lovdare! I would love to custom-build my own "Happy Period Box" and handpick my comfort essentials. Could you please share the customization options?';
-              const url = `https://wa.me/${LOVDARE_CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
-              window.open(url, '_blank', 'noopener,noreferrer');
-            }}
-            className="group inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-semibold text-[#F7F4EF] bg-[#7A5E4A] hover:bg-[#644C3B] transition-all duration-300 hover:-translate-y-0.5 cursor-pointer shrink-0 border-0"
+          <Link
+            to="/make-your-box"
+            className="group inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-semibold text-[#F7F4EF] bg-[#7A5E4A] hover:bg-[#644C3B] transition-all duration-300 hover:-translate-y-0.5 cursor-pointer shrink-0 border-0 no-underline"
             style={{
+              color: '#F7F4EF',
               boxShadow:
                 '0 8px 22px -4px rgba(75, 54, 42, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.25)'
             }}
           >
             <span>Make Your Box</span>
             <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-          </button>
+          </Link>
         </div>
       </section>
 
