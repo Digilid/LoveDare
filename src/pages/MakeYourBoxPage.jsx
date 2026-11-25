@@ -17,7 +17,7 @@ import { LOVDARE_CONFIG } from '../config/lovdareConfig';
 /* ============================================================================
    CONFIGURABLE CONSTANTS & CURATED PRODUCT CATALOG
    ============================================================================ */
-export const MIN_BOX_ITEMS = 3;
+export const MIN_BOX_ITEMS = 1;
 
 export const BOX_CATEGORIES = [
   'All',
@@ -177,9 +177,7 @@ export default function MakeYourBoxPage() {
 
   const totalItemsCount = selectedItems.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = selectedItems.reduce((sum, item) => sum + item.subtotal, 0);
-  const isReadyToOrder = totalItemsCount >= MIN_BOX_ITEMS;
-  const remainingForMin = Math.max(0, MIN_BOX_ITEMS - totalItemsCount);
-  const progressPercent = Math.min(100, Math.round((totalItemsCount / MIN_BOX_ITEMS) * 100));
+  const isReadyToOrder = totalItemsCount >= 1;
 
   /* --------------------------------------------------------------------------
      FLY-TO-BOX ANIMATION & QUANTITY HANDLERS
@@ -349,29 +347,6 @@ export default function MakeYourBoxPage() {
             </h3>
           </div>
         </div>
-
-        {/* Visual Progress Bar & Minimum Requirement Status */}
-        <div className="mt-3 pt-2.5 border-t border-[#E6DCC6]/20">
-          <div className="flex items-center justify-between text-[11px] mb-1.5">
-            <span className="text-[#E6DCC6]/90 font-medium">
-              {isReadyToOrder
-                ? `✓ Minimum ${MIN_BOX_ITEMS} items reached`
-                : `Add at least ${MIN_BOX_ITEMS} items to complete your box (${remainingForMin} more needed)`}
-            </span>
-            <span className="font-bold text-[#F7F4EF]">{progressPercent}%</span>
-          </div>
-          <div className="w-full h-2 rounded-full bg-black/35 overflow-hidden">
-            <div
-              className="h-full rounded-full transition-all duration-500"
-              style={{
-                width: `${progressPercent}%`,
-                background: isReadyToOrder
-                  ? 'linear-gradient(90deg, #B89F8A 0%, #F7F4EF 100%)'
-                  : 'linear-gradient(90deg, #7A5E4A 0%, #B89F8A 100%)'
-              }}
-            />
-          </div>
-        </div>
       </div>
 
       {/* Visual Slots / Added Items List */}
@@ -505,8 +480,7 @@ export default function MakeYourBoxPage() {
 
         {!isReadyToOrder && (
           <p className="text-[11px] text-[#7A5E4A] text-center mt-2 mb-0 font-medium">
-            Please add {remainingForMin} more {remainingForMin === 1 ? 'item' : 'items'} (minimum{' '}
-            {MIN_BOX_ITEMS}) to unlock WhatsApp checkout.
+            Add at least 1 item to unlock WhatsApp checkout.
           </p>
         )}
       </div>
@@ -786,7 +760,7 @@ export default function MakeYourBoxPage() {
               <span className="text-[10px] text-[#E6DCC6]/85 block">
                 {isReadyToOrder
                   ? '✓ Box ready to order'
-                  : `Add ${remainingForMin} more to complete box`}
+                  : 'Add at least 1 item to order'}
               </span>
             </div>
           </div>
