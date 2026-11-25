@@ -309,11 +309,19 @@ export default function MakeYourBoxPage() {
      SHARED BOX PREVIEW CONTENT (Used in Desktop Sticky Box & Mobile Drawer)
      -------------------------------------------------------------------------- */
   const renderBoxPreviewContents = (isMobileSheet = false) => (
-    <div className="flex flex-col h-full">
+    <div className={`flex flex-col ${isMobileSheet ? 'flex-1 min-h-0 overflow-hidden' : 'h-full'}`}>
       {/* Top Visual Gift Box Showcase Header */}
-      <div className="relative rounded-2xl overflow-hidden bg-[#3B2B20] p-4 mb-4 border border-[#B89F8A]/40 text-[#F7F4EF]">
-        <div className="flex items-center gap-3.5">
-          <div className="relative w-16 h-14 rounded-xl overflow-hidden bg-[#F7F4EF] shrink-0 border border-[#E6DCC6]/50 shadow-md">
+      <div
+        className={`relative rounded-2xl overflow-hidden bg-[#3B2B20] border border-[#B89F8A]/40 text-[#F7F4EF] shrink-0 ${
+          isMobileSheet ? 'p-3 mb-2.5' : 'p-4 mb-4'
+        }`}
+      >
+        <div className="flex items-center gap-3">
+          <div
+            className={`relative rounded-xl overflow-hidden bg-[#F7F4EF] shrink-0 border border-[#E6DCC6]/50 shadow-md ${
+              isMobileSheet ? 'w-14 h-12' : 'w-16 h-14'
+            }`}
+          >
             <img
               src={
                 isReadyToOrder
@@ -330,7 +338,7 @@ export default function MakeYourBoxPage() {
                 CUSTOM GIFT BOX
               </span>
               <span
-                className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold transition-transform duration-300 ${
+                className={`px-2 py-0.5 rounded-full text-[10px] sm:text-[11px] font-bold transition-transform duration-300 ${
                   isBoxPulsing
                     ? 'scale-125 bg-[#F7F4EF] text-[#4B362A]'
                     : 'bg-[#7A5E4A] text-[#F7F4EF]'
@@ -340,7 +348,7 @@ export default function MakeYourBoxPage() {
               </span>
             </div>
             <h3
-              className="font-serif text-lg sm:text-xl font-semibold m-0 mt-0.5"
+              className="font-serif text-base sm:text-xl font-semibold m-0 mt-0.5"
               style={{ color: '#F7F4EF' }}
             >
               {isReadyToOrder ? 'Your Box is Ready to Seal!' : 'Build Your Comfort Sanctuary'}
@@ -351,8 +359,8 @@ export default function MakeYourBoxPage() {
 
       {/* Visual Slots / Added Items List */}
       <div
-        className={`flex-1 overflow-y-auto pr-1 space-y-2.5 ${
-          isMobileSheet ? 'max-h-[42vh]' : 'max-h-[340px]'
+        className={`flex-1 min-h-0 overflow-y-auto pr-1 space-y-2 ${
+          isMobileSheet ? '' : 'max-h-[340px]'
         }`}
       >
         {selectedItems.length === 0 ? (
@@ -439,7 +447,11 @@ export default function MakeYourBoxPage() {
       </div>
 
       {/* Box Footer: Running Total + Buy Now via WhatsApp CTA */}
-      <div className="mt-4 pt-3.5 border-t border-[#B89F8A]/40">
+      <div
+        className={`shrink-0 border-t border-[#B89F8A]/40 ${
+          isMobileSheet ? 'mt-2.5 pt-2.5' : 'mt-4 pt-3.5'
+        }`}
+      >
         <div className="flex items-center justify-between mb-1">
           <span className="text-xs font-semibold uppercase tracking-wider text-[#7A5E4A]">
             Total Items ({totalItemsCount})
@@ -455,11 +467,11 @@ export default function MakeYourBoxPage() {
           )}
         </div>
 
-        <div className="flex items-baseline justify-between mb-3">
-          <span className="font-serif text-lg font-semibold text-[#4B362A]">
+        <div className="flex items-baseline justify-between mb-2.5 sm:mb-3">
+          <span className="font-serif text-base sm:text-lg font-semibold text-[#4B362A]">
             Running Total Price
           </span>
-          <span className="font-serif text-2xl sm:text-3xl font-bold text-[#4B362A]">
+          <span className="font-serif text-xl sm:text-2xl font-bold text-[#4B362A]">
             ₹{totalPrice.toLocaleString('en-IN')}
           </span>
         </div>
@@ -468,7 +480,7 @@ export default function MakeYourBoxPage() {
           type="button"
           disabled={!isReadyToOrder}
           onClick={handleBuyNowWhatsApp}
-          className={`w-full py-3.5 px-5 rounded-full text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all duration-300 border-0 ${
+          className={`w-full py-3 sm:py-3.5 px-5 rounded-full text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all duration-300 border-0 ${
             isReadyToOrder
               ? 'bg-[#4B362A] hover:bg-[#7A5E4A] text-[#F7F4EF] cursor-pointer shadow-lg hover:-translate-y-0.5'
               : 'bg-[#B89F8A]/45 text-[#57524E] cursor-not-allowed'
@@ -479,7 +491,7 @@ export default function MakeYourBoxPage() {
         </button>
 
         {!isReadyToOrder && (
-          <p className="text-[11px] text-[#7A5E4A] text-center mt-2 mb-0 font-medium">
+          <p className="text-[11px] text-[#7A5E4A] text-center mt-1.5 mb-0 font-medium">
             Add at least 1 item to unlock WhatsApp checkout.
           </p>
         )}
@@ -784,13 +796,16 @@ export default function MakeYourBoxPage() {
           onClick={() => setIsMobileDrawerOpen(false)}
         >
           <div
-            className="w-full max-w-lg rounded-t-[28px] bg-[#E6DCC6] p-5 border-t-2 border-[#B89F8A] shadow-2xl max-h-[86vh] flex flex-col"
+            className="w-full max-w-lg rounded-t-[28px] bg-[#E6DCC6] px-4 pt-4 pb-4 sm:px-5 sm:pt-5 sm:pb-5 border-t-2 border-[#B89F8A] shadow-2xl max-h-[88dvh] max-h-[88vh] flex flex-col overflow-hidden"
+            style={{
+              paddingBottom: 'max(1.25rem, calc(env(safe-area-inset-bottom, 0px) + 0.75rem))'
+            }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#B89F8A]/45">
+            <div className="flex items-center justify-between pb-2.5 mb-2.5 border-b border-[#B89F8A]/45 shrink-0">
               <div className="flex items-center gap-2">
                 <ShoppingBag className="w-4 h-4 text-[#7A5E4A]" />
-                <h3 className="font-serif text-xl font-semibold text-[#4B362A] m-0">
+                <h3 className="font-serif text-lg sm:text-xl font-semibold text-[#4B362A] m-0">
                   Your Custom Happy Period Box
                 </h3>
               </div>
@@ -798,7 +813,7 @@ export default function MakeYourBoxPage() {
                 type="button"
                 onClick={() => setIsMobileDrawerOpen(false)}
                 aria-label="Close box drawer"
-                className="w-8 h-8 rounded-full bg-[#F7F4EF] text-[#4B362A] flex items-center justify-center border border-[#B89F8A]/40 cursor-pointer"
+                className="w-8 h-8 rounded-full bg-[#F7F4EF] text-[#4B362A] flex items-center justify-center border border-[#B89F8A]/40 cursor-pointer hover:bg-white transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
